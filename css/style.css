@@ -1,5 +1,95 @@
+#myCanvas{
+  border:1px solid #c3c3c3;
+  background-color:black;
+  position:absolute;
+  z-index:-1;
+}
+#phone{
+  height:500px;
+  border:1px solid white;
+  margin-top:25%;
+  border-radius:3%;
+}
+#point{
+  width:5%;
+  height:8px;
+  border:1px solid gray;
+  padding:0;
+  margin-top:4%;
+  border-radius:100%;
+}
+#bar{
+  width:50%;
+  height:8px;
+  border:1px solid gray;
+  border-radius:10%;
+  margin-top:4%;
+}
+#screen{
+  width:90%;
+  height:80%;
+  margin:5% 5% 1% 5%;
+  padding:15% 8%;
+  background-color:gray;
+  opacity:0.6;
+  text-align:center;
+}
+.list-group{
+  margin-top:20%;
+  padding:2% 5%;
+}
 .list-group-item{
   margin:5% 5%;
   border-radius:5%;
   font-size: 20px;
 }
+#homebtn{
+  width:15%;
+  height:45px;
+  border:1px solid white;
+  border-radius:100%;
+  margin:3% 42%;
+  padding-top:4%;
+  text-align:center;
+}
+
+.banner{
+  margin-top: 2px;
+  font-size:18px;
+  font-weight: bold;
+}
+.navbar{
+  padding:0 3%;
+  background-color: #b8b8dc;
+}
+.navlist{
+  margin-top: 4px;
+  font-size:15px;
+  font-weight: bold;
+}
+@media only screen and (max-width: 767px) {
+    .navbar-collapse {
+        display: none;
+        border: none;
+        background: white;
+        box-shadow: rgba(0, 0, 0, 0.2) 0 1px 4px;
+        border-radius: 2px;
+        width: 150px;
+        float: right;
+        margin: 0;
+        height: auto;
+    }
+  .navbar-fixed-top{
+    height:50px;
+  }
+  .navbar-toggle{
+    margin-right:0;
+  }
+
+  .myfirstarchive{
+    border: 1px solid black;
+    background: url(/images/arhive.jpg);
+    text-align: center;
+    width: 1000px;
+    height: 500px;
+  }
