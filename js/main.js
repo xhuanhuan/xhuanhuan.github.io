@@ -1,5 +1,5 @@
-var c=document.getElementById("myCanvas");  
-var ctx=c.getContext("2d");  
+var c=document.getElementById("myCanvas");
+var ctx=c.getContext("2d");
 
 width=window.innerWidth;
 height=window.innerHeight;
@@ -16,7 +16,7 @@ function main(){
 	count++;
 	//if(count%10==0){
 		blink();
-		
+
 	//}
 	drawmoon();
 	drawstar();
@@ -24,4 +24,4 @@ function main(){
 	//getxandy();
 }
 getxandy();
-setInterval('main()',10);
+setInterval('main()',30);
