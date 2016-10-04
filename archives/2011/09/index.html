@@ -12,7 +12,7 @@
 <body>
     <div class="main">
         <header>
-  <nav class="navbar navbar-default navbar-fixed-top" role="navigation" style="webkit-box-shadow:10px 10px 5px 10px #444;">
+  <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
     <div class="navbar-header">
         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#my-navbar">
             <span class="sr-only">切换导航</span>
@@ -37,27 +37,74 @@
         
             <li class="navlist"><a href="/archives" >Archives</a></li>
         
-            <li class="navlist"><a href="/tags" >Tags</a></li>
+            <li class="navlist"><a href="/myworks" >My-Works</a></li>
         
-            <li class="navlist"><a href="/about" >About</a></li>
+            <li class="navlist"><a href="/tag" >Tags</a></li>
         
     </ul>
   </div>
   </nav>
 </header>
 
-<div id="archive">
-  <div class="myfirstarchive" >
-    <img src="/images/2.jpg" class="img-responsive" style="min-height:150px;">
+<div class="myfirstarchive" >
+  <img src="/images/2.jpg" style="width:100%;min-height:150px;">
+</div>
+<div class = 'container' style="padding:5% 0;margin-right:0;margin-left:0;width:100%;">
+  <div class = 'row'>
+  <div class = 'col-xs-12 col-xs-offset-0 col-md-5 col-md-offset-2 col-sm-5 col-sm-offset-2 col-lg-5 col-lg-offset-2'>
+    <div class = 'well'>
+    <div class="archive">
+      
+    <div id='li-of-posts'>
+      <div style = 'text-align:right'>
+        <button type="button" class="btn btn-success" id='but2'>摘要视图</button>
+        <hr>
+      </div>
+      
+      
+        <div class="postblock">
+      
+    <article>
+      <div class="postblock">
+        
+          <h2 class="post-title"><a href="/2011/09/22/hello-world/">Hello World</a></h2>
+          
+        <h4 class="date"><span class="glyphicon glyphicon-calendar"></span>2011-09-22</h4>
+              <span class="glyphicon glyphicon-tags" style="float:left;"></span>
+              <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/text/">text</a></li></ul>
+      </div>
+        <div class="postblock">
+        <section class="md post-content">
+            
+                <h2 id="jjjj"><a href="#jjjj" class="headerlink" title="jjjj"></a>jjjj</h2><h4 id="shhh"><a href="#shhh" class="headerlink" title="shhh"></a>shhh</h4><p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.<br>
+            
+        </section>
+        
+            <a href="/2011/09/22/hello-world/" class="more">More +</a>
+        
+      </div>
+    </article>
+
+
+        </div>
+      
+      <div class="pagination">
+        <p><span class="page-number current">1</span><a class="page-number" href="/archives/2011/09/page/2/">2</a><a class="extend next" rel="next" href="/archives/2011/09/page/2/">Next</a></p>
+      </div>
+    </div>
+    </div>
   </div>
-<div class="container">
-<div class="row">
-  <div id="li-of-post"  class="col col-xs-12 col-sm-12 col-md-3 col-lg-3 col-xs-offset-0 col-sm-offset-0 col-md-offset-0 col-lg-offset-0">
+  </div>
+  <div id="li-of-post" class = 'col-xs-12 col-xs-offset-0 col-md-3 col-md-offset-0 col-sm-4 col-sm-offset-0 col-lg-3 col-lg-offset-0'>
     
     
     
     
-  <div class="here">
+    <div class='well here'>
+   <div style = 'text-align:left'>
+     <button type="button" class="btn btn-primary" id='but2'>目录视图</button>
+     <hr>
+   </div>
     
       <div class="postblock">
         <h2 class="year">2011</h2>
@@ -73,52 +120,21 @@
      </div>
     
    </div>
-  </div>
-  <div id="li-of-posts" class="col col-xs-12 col-sm-12 col-md-9 col-lg-9 col-xs-offset-0 col-sm-offset-0 col-md-offset-0 col-lg-offset-0">
-    
-      <div class="postblock">
-    
-    <article>
-      <div class="postblock">
-        
-          <h2 class="post-title"><a href="/2011/09/22/hello-world/">Hello World</a></h2>
-          
-        <h4 class="date"><span class="glyphicon glyphicon-calendar"></span>2011-09-22</h4>
-        
-      </div>
-        <div class="postblock">
-        <section class="md post-content">
-            
-                <h2 id="jjjj"><a href="#jjjj" class="headerlink" title="jjjj"></a>jjjj</h2><h4 id="shhh"><a href="#shhh" class="headerlink" title="shhh"></a>shhh</h4><p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.<br>
-            
-        </section>
-        
-            <a href="/2011/09/22/hello-world/" class="more">More +</a>
-        
-      </div>
-    </article>
-
-
-      </div>
-    
+   <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2016/10/04/yse/">yse</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/22/second/">second</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/22/My-New-Post-1/">My New Post 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2015/09/22/My-New-Post/">My New Post</a></li><li class="post-list-item"><a class="post-list-link" href="/2014/09/22/My-new-post-2/">My New Post 2</a></li><li class="post-list-item"><a class="post-list-link" href="/2013/09/22/My-New-Post-3/">My New Post 3</a></li></ul>
+</div>
   </div>
 </div>
-
-<div class="pagination" style="width:100%;text-align:center;margin-bottom:0;">
-  <span class="page-number current">1</span><a class="page-number" href="/archives/2011/09/page/2/">2</a><a class="extend next" rel="next" href="/archives/2011/09/page/2/">Next</a>
-</div>
-</div>
-</div>
-<!-- <footer>
-    <div class="info" style="float:right;margin:20px 40px;"><span>Powered By <a href="https://hexo.io/" target="blank">Hexo</a></span>&nbsp;&nbsp;&nbsp;&nbsp;<span>Theme by <a href="https://github.com/showonne/hexo_showonne" target="blank">Showonne</a></span></div>
+<footer>
+    <div class="info" style=";position:fixed;bottom:0;right:50px;margin:20px 40px;"><span>Powered By <a href="https://hexo.io/" target="blank">Hexo</a></span>&nbsp;&nbsp;&nbsp;&nbsp;<span>Theme by <a href="https://github.com/showonne/hexo_showonne" target="blank">Showonne</a></span></div>
 </footer>
- -->
 
-        <footer>
-    <div class="info" style="float:right;margin:20px 40px;"><span>Powered By <a href="https://hexo.io/" target="blank">Hexo</a></span>&nbsp;&nbsp;&nbsp;&nbsp;<span>Theme by <a href="https://github.com/showonne/hexo_showonne" target="blank">Showonne</a></span></div>
-</footer>
+ <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2016/10/04/yse/">yse</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/22/second/">second</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/22/My-New-Post-1/">My New Post 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2015/09/22/My-New-Post/">My New Post</a></li><li class="post-list-item"><a class="post-list-link" href="/2014/09/22/My-new-post-2/">My New Post 2</a></li><li class="post-list-item"><a class="post-list-link" href="/2013/09/22/My-New-Post-3/">My New Post 3</a></li></ul>
 
     </div>
+      <!-- <footer>
+    <div class="info" style=";position:fixed;bottom:0;right:50px;margin:20px 40px;"><span>Powered By <a href="https://hexo.io/" target="blank">Hexo</a></span>&nbsp;&nbsp;&nbsp;&nbsp;<span>Theme by <a href="https://github.com/showonne/hexo_showonne" target="blank">Showonne</a></span></div>
+</footer>
+ -->
       <script src="/js/jquery-1.12.3.min.js"></script>
       <script src="/js/index.js"></script>
       <script src="/js/bootstrap.min.js"></script>
