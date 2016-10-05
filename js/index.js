@@ -1,4 +1,7 @@
 $(document).ready(function(){
+  var w= $('#li-of-post').width();
+  $('.fixhere').css({'width':w});
+
   var link = document.getElementsByClassName('toc-link');
   var scrotop=window.pageYOffset;
   if(scrotop>100){
@@ -23,9 +26,11 @@ $(document).ready(function(){
         var mTop = document.getElementById('li-of-post').offsetTop-document.body.scrollTop;
         mTop=mTop+scrotop;
          if(mTop<=scrotop){
+           if(window.screen.width>767){
            var w= $('#li-of-post').width();
            $('.fixhere').css({'width':w});
            $('.here').addClass('fixhere');
+         }
          }
          else{
            $('.here').removeClass('fixhere');
@@ -63,55 +68,111 @@ $(document).ready(function(){
         return false;
       }
   }
-//read works
-// var fs = require("fs");
-// var count=0;
-// var num=[];
-// var Data=[];
-// var str='';
-// function readFile(path,filesList)
-// {
-// files = fs.readdirSync(path);//需要用到同步读取
-// files.forEach(walk);
-// function walk(file)
-// {
-//   count=0;
-//   num=[];
-//   Data=[];
-//   // console.log(file);console.log(1);
-// var data=fs.readFileSync(path+'/'+file)
+  //---------
+    var list = document.getElementsByClassName('tag-list-count');
+    for(var i=0;i<list.length;i++)
+    {
+    list[i].innerHTML  = '('+list[i].innerHTML+')';
+    }
+    var list1 = document.getElementsByClassName('category-list-count');
+  for(var i=0;i<list1.length;i++)
+  {
+    list1[i].innerHTML  = '('+list1[i].innerHTML+')';
+  }
+  var list2 = document.getElementsByClassName('archive-list-count');
+for(var i=0;i<list2.length;i++)
+{
+  list2[i].innerHTML  = '('+list2[i].innerHTML+')';
+}
+
+
+window.onresize=function(){
+  var ws=window.screen.width-50;
+  var hs=window.screen.height;
+  if(ws<767){
+    $('.here').removeClass('fixhere');
+    $('.here').addClass('fixleft');
+      $('.fixleft').css({'width':ws});
+    $('.fixleft').css({'left':-ws});
+    $('.fixleft').css({'max-height':hs});
+    var c=0;
+
+    $('#head1').click(
+      function(){
+        c++;
+        console.log(c);
+        if(c%2==1){
+          $('.fixleft').animate({'left':0},1000);
+        }
+        else{
+          $('.fixleft').animate({'left':-ws},1000);
+      }
+      })
+      $('body').click(function(){
+        if($('.fixleft').css('left')=='0px'){
+            $('.fixleft').animate({'left':-ws},1000);
+        }
+      })
+  }else{
+    $('.here').removeClass('fixleft');
+    $('.here').css({'left':'auto'});
+  }
+
+}
+var ws=window.screen.width-50;
+var hs=window.screen.height;
+if(ws<767){
+  $('.here').removeClass('fixhere');
+  $('.here').addClass('fixleft');
+    $('.fixleft').css({'width':ws});
+  $('.fixleft').css({'left':-ws});
+  $('.fixleft').css({'max-height':hs});
+  var c=0;
+
+  $('#head1').click(
+    function(){
+      c++;
+      if(c%2==1){
+        $('.fixleft').animate({'left':0},1000);
+      }
+      else{
+        $('.fixleft').animate({'left':-ws},1000);
+    }
+    })
+    $('body').click(function(){
+      if($('.fixleft').css('left')=='0px'){
+          $('.fixleft').animate({'left':-ws},1000);
+      }
+    })
+}else{
+  $('.here').removeClass('fixleft');
+  $('.here').css({'left':'auto'});
+}
+
+// var ws=window.screen.width-50;
+// var hs=window.screen.height;
+// if(ws<767){
+//   $('.here').removeClass('fixhere');
+//   $('.here').addClass('fixleft');
+//     $('.here').css({'width':ws});
+//   $('.here').css({'left':-ws});
+//   $('.here').css({'max-height':hs});
+//   var c=0;
 //
-//       Data=data.toString();
-//       for(var i=0;i<Data.length;i++){
-//         if(Data[i]==':'&&Data[i+1]==' '){
-//           num[count]=i;
-//           count++;
-//         }
+//   $('#head1').click(
+//     function(){
+//       c++;
+//       console.log(c);
+//       if(c%2==1){
+//         $('.here').animate({'left':0},1000);
 //       }
-//  //创建一个对象保存信息
-//  var obj = new Object();
-//  obj.wtitle =getstr(num[0]+2,num[1]-6,Data);//文件名
-//  obj.Date =getstr(num[1]+2,num[2]-6,Data);
-//  obj.path =getstr(num[2]+2,num[3]-5,Data);
-//  obj.img =getstr(num[3]+2,num[4]-10,Data);
-//  obj.subtitle =getstr(num[4]+2,num[5]-10,Data);
-//  obj.contents =getstr(num[5]+2,Data.length-7,Data);
-//  filesList.push(obj);
+//       else{
+//         $('.here').animate({'left':-ws},1000);
+//     }
+//     })
+//     $('body').click(function(){
+//       if($('.here').css('left')=='0px'){
+//           $('.here').animate({'left':-ws},1000);
+//       }
+//     })
 // }
-// }
-// function getstr(i,j,data){
-//   str='';
-//   for(var c=i;c<j;c++){
-//     str=str+data[c];
-//   }
-//   return str;
-// }
-//
-// function geFileList(path)
-// {
-// var filesList = [];
-// readFile(path,filesList);
-// return filesList;
-// }
-// var filesList = geFileList("D:/文档/web_items/blog/source/_works");
-// console.log(filesList[0].wtitle);

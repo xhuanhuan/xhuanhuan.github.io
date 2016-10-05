@@ -86,8 +86,8 @@ body {
   }
   .myfirstarchive{
     /*border: 1px solid black;*/
-  background: url(/images/archive.JPG) no-repeat;
- background-size: 100% auto;
+    background: url(/images/archive.JPG) no-repeat;
+    background-size: 100% auto;
     text-align: center;
     width: 100%;
     height:300px;
@@ -98,6 +98,16 @@ body {
     left:0;
     z-index: -1;
   }
+  .myfirstarchive img{
+    width:100%;
+    }
+    .title-on-img{
+      position:absolute;
+      width:50%;
+      height:150px;
+      top:25%;
+      left:25%;
+    }
   .img-responsive{
     width:100%;
     height:100%;
@@ -144,17 +154,21 @@ body {
 }
 .here{
   max-height:82%;
-  width:100%;
   padding-bottom: 10%;
 }
 .fixhere{
 height:82%;
-width:25%;
+width:22%;
 position: fixed;
 top:30px;
 background-color: #f0f0f0;
 overflow:auto;
 outline:1px solid #f0f0f0;
+}
+.fixleft{
+  position:fixed;
+  top:0;
+  overflow:auto;
 }
 a.title{
   width:100%;
@@ -178,17 +192,29 @@ a.title{
         height: auto;
     }
     .myfirstarchive{
-      height:250px;
+      height:200px;
+      background-size: 200% auto;
+      overflow: hidden;
+
+    }
+    .myfirstarchive img{
+      width:200%;
+      /*height:100%;*/
+    }
+    .title-on-img{
+      height:100px;
+      top:15%;
     }
     .container{
-        margin-top:45%;
+        margin-top:40%;
     }
+
+    .mulu{
+    display:none;
+      }
 
   }
 @media only screen and (max-width: 992px){
-.here{
-display:none;
-  }
   #li-of-posts{
     border-left:1px solid white;
   }
@@ -251,4 +277,64 @@ color: white;
 }
 li.article-tag-list-item{
   list-style-type:none;
+}
+li.toc-item{
+  list-style-type:none;
+}
+li.intro{
+  list-style-type:none;
+}
+ol.toc{
+  font-size: 15px;
+  line-height: 30px;
+}
+.personal-information{
+    width:100%;
+}
+.head-img{
+  width:90%;
+  margin:5% 5%;
+}
+.my-name{
+  width:90%;
+  margin:5% 5%;
+  text-align: center;
+}
+.intro{
+  display:inline;
+  font-size: 25px;
+  margin:1% 3%;
+}
+#wechat{
+  width:90%;
+  margin:5% 5%;
+}
+.my-paper-intro{
+  width:90%;
+  margin:5% 5%;
+  padding-left: 10%;
+}
+.tag-list{
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.tag-list .tag-list-item{
+  float:left;
+}
+.tag-list .tag-list-item .tag-list-link{
+    display: block;
+    padding: 8px;
+    margin:4px;
+    text-decoration: none;
+    background-color: #5cb85c;
+    color:white;
+    border-radius:3px;
+}
+.tag-list .tag-list-item .tag-list-link:hover{
+    background-color: #449d44;
+    border-color:#398439;
+}
+.tag-list .tag-list-item .tag-list-count{
+    display:none;
 }
