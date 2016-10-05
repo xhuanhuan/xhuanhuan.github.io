@@ -150,7 +150,7 @@ body {
 
 }
 #li-of-posts{
-
+width:100%;
 }
 .here{
   max-height:82%;
@@ -163,7 +163,6 @@ position: fixed;
 top:30px;
 background-color: #f0f0f0;
 overflow:auto;
-outline:1px solid #f0f0f0;
 }
 .fixleft{
   position:fixed;
@@ -214,11 +213,7 @@ a.title{
       }
 
   }
-@media only screen and (max-width: 992px){
-  #li-of-posts{
-    border-left:1px solid white;
-  }
-}
+
 .one-post{
   /*padding:2% 15%;*/
 }

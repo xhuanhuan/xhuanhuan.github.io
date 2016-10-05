@@ -95,11 +95,8 @@ window.onresize=function(){
       $('.fixleft').css({'width':ws});
     $('.fixleft').css({'left':-ws});
     $('.fixleft').css({'max-height':hs});
-    var c=0;
-
     $('#head1').click(
       function(){
-        c++;
         console.log(c);
         if($('.fixleft').css('left')=='0px'){
           $('.fixleft').animate({'left':-ws},500);
@@ -128,11 +125,8 @@ if(ws<767){
   $('.fixleft').css({'left':-ws});
   $('.fixleft').css({'max-height':hs});
   $('.fixleft').css({'padding-top':'50px'});
-  var c=0;
-
   $('#head1').click(
     function(){
-      c++;
       if($('.fixleft').css('left')=='0px'){
         $('.fixleft').animate({'left':-ws},500);
       }
@@ -149,31 +143,3 @@ if(ws<767){
   $('.here').removeClass('fixleft');
   $('.here').css({'left':'auto'});
 }
-
-// var ws=window.screen.width-50;
-// var hs=window.screen.height;
-// if(ws<767){
-//   $('.here').removeClass('fixhere');
-//   $('.here').addClass('fixleft');
-//     $('.here').css({'width':ws});
-//   $('.here').css({'left':-ws});
-//   $('.here').css({'max-height':hs});
-//   var c=0;
-//
-//   $('#head1').click(
-//     function(){
-//       c++;
-//       console.log(c);
-//       if(c%2==1){
-//         $('.here').animate({'left':0},1000);
-//       }
-//       else{
-//         $('.here').animate({'left':-ws},1000);
-//     }
-//     })
-//     $('body').click(function(){
-//       if($('.here').css('left')=='0px'){
-//           $('.here').animate({'left':-ws},1000);
-//       }
-//     })
-// }
