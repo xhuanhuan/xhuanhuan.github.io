@@ -102,15 +102,15 @@ window.onresize=function(){
         c++;
         console.log(c);
         if(c%2==1){
-          $('.fixleft').animate({'left':0},1000);
+          $('.fixleft').animate({'left':0},500);
         }
         else{
-          $('.fixleft').animate({'left':-ws},1000);
+          $('.fixleft').animate({'left':-ws},500);
       }
       })
       $('body').click(function(){
         if($('.fixleft').css('left')=='0px'){
-            $('.fixleft').animate({'left':-ws},1000);
+            $('.fixleft').animate({'left':-ws},500);
         }
       })
   }else{
@@ -133,15 +133,15 @@ if(ws<767){
     function(){
       c++;
       if(c%2==1){
-        $('.fixleft').animate({'left':0},1000);
+        $('.fixleft').animate({'left':0},500);
       }
       else{
-        $('.fixleft').animate({'left':-ws},1000);
+        $('.fixleft').animate({'left':-ws},500);
     }
     })
     $('body').click(function(){
       if($('.fixleft').css('left')=='0px'){
-          $('.fixleft').animate({'left':-ws},1000);
+          $('.fixleft').animate({'left':-ws},500);
       }
     })
 }else{
