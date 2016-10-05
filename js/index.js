@@ -143,3 +143,9 @@ if(ws<767){
   $('.here').removeClass('fixleft');
   $('.here').css({'left':'auto'});
 }
+
+
+
+$('#up').click(function(){
+   $("html,body").animate({scrollTop:0}, 500);
+});

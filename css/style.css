@@ -103,10 +103,10 @@ body {
     }
     .title-on-img{
       position:absolute;
-      width:50%;
+      width:90%;
       height:150px;
       top:25%;
-      left:25%;
+      left:5%;
     }
   .img-responsive{
     width:100%;
@@ -199,10 +199,6 @@ a.title{
     .myfirstarchive img{
       width:200%;
       /*height:100%;*/
-    }
-    .title-on-img{
-      height:100px;
-      top:15%;
     }
     .container{
         margin-top:40%;
@@ -332,4 +328,8 @@ ol.toc{
 }
 .tag-list .tag-list-item .tag-list-count{
     display:none;
+}
+button#up{
+float:right;
+margin-right: 20px;
 }
