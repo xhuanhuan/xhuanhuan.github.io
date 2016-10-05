@@ -124,6 +124,7 @@ body {
   padding-right: 3px;
   margin:8% 0;
 }
+
 .container{
   padding:5% 1%;
   margin-right:0;
@@ -157,7 +158,7 @@ outline:1px solid #f0f0f0;
 }
 a.title{
   width:100%;
-  white-space:nowrap;
+  /*white-space:nowrap;*/
   display:block;
 }
 .date{
@@ -232,7 +233,6 @@ display:none;
 }
 .work-figure{
   width:100%;
-  height:300px;
 }
 .introduction{
   width:100%;

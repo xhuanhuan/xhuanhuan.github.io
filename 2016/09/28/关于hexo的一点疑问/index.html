@@ -32,7 +32,7 @@
        </div>
        
        <div class="mytittle">
-         My New Post 3
+         hexo做主题笔记（1） 关于hexo的一点疑问
        </div>
        
    <div class="navbar-collapse" id="my-navbar">
@@ -53,10 +53,10 @@
 </header>
 
       <div class="myfirstarchive">
-        <img src="/images/My New Post 3.JPG ">
+        <img src="/images/hexo做主题笔记（1） 关于hexo的一点疑问.JPG ">
       <div class="title-on-img">
         <h2 class='post-title' style="color:white;">
-            <span>My New Post 3</span>
+            <span>hexo做主题笔记（1） 关于hexo的一点疑问</span>
         </h2>
       </div>
       </div>
@@ -71,21 +71,21 @@
           </div>
          <div class="postblock">
           <h1 class='post-title' style="border-bottom:1px solid #f0f0f0;">
-              <span>My New Post 3</span>
+              <span>hexo做主题笔记（1） 关于hexo的一点疑问</span>
           </h1>
           <section class='post-content' style="font-size:18px;">
-              <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.<br><a id="more"></a><br>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
+              <h3 id="hexo变量的作用域"><a href="#hexo变量的作用域" class="headerlink" title="hexo变量的作用域"></a>hexo变量的作用域</h3><h4 id="problem-1"><a href="#problem-1" class="headerlink" title="problem_1"></a>problem_1</h4><p>page变量在archive.ejs和post.ejs中的含义不同，不好在post页面访问整个博客的所有文章列表<br><a id="more"></a><br>根据手册，archive.ejs中的page表示的是所有的文章，也就是page.posts的元素就是每一篇文章。而在post.ejs中，也就是访问:year/:month…某篇文章时，page变量就是archive.ejs中的page.posts中对应于该文章的变量。<br>我希望实现的功能是在post.ejs中，也就是展示每篇文章的页面时，左侧显示文章，右侧显示toc,同时toc下面显示我发表过的文章。但是在post.ejs中并不能访问archive中page.posts变量，在post.ejs中，page就表示当前页面，page(in post.ejs)=page.post[index] (in archive.ejs)。所以不能访问到整个的博客文章变量，不好将其显示出来。</p>
+<h3 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h3><p>变量是内部定义好的，框架这样安排是有它的道理的，这样，在post中可以很方便的处理当前文章的内容，而在archive中，可以直接对所有的文章进行相应的处理。在性能上应该有不少提升，很想知道内部的实现原理。不过要看源码了。暂时还是把自己的博客主题做好，不容易啊。</p>
+<h3 id="暂时的解决方案"><a href="#暂时的解决方案" class="headerlink" title="暂时的解决方案"></a>暂时的解决方案</h3><p>hexo提供的辅助函数（helpers）可以解决这个问题<br><code>&lt;%- list_archives([options]) %&gt;</code><br>  可以显示当前的列表，具体的参数设置可以查看手册<br>  <code>&lt;%- list_posts([options]) %&gt;</code>可以显示所有的文章，具体有个格式，索然可以通过更改options获得自己想要的格式，不过获取这个格式之后，可以自己添加js,css来实现想要的渲染效果。</p>
 
           </section>
           <section style="font-size:18px;">
             <ul>
             
-              <li class="page-prev"><a href=/2014/09/22/My-new-post-2/>上一篇：My New Post 2</a></li>
+              <li class="page-prev"><a href=/2016/09/28/进度/>上一篇：hexo主题制作笔记（2）：进展</a></li>
         
         
-          <li class="page-next"><a href=/2011/09/22/hello-world/>下一篇：Hello World</a></li>
+          <li class="page-next"><a href=/2016/09/22/second/>下一篇：second</a></li>
         
             </ul>
           </section>
@@ -93,7 +93,7 @@
               <section id="comments">
               
                       <!-- 多说评论框 start -->
-<div class="ds-thread" data-thread-key="post-My-New-Post-3" data-title="My New Post 3" data-url="http://xhuanhuan.github.io/2013/09/22/My-New-Post-3/"></div>
+<div class="ds-thread" data-thread-key="post-关于hexo的一点疑问" data-title="hexo做主题笔记（1） 关于hexo的一点疑问" data-url="http://xhuanhuan.github.io/2016/09/28/关于hexo的一点疑问/"></div>
 <!-- 多说评论框 end -->
 <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 <script type="text/javascript">
@@ -123,7 +123,7 @@
               <hr>
             </div>
             <div class="postblock">
-            
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#hexo变量的作用域"><span class="toc-number">1.</span> <span class="toc-text">hexo变量的作用域</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#problem-1"><span class="toc-number">1.1.</span> <span class="toc-text">problem_1</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#思考"><span class="toc-number">2.</span> <span class="toc-text">思考</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#暂时的解决方案"><span class="toc-number">3.</span> <span class="toc-text">暂时的解决方案</span></a></li></ol>
             </div>
           </div>
         </div>

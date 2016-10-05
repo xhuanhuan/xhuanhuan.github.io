@@ -1,4 +1,5 @@
 $(document).ready(function(){
+  var link = document.getElementsByClassName('toc-link');
   var scrotop=window.pageYOffset;
   if(scrotop>100){
         $('.navbar').css({'background-color':'#b8b8dc'});
@@ -6,9 +7,6 @@ $(document).ready(function(){
       else{
         $('.navbar-default').css({'background-color':'rgba(255,255,255,0.3)','border':'transparent'});
       }
-
-      var w= $('#li-of-post').width();
-      $('.fixhere').css({'width':w});
  document.addEventListener('scroll',function(){
     var scrotop=window.pageYOffset;
     if(scrotop>100){
@@ -25,16 +23,46 @@ $(document).ready(function(){
         var mTop = document.getElementById('li-of-post').offsetTop-document.body.scrollTop;
         mTop=mTop+scrotop;
          if(mTop<=scrotop){
-        $('.here').addClass('fixhere');
+           var w= $('#li-of-post').width();
+           $('.fixhere').css({'width':w});
+           $('.here').addClass('fixhere');
          }
          else{
            $('.here').removeClass('fixhere');
            }
+
+//----------滚动监听-----------
+  for(var i=0;i<link.length;i++)
+  {
+  // var link = $('.toc-link');
+    // var mao = /#[\u4e00-\u9fa5|a-z|A-Z|0-9|]*/;
+    var mao = /#.*/;
+    var h=$(link[i].href.match(mao)[0]).offset().top-document.body.scrollTop;
+    console.log(h);
+    if(h<80 && h>40){
+      $(link[i]).css('background-color','#d0d0d0');
+    }else{
+      $(link[i]).css('background-color','white');
+    }
+
+  }
+
  });
-
-
   });
-
+  var link = document.getElementsByClassName('toc-link');
+  // var link = $('.toc-link');
+  for(var i=0;i<link.length;i++)
+  {
+      // var mao = /#[\u4e00-\u9fa5|a-z|A-Z|0-9|]*/;
+      var mao = /#.*/;
+      link[i].onclick = function(){
+        var temp = $(this.href.match(mao)[0]);
+        // $(this.href.match(mao)[0]).animate({'font-size':'30px'},1000);
+        // $(this.href.match(mao)[0]).css('color','green');
+        $('html,body').animate({scrollTop:$(this.href.match(mao)[0]).offset().top-70},500);
+        return false;
+      }
+  }
 //read works
 // var fs = require("fs");
 // var count=0;
