@@ -101,11 +101,11 @@ window.onresize=function(){
       function(){
         c++;
         console.log(c);
-        if(c%2==1){
-          $('.fixleft').animate({'left':0},500);
+        if($('.fixleft').css('left')=='0px'){
+          $('.fixleft').animate({'left':-ws},500);
         }
         else{
-          $('.fixleft').animate({'left':-ws},500);
+          $('.fixleft').animate({'left':0},500);
       }
       })
       $('body').click(function(){
@@ -127,16 +127,17 @@ if(ws<767){
     $('.fixleft').css({'width':ws});
   $('.fixleft').css({'left':-ws});
   $('.fixleft').css({'max-height':hs});
+  $('.fixleft').css({'padding-top':'50px'});
   var c=0;
 
   $('#head1').click(
     function(){
       c++;
-      if(c%2==1){
-        $('.fixleft').animate({'left':0},500);
+      if($('.fixleft').css('left')=='0px'){
+        $('.fixleft').animate({'left':-ws},500);
       }
       else{
-        $('.fixleft').animate({'left':-ws},500);
+        $('.fixleft').animate({'left':0},500);
     }
     })
     $('body').click(function(){
