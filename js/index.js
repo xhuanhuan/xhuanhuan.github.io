@@ -39,12 +39,10 @@ $(document).ready(function(){
 //----------滚动监听-----------
   for(var i=0;i<link.length;i++)
   {
-  // var link = $('.toc-link');
-    // var mao = /#[\u4e00-\u9fa5|a-z|A-Z|0-9|]*/;
     var mao = /#.*/;
     var h=$(link[i].href.match(mao)[0]).offset().top-document.body.scrollTop;
-    console.log(h);
-    if(h<80 && h>40){
+    // console.log(h);
+    if(h<80 && h>20){
       $(link[i]).css('background-color','#d0d0d0');
     }else{
       $(link[i]).css('background-color','white');
@@ -58,12 +56,10 @@ $(document).ready(function(){
   // var link = $('.toc-link');
   for(var i=0;i<link.length;i++)
   {
-      // var mao = /#[\u4e00-\u9fa5|a-z|A-Z|0-9|]*/;
       var mao = /#.*/;
       link[i].onclick = function(){
-        var temp = $(this.href.match(mao)[0]);
-        // $(this.href.match(mao)[0]).animate({'font-size':'30px'},1000);
-        // $(this.href.match(mao)[0]).css('color','green');
+        var temp = $(this.href.match(mao)[0]).offset().top;
+        console.log(temp)
         $('html,body').animate({scrollTop:$(this.href.match(mao)[0]).offset().top-70},500);
         return false;
       }
@@ -143,8 +139,6 @@ if(ws<767){
   $('.here').removeClass('fixleft');
   $('.here').css({'left':'auto'});
 }
-
-
 
 $('#up').click(function(){
    $("html,body").animate({scrollTop:0}, 500);
