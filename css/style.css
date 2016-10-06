@@ -333,3 +333,6 @@ button#up{
 float:right;
 margin-right: 20px;
 }
+ol.toc{
+  padding:1% 5%;
+}

@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Xhuanhuan&#39;s Blog</title>
+    <link rel="Shortcut Icon" href="icon.jpg">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+      <link rel="stylesheet" href="/css/style.css">
+        <link rel="stylesheet" href="/css/font-awesome.min.css">
+        <link rel="stylesheet" href="/css/fontdiao.css">
+    </head>
+<body>
+    <div class="main">
+        
+    <article>
+      <header>
+  <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#my-navbar">
+            <span class="sr-only">切换导航</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+
+        <ul class="nav nav-pills navbar-left" role="tablist">
+        <li><div class="navbar-left" style="margin-top:2px;width:45px;height:45px;border-radius:100%;">
+          <img id="head1" class="img-responsive img-circle" src="/images/head1.JPG">
+        </div></li>
+        <li class="banner">  <a href="/">Xhuanhuan&#39;s Blog</a></li>
+         </ul>
+       </div>
+       
+       <div class="mytittle">
+         Hexo主题制作笔记（二）
+       </div>
+       
+   <div class="navbar-collapse" id="my-navbar">
+
+    <ul class="nav nav-pills navbar-right menu_list" role="tablist">
+        
+            <li class="navlist"><a href="/" >Home</a></li>
+        
+            <li class="navlist"><a href="/archives" >Archives</a></li>
+        
+            <li class="navlist"><a href="/myworks" >My-Works</a></li>
+        
+            <li class="navlist"><a href="/tag" >Tags</a></li>
+        
+    </ul>
+  </div>
+  </nav>
+</header>
+
+      <div class="myfirstarchive">
+        <img src="/images/Hexo主题制作笔记（二）.JPG ">
+      <div class="title-on-img">
+        <h2 class='post-title' style="color:white;">
+            <span>Hexo主题制作笔记（二）</span>
+        </h2>
+      </div>
+      </div>
+
+      <div class="container">
+      <div class="row">
+      <div  class = 'col-xs-12 col-xs-offset-0 col-md-7 col-md-offset-1 col-sm-7 col-sm-offset-1 col-lg-7 col-lg-offset-1'>
+        <div class="well">
+          <div style = 'text-align:right'>
+            <button type="button" class="btn btn-success" id='but2'><a href="/archives">返回</a></button>
+            <hr>
+          </div>
+         <div class="postblock">
+          <h1 class='post-title' style="border-bottom:1px solid #f0f0f0;">
+              <span>Hexo主题制作笔记（二）</span>
+          </h1>
+          <section class='post-content'>
+              <pre><code>本篇笔记想要介绍一下手机界面下左侧边栏的制作过程。
+功能描述：点击头像，侧边栏左侧滑出，再次点击任意处隐藏。
+内容展示：展示的内容包括我的头像、联系方式（微信、微博、github等）、博客分类、博客目录以及work目录。
+</code></pre><a id="more"></a>
+<h3 id="写在之前"><a href="#写在之前" class="headerlink" title="写在之前"></a>写在之前</h3><pre><code>作为一个前端菜鸟，本文纯属个人理解，欢迎高手质疑指正！
+</code></pre><hr>
+<pre><code>虽为菜鸟，但追求完美的我，发现很多app都有这样一个想过十分羡慕，但是想想就觉得很难呢。可是真的就只是畅想会觉得难，更像是恐惧 拖延症吧，真的动起手来，还是挺简单的。所以，万事不要停留在想象，试着写起来，很多时候我们只是有着畏难情绪而已。
+</code></pre><h3 id="简单几步搞定侧边栏"><a href="#简单几步搞定侧边栏" class="headerlink" title="简单几步搞定侧边栏"></a>简单几步搞定侧边栏</h3><h4 id="（一）设定position"><a href="#（一）设定position" class="headerlink" title="（一）设定position"></a>（一）设定position</h4><p>当你想要把某个div放在某个位置执行某项操作时，首先就应该想到设置position及相关属性。</p>
+<h5 id="position：fixed"><a href="#position：fixed" class="headerlink" title="position：fixed"></a>position：fixed</h5><p>fixed是以body为准的绝对定位，根据浏览器的窗口来进行元素的定位，通过设置”left”、 “top”、 “right”、 “bottom” 等属性来实现把某个对象定位在你想要放的地方。</p>
+<h5 id="两次设置left、top"><a href="#两次设置left、top" class="headerlink" title="两次设置left、top"></a>两次设置left、top</h5><p>想想看，功能上侧边栏有两个固定位置：隐藏、滑出终止在屏幕的位置。这意味着其left属性被改变。隐藏式left应为负，滑出后为0。</p>
+<h4 id="（二）动画"><a href="#（二）动画" class="headerlink" title="（二）动画"></a>（二）动画</h4><h5 id="animate"><a href="#animate" class="headerlink" title="animate"></a>animate</h5><p>上面我们已经提到两次left的设定，想要侧边栏从左侧滑出的效果就需要通过动画来实现。</p>
+<pre><code>$(&apos;&apos;).animate({&apos;left&apos;:&apos;&apos;},500);
+</code></pre><p>花括号里写你想设置的属性，500是指完成这个动作需要多少时间，单位是毫秒（ms）。这样一来，侧边栏滑出的效果便有了。</p>
+<h4 id="（三）js实现"><a href="#（三）js实现" class="headerlink" title="（三）js实现"></a>（三）js实现</h4><p>剩下就靠js实现了。当点击某处时left变为0，滑进屏幕，再点击变为负滑出隐藏。</p>
+<pre><code>$(&apos;&apos;).click(
+function(){
+  if($(&apos;&apos;).css(&apos;left&apos;)==&apos;0px&apos;){
+    $(&apos;&apos;).animate({&apos;left&apos;:-ws},500);
+  }
+  else{
+    $(&apos;&apos;).animate({&apos;left&apos;:0},500);
+}
+});
+</code></pre><h3 id="写在最后"><a href="#写在最后" class="headerlink" title="写在最后"></a>写在最后</h3><pre><code>是不是很简单！当然了，实际过程中会有一些bug,我们往往会忽略一些细节，通过观察、测试、调试、再加上平日积累，会决绝的哦。祝你好运！
+</code></pre>
+          </section>
+          <section>
+            <ul style="list-style-type:none">
+            
+        
+          <li class="page-next"><a href=/2016/09/28/进度/>下一篇：hexo主题制作笔记（2）：进展</a></li>
+        
+            </ul>
+          </section>
+          
+              <section id="comments">
+              
+                      <!-- 多说评论框 start -->
+<div class="ds-thread" data-thread-key="post-hello-world" data-title="Hexo主题制作笔记（二）" data-url="http://xhuanhuan.github.io/2016/10/06/hello-world/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+    var duoshuoQuery = {short_name:'xhuanhuan'};
+      (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] 
+         || document.getElementsByTagName('body')[0]).appendChild(ds);
+      })();
+  </script>
+<!-- 多说公共JS代码 end -->
+
+                  
+              </section>
+          
+          <!-- </article> -->
+        </div>
+        </div>
+          </div>
+          <div id="li-of-post" class = 'col-xs-12 col-xs-offset-0 col-md-3 col-md-offset-0 col-sm-4 col-sm-offset-0 col-lg-3 col-lg-offset-0'>
+          <div class="well here">
+            <div style = 'text-align:left'>
+              <button type="button" class="btn btn-primary" id='but2'>内容列表</button>
+              <hr>
+            </div>
+            <div class="postblock">
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#写在之前"><span class="toc-number">1.</span> <span class="toc-text">写在之前</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#简单几步搞定侧边栏"><span class="toc-number">2.</span> <span class="toc-text">简单几步搞定侧边栏</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#（一）设定position"><span class="toc-number">2.1.</span> <span class="toc-text">（一）设定position</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#position：fixed"><span class="toc-number">2.1.1.</span> <span class="toc-text">position：fixed</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#两次设置left、top"><span class="toc-number">2.1.2.</span> <span class="toc-text">两次设置left、top</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#（二）动画"><span class="toc-number">2.2.</span> <span class="toc-text">（二）动画</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#animate"><span class="toc-number">2.2.1.</span> <span class="toc-text">animate</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#（三）js实现"><span class="toc-number">2.3.</span> <span class="toc-text">（三）js实现</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#写在最后"><span class="toc-number">3.</span> <span class="toc-text">写在最后</span></a></li></ol>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <div style="width:100%;position:fixed;bottom:5px">
+    <button id="up" class="btn btn-default"><i class="icon-angle-up"></i></button>
+    </div>
+    <footer>
+    <div class="info" style="text-align:center;"><span>Powered By <a href="https://hexo.io/" target="blank">Hexo</a></span>&nbsp;&nbsp;&nbsp;&nbsp;<span>Theme by <a href="https://github.com/showonne/hexo_showonne" target="blank">Showonne</a></span></div>
+</footer>
+
+</article>
+
+
+    </div>
+      <script src="/js/jquery-1.12.3.min.js"></script>
+      <script src="/js/index.js"></script>
+      <script src="/js/bootstrap.min.js"></script>
+      
+</body>
+</html>
