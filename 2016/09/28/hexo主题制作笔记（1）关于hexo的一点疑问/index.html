@@ -33,7 +33,7 @@
        </div>
        
        <div class="mytittle">
-         hexo主题制作进展
+         关于hexo的一点疑问
        </div>
        
    <div class="navbar-collapse" id="my-navbar">
@@ -54,10 +54,10 @@
 </header>
 
       <div class="myfirstarchive">
-        <img src="/images/hexo主题制作进展.JPG ">
+        <img src="/images/关于hexo的一点疑问.JPG ">
       <div class="title-on-img">
         <h1 class='post-title' style="color:white;">
-            <span>hexo主题制作进展</span>
+            <span>关于hexo的一点疑问</span>
         </h1>
       </div>
       </div>
@@ -72,30 +72,19 @@
           </div>
          <div class="postblock">
           <h1 class='post-title' style="border-bottom:1px solid #f0f0f0;">
-              <span>hexo主题制作进展</span>
+              <span>关于hexo的一点疑问</span>
           </h1>
           <section class='post-content'>
-              <h4 id="完成情况记录"><a href="#完成情况记录" class="headerlink" title="完成情况记录"></a>完成情况记录</h4><pre><code>1. index，是一个流星背景的欢迎页面，带有欢迎和一些我自己的个人链接
-2. archive,显示所有文章，方便读者按照标题查找。右侧有分类栏以及个人信息
-</code></pre><a id="more"></a>
-<pre><code>3. post,每篇文章的格式设计，右侧显示阅读进度导航，方便读者定位
-4. category，按照分类对文章进行分类，同类的文章全部展示在一个界面
-5. tag,按照标签进行查找文章，具体功能和category差不多，同个标签的文章在同一个界面
-</code></pre><h4 id="完成说明"><a href="#完成说明" class="headerlink" title="完成说明"></a>完成说明</h4><pre><code>1. 只是功能实现了，整体style能看，但是很多style还需要调整，这一步还需要慢慢调整
-2. 第三方插件还没有开始行动，评论功能以及流量统计，两个我最想要的功能
-3. js还没有动，页面几乎都是css做出来的，js效果全部都没有添加（除了index界面，背景是提前写好的（根据掘金上的一篇文章改变而来））
-</code></pre><h4 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h4><h5 id="功能问题"><a href="#功能问题" class="headerlink" title="功能问题"></a>功能问题</h5><pre><code>1. page页面的功能，没有看懂。连变量都和post一样，不知道这个page到底有什么用
-</code></pre><h5 id="美工"><a href="#美工" class="headerlink" title="美工"></a>美工</h5><pre><code>2. 格式太丑，急需改进
-</code></pre><h4 id="心情"><a href="#心情" class="headerlink" title="心情"></a>心情</h4><pre><code>1. 不得不说，还是很开心的，毕竟从接触hexo，到现在稍微熟悉，写hexo的人太强了，刚开始觉得hexo没有帮忙做什么，但是深入之后发现，我，即便自己动手写了主题，才是那个没做什么的人。说到开心，我就想到了emoji功能，这个功能后续也要加上
-</code></pre>
+              <h3 id="hexo变量的作用域"><a href="#hexo变量的作用域" class="headerlink" title="hexo变量的作用域"></a>hexo变量的作用域</h3><h4 id="problem-1"><a href="#problem-1" class="headerlink" title="problem_1"></a>problem_1</h4><p>page变量在archive.ejs和post.ejs中的含义不同，不好在post页面访问整个博客的所有文章列表<br><a id="more"></a><br>根据手册，archive.ejs中的page表示的是所有的文章，也就是page.posts的元素就是每一篇文章。而在post.ejs中，也就是访问:year/:month…某篇文章时，page变量就是archive.ejs中的page.posts中对应于该文章的变量。<br>我希望实现的功能是在post.ejs中，也就是展示每篇文章的页面时，左侧显示文章，右侧显示toc,同时toc下面显示我发表过的文章。但是在post.ejs中并不能访问archive中page.posts变量，在post.ejs中，page就表示当前页面，page(in post.ejs)=page.post[index] (in archive.ejs)。所以不能访问到整个的博客文章变量，不好将其显示出来。</p>
+<h3 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h3><p>变量是内部定义好的，框架这样安排是有它的道理的，这样，在post中可以很方便的处理当前文章的内容，而在archive中，可以直接对所有的文章进行相应的处理。在性能上应该有不少提升，很想知道内部的实现原理。不过要看源码了。暂时还是把自己的博客主题做好，不容易啊。</p>
+<h3 id="暂时的解决方案"><a href="#暂时的解决方案" class="headerlink" title="暂时的解决方案"></a>暂时的解决方案</h3><p>hexo提供的辅助函数（helpers）可以解决这个问题<br><code>&lt;%- list_archives([options]) %&gt;</code><br>  可以显示当前的列表，具体的参数设置可以查看手册<br>  <code>&lt;%- list_posts([options]) %&gt;</code>可以显示所有的文章，具体有个格式，索然可以通过更改options获得自己想要的格式，不过获取这个格式之后，可以自己添加js,css来实现想要的渲染效果。</p>
+
           </section>
           <section>
             <ul style="list-style-type:none">
             
-              <li class="page-prev"><a href=/2016/10/06/hexo主题笔记（4）右侧栏的固定与滚动监听问题/>上一篇：右侧边栏的固定与滚动监听问题</a></li>
+              <li class="page-prev"><a href=/2016/09/28/hexo主题制作笔记（2）：进展/>上一篇：hexo主题制作进展</a></li>
         
-        
-          <li class="page-next"><a href=/2016/09/28/hexo主题制作笔记（1）关于hexo的一点疑问/>下一篇：关于hexo的一点疑问</a></li>
         
             </ul>
           </section>
@@ -103,7 +92,7 @@
               <section id="comments">
               
                       <!-- 多说评论框 start -->
-<div class="ds-thread" data-thread-key="post-hexo主题制作笔记（2）：进展" data-title="hexo主题制作进展" data-url="http://xhuanhuan.github.io/2016/09/28/hexo主题制作笔记（2）：进展/"></div>
+<div class="ds-thread" data-thread-key="post-hexo主题制作笔记（1）关于hexo的一点疑问" data-title="关于hexo的一点疑问" data-url="http://xhuanhuan.github.io/2016/09/28/hexo主题制作笔记（1）关于hexo的一点疑问/"></div>
 <!-- 多说评论框 end -->
 <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 <script type="text/javascript">
@@ -133,7 +122,7 @@
               <hr>
             </div>
             <div class="postblock">
-            <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#完成情况记录"><span class="toc-number">1.</span> <span class="toc-text">完成情况记录</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#完成说明"><span class="toc-number">2.</span> <span class="toc-text">完成说明</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#问题"><span class="toc-number">3.</span> <span class="toc-text">问题</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#功能问题"><span class="toc-number">3.1.</span> <span class="toc-text">功能问题</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#美工"><span class="toc-number">3.2.</span> <span class="toc-text">美工</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#心情"><span class="toc-number">4.</span> <span class="toc-text">心情</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#hexo变量的作用域"><span class="toc-number">1.</span> <span class="toc-text">hexo变量的作用域</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#problem-1"><span class="toc-number">1.1.</span> <span class="toc-text">problem_1</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#思考"><span class="toc-number">2.</span> <span class="toc-text">思考</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#暂时的解决方案"><span class="toc-number">3.</span> <span class="toc-text">暂时的解决方案</span></a></li></ol>
             </div>
           </div>
         </div>
