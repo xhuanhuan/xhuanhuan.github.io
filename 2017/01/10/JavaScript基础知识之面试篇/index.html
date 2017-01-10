@@ -73,9 +73,66 @@
               <span>JavaScript基础之面试篇</span>
           </h1>
           <section class='post-content'>
-              <h3 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a><strong>摘要</strong></h3><p>这篇博文主要是针对前端面试常见的js问题进行的总结，也算是博主在就业前夕对js的复习吧，为前端面试做准备。此外也希望可以帮到大家。<br>本文总结的问题并非博主总结，详见<a href="https://github.com/markyun/My-blog/tree/master/Front-end-Developer-Questions/Questions-and-Answers" target="_blank" rel="external">原文</a><br><a id="more"></a></p>
-<h4 id="1-JS基本数据类型"><a href="#1-JS基本数据类型" class="headerlink" title="1.JS基本数据类型"></a>1.JS基本数据类型</h4><p>js包括5种基本数据类型：Undefined,boolean,string,Null,Number（注意还有一种引用数据类型Object）。</p>
-<h4 id="2-JS有哪些内置对象"><a href="#2-JS有哪些内置对象" class="headerlink" title="2.JS有哪些内置对象"></a>2.JS有哪些内置对象</h4>
+              <h3 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a><strong>摘要</strong></h3><p>这篇博文主要是针对前端面试常见的js问题进行的总结，也算是博主在就业前夕对js的复习吧，为前端面试做准备。此外也希望可以帮到大家。<br>本文总结的问题并非博主总结，只是对原文的查漏补缺，详见<a href="https://github.com/markyun/My-blog/tree/master/Front-end-Developer-Questions/Questions-and-Answers" target="_blank" rel="external">原文</a><br><a id="more"></a></p>
+<h4 id="1-JS基本数据类型"><a href="#1-JS基本数据类型" class="headerlink" title="1.JS基本数据类型"></a>1.JS基本数据类型</h4><pre><code>js包括5种基本数据类型：Undefined,Boolean,String,Null,Number（注意还有一种引用数据类型Object）。
+</code></pre><h4 id="2-JS有哪些内置对象"><a href="#2-JS有哪些内置对象" class="headerlink" title="2.JS有哪些内置对象"></a>2.JS有哪些内置对象</h4><pre><code>Object 是 JavaScript 中所有对象的父对象;
+数据封装类对象：Object、Array、Boolean、Number 和 String;
+其他对象：Global,Function、Arguments(可理解成由函数输入参数组成的对象)、Math、Date、RegExp（正则表达式）、Error;
+</code></pre><h4 id="3-列出几条JavaScript的基本规范？"><a href="#3-列出几条JavaScript的基本规范？" class="headerlink" title="3.列出几条JavaScript的基本规范？"></a>3.列出几条JavaScript的基本规范？</h4><pre><code>1.不要在同一行声明多个变量。
+2.请使用 ===/!==来比较true/false或者数值
+3.使用对象字面量替代new Array这种形式
+4.不要使用全局函数。
+5.Switch语句必须带有default分支
+6.函数不应该有时候有返回值，有时候没有返回值。
+7.For循环必须使用大括号
+8.If语句必须使用大括号
+9.for-in循环中的变量 应该使用var关键字明确限定作用域，从而避免作用域污染。
+</code></pre><h4 id="4-JavaScript原型，原型链-有什么特点？"><a href="#4-JavaScript原型，原型链-有什么特点？" class="headerlink" title="4.JavaScript原型，原型链 ? 有什么特点？"></a>4.JavaScript原型，原型链 ? 有什么特点？</h4><h5 id="4-1原型"><a href="#4-1原型" class="headerlink" title="4.1原型"></a>4.1原型</h5><p>我们创建的每个函数都有一个prototype(原型)属性，他是一个指针，指向一个对象，这个对象包含了特定类型的所有实例所共享的属性和方法。按照字面理解，prototype就是调用构造函数创建的实例的原型对象。</p>
+<pre><code>function Person(){
+}
+Person.prototype.name=&quot;Nicholas&quot;;
+Person.prototype.age=27;
+Person.prototype.job=&quot;Software Engineer&quot;;
+Person.prototype.sayName=function(){
+  alert(this.name);
+};
+var person1=new Person();
+var person2=new Person();
+person2.name=&quot;xiaohuan&quot;;
+
+person1.sayName();//&quot;Nicholas&quot;
+person2.sayName();//&quot;xiaohuan&quot;
+delete person2.name;
+person2.sayName();//&quot;Nicholas&quot;
+</code></pre><h5 id="4-2原型链"><a href="#4-2原型链" class="headerlink" title="4.2原型链"></a>4.2原型链</h5><p>假如我们让原型对象等于另一个类型的实例，那么原型对象将包含指向另一个类型的指针，相应的，另一个原对象又包含了指向另一个类型的指针，以此类推。当我们访问一个对象的属性时，如果这个对象内部不存在这个属性，他就会去 prototype里找这个属性，这个prototype又会有自己的prototype,于是就这样一直找下去，也就是我们平时所说的原型链的概念。</p>
+<pre><code>function SuperType(){
+  this.property=true;
+}
+SuperType.prototype.getSuperValue=function(){
+  return this.property;
+}
+function SubType(){
+  this.Subproperty=false;
+}
+SubType.prototype=new SuperType();
+SubType.prototype.getSubValue=function(){
+  return this.Subproperty;
+}
+var instance=new SubType();
+alert(instance.getSuperValue);//true
+</code></pre><h5 id="4-3特点"><a href="#4-3特点" class="headerlink" title="4.3特点"></a>4.3特点</h5><p> JavaScript对象是通过引用来传递的，我们创建的每个新对象实体中并没有一份属于自己的原型副本。当我们修改原型时，与之相关的对象也会继承这一改变。<br> 当我们需要一个属性的时，Javascript引擎会先看当前对象中是否有这个属性， 如果没有的话，就会查找他的Prototype对象是否有这个属性，如此递推下去，一直检索到 Object 内建对象。</p>
+<pre><code>function Func(){}
+  Func.prototype.name = &quot;Sean&quot;;
+  Func.prototype.getInfo = function() {
+    return this.name;
+}
+var person = new Func();//现在可以参考var person = Object.create(oldObject);
+console.log(person.getInfo());//&quot;Sean&quot;
+console.log(Func.prototype); // { name=&quot;Sean&quot;, getInfo=function()}
+</code></pre><h4 id="5-JavaScript有几种类型的值？你能画一下他们的内存图吗？"><a href="#5-JavaScript有几种类型的值？你能画一下他们的内存图吗？" class="headerlink" title="5.JavaScript有几种类型的值？你能画一下他们的内存图吗？"></a>5.JavaScript有几种类型的值？你能画一下他们的内存图吗？</h4><pre><code>JavaScript包含两种数据类型值：基本类型值（Undefined、Null、String、Boolean、Number）和引用类型值（Object、Array、Function）。
+两种类型的区别是：存储位置不同。基本类型值是直接存储在**栈**(stack)中的简单数据段，占据空间小、大小固定，属于被频繁使用数据，所以放入栈中存储；引用数据类型存储在**堆**(heap)中的对象,占据空间大、大小不固定。如果存储在栈中，将会影响程序运行的性能。引用数据类型在栈中存储了指针，该指针指向堆中该实体的起始地址，当解释器寻找引用值时，会首先检索其在栈中的地址，取得地址后从堆中获得实体。
+</code></pre><p><img src="" alt=""></p>
+<h4 id="6-JS有哪些内置对象"><a href="#6-JS有哪些内置对象" class="headerlink" title="6.JS有哪些内置对象"></a>6.JS有哪些内置对象</h4>
           </section>
           <section>
             <ul style="list-style-type:none">
@@ -119,7 +176,7 @@
               <hr>
             </div>
             <div class="postblock">
-            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#摘要"><span class="toc-number">1.</span> <span class="toc-text">摘要</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-JS基本数据类型"><span class="toc-number">1.1.</span> <span class="toc-text">1.JS基本数据类型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-JS有哪些内置对象"><span class="toc-number">1.2.</span> <span class="toc-text">2.JS有哪些内置对象</span></a></li></ol></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#摘要"><span class="toc-number">1.</span> <span class="toc-text">摘要</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-JS基本数据类型"><span class="toc-number">1.1.</span> <span class="toc-text">1.JS基本数据类型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-JS有哪些内置对象"><span class="toc-number">1.2.</span> <span class="toc-text">2.JS有哪些内置对象</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-列出几条JavaScript的基本规范？"><span class="toc-number">1.3.</span> <span class="toc-text">3.列出几条JavaScript的基本规范？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-JavaScript原型，原型链-有什么特点？"><span class="toc-number">1.4.</span> <span class="toc-text">4.JavaScript原型，原型链 ? 有什么特点？</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#4-1原型"><span class="toc-number">1.4.1.</span> <span class="toc-text">4.1原型</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#4-2原型链"><span class="toc-number">1.4.2.</span> <span class="toc-text">4.2原型链</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#4-3特点"><span class="toc-number">1.4.3.</span> <span class="toc-text">4.3特点</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-JavaScript有几种类型的值？你能画一下他们的内存图吗？"><span class="toc-number">1.5.</span> <span class="toc-text">5.JavaScript有几种类型的值？你能画一下他们的内存图吗？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-JS有哪些内置对象"><span class="toc-number">1.6.</span> <span class="toc-text">6.JS有哪些内置对象</span></a></li></ol></li></ol>
             </div>
           </div>
         </div>
