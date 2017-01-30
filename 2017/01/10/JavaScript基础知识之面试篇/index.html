@@ -33,7 +33,7 @@
        </div>
        
        <div class="mytittle">
-         JavaScript基础之面试篇
+         JavaScript基础之面试篇（一）
        </div>
        
    <div class="navbar-collapse" id="my-navbar">
@@ -52,10 +52,10 @@
 </header>
 
       <div class="myfirstarchive">
-        <img src="/images/JavaScript基础之面试篇.JPG ">
+        <img src="/images/JavaScript基础之面试篇（一）.JPG ">
       <div class="title-on-img">
         <h1 class='post-title' style="color:white;">
-            <span>JavaScript基础之面试篇</span>
+            <span>JavaScript基础之面试篇（一）</span>
         </h1>
       </div>
       </div>
@@ -70,7 +70,7 @@
           </div>
          <div class="postblock">
           <h1 class='post-title' style="border-bottom:1px solid #f0f0f0;">
-              <span>JavaScript基础之面试篇</span>
+              <span>JavaScript基础之面试篇（一）</span>
           </h1>
           <section class='post-content'>
               <h3 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a><strong>摘要</strong></h3><p>这篇博文主要是针对前端面试常见的js问题进行的总结，也算是博主在就业前夕对js的复习吧，为前端面试做准备。此外也希望可以帮到大家。<br>本文总结的问题并非博主总结，只是对原文的查漏补缺，详见<a href="https://github.com/markyun/My-blog/tree/master/Front-end-Developer-Questions/Questions-and-Answers" target="_blank" rel="external">原文</a><br><a id="more"></a></p>
@@ -348,7 +348,7 @@ $$(&apos;*&apos;) 表示选择所以元素（将*换成别的即可选择特定�
 参考：https://gold.xitu.io/entry/57d36f598ac2470062f63467
 </code></pre><h4 id="28-js延迟加载的方式有哪些？"><a href="#28-js延迟加载的方式有哪些？" class="headerlink" title="28.js延迟加载的方式有哪些？"></a>28.js延迟加载的方式有哪些？</h4><p><strong>参考</strong>：<a href="http://blog.csdn.net/newborn2012/article/details/17057759" target="_blank" rel="external">http://blog.csdn.net/newborn2012/article/details/17057759</a><br>1.直接将script节点放置在之前，这样js脚本就会在页面显示出来之后再加载。<br>2.使用script标签的defer和async属性，defer属性为延迟加载，是在页面渲染完成之后再进行加载的，而async属性则是和文档并行加载，这两种解决方案都不完美，原因在于不是所有浏览器都支持。<br>3.通过监听onload事件，动态添加script节点(最常用)：<br>    <figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">&lt;script type=<span class="string">"text/javascript"</span>&gt;</div><div class="line">   <span class="function"><span class="keyword">function</span> <span class="title">downloadJSAtOnload</span>(<span class="params"></span>) </span>&#123;</div><div class="line">       <span class="keyword">var</span> element = <span class="built_in">document</span>.createElement(<span class="string">"script"</span>);</div><div class="line">      element.src = <span class="string">"test2.js"</span>;</div><div class="line">      <span class="built_in">document</span>.body.appendChild(element);</div><div class="line">   &#125;</div><div class="line">   <span class="keyword">if</span> (<span class="built_in">window</span>.addEventListener)</div><div class="line">      <span class="built_in">window</span>.addEventListener(<span class="string">"load"</span>,downloadJSAtOnload, <span class="literal">false</span>);</div><div class="line">   <span class="keyword">else</span> <span class="keyword">if</span> (<span class="built_in">window</span>.attachEvent)</div><div class="line">      <span class="built_in">window</span>.attachEvent(<span class="string">"onload"</span>,downloadJSAtOnload);</div><div class="line">   <span class="keyword">else</span> <span class="built_in">window</span>.onload =downloadJSAtOnload;</div><div class="line"> &lt;/script&gt;</div></pre></td></tr></table></figure></p>
 <p>4.通过ajax下载js脚本，动态添加script节点。<br>这种方式与第二种类似，区别就在与js脚本的自动下载还是通过ajax下载，ajax的方式显然可控制性更好一点，它可以先下载js文件，但不立即执行：<br>    <figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> xhr = <span class="keyword">new</span> XMLHttpRequest();  </div><div class="line">xhr.open(<span class="string">"get"</span>, <span class="string">"script1.js"</span>, <span class="literal">true</span>);  </div><div class="line">xhr.onreadystatechange = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;  </div><div class="line">    <span class="keyword">if</span> (xhr.readyState == <span class="number">4</span>)&#123;  </div><div class="line">        <span class="keyword">if</span> (xhr.status &gt;= <span class="number">200</span> &amp;&amp; xhr.status &lt; <span class="number">300</span> || xhr.status == <span class="number">304</span>)&#123;  </div><div class="line">            <span class="keyword">var</span> script = <span class="built_in">document</span>.createElement (<span class="string">"script"</span>);  </div><div class="line">            script.type = <span class="string">"text/javascript"</span>;  </div><div class="line">            script.text = xhr.responseText;  </div><div class="line">            <span class="built_in">document</span>.body.appendChild(script);  </div><div class="line">        &#125;  </div><div class="line">    &#125;  </div><div class="line">&#125;;  </div><div class="line">xhr.send(<span class="literal">null</span>);</div></pre></td></tr></table></figure></p>
-<h4 id="29-Ajax-是什么-如何创建一个Ajax？"><a href="#29-Ajax-是什么-如何创建一个Ajax？" class="headerlink" title="29.Ajax 是什么? 如何创建一个Ajax？"></a>29.Ajax 是什么? 如何创建一个Ajax？</h4><p>ajax的全称：Asynchronous Javascript And XML。<br>异步传输+js+xml。<br>所谓异步，在这里简单地解释就是：向服务器发送请求的时候，我们不必等待结果，而是可以同时做其他的事情，等到有了结果它自己会根据设定进行后续操作，与此同时，页面是不会发生整页刷新的，提高了用户体验</p>
+<h4 id="29-Ajax-是什么-如何创建一个Ajax？"><a href="#29-Ajax-是什么-如何创建一个Ajax？" class="headerlink" title="29.Ajax 是什么? 如何创建一个Ajax？"></a>29.Ajax 是什么? 如何创建一个Ajax？</h4><p>ajax的全称：Asynchronous Javascript And XML,即 异步传输+js+xml。<br>所谓异步，在这里简单地解释就是：向服务器发送请求的时候，我们不必等待结果，而是可以同时做其他的事情，等到有了结果它自己会根据设定进行后续操作，与此同时，页面是不会发生整页刷新的，提高了用户体验</p>
 <p>(1)创建XMLHttpRequest对象,也就是创建一个异步调用对象<br>(2)创建一个新的HTTP请求,并指定该HTTP请求的方法、URL及验证信息<br>(3)设置响应HTTP请求状态变化的函数<br>(4)发送HTTP请求<br>(5)获取异步调用返回的数据<br>(6)使用JavaScript和DOM实现局部刷新</p>
 <h4 id="30-Ajax-解决浏览器缓存问题？"><a href="#30-Ajax-解决浏览器缓存问题？" class="headerlink" title="30.Ajax 解决浏览器缓存问题？"></a>30.Ajax 解决浏览器缓存问题？</h4><p>1、在ajax发送请求前加上 anyAjaxObj.setRequestHeader(“If-Modified-Since”,”0”)。<br>2、在ajax发送请求前加上 anyAjaxObj.setRequestHeader(“Cache-Control”,”no-cache”)。<br>3、在URL后面加上一个随机数： “fresh=” + Math.random();。<br>4、在URL后面加上时间搓：”nowtime=” + new Date().getTime();。<br>5、如果是使用jQuery，直接这样就可以了 $.ajaxSetup({cache:false})。这样页面的所有ajax都会执行这条语句就是不需要保存缓存记录。</p>
 
@@ -356,6 +356,8 @@ $$(&apos;*&apos;) 表示选择所以元素（将*换成别的即可选择特定�
           <section>
             <ul style="list-style-type:none">
             
+              <li class="page-prev"><a href=/2017/01/10/JavaScript基础知识之面试篇（二）/>上一篇：JavaScript基础之面试篇(二)</a></li>
+        
         
           <li class="page-next"><a href=/2016/10/06/Hexo主题制作笔记（3）左侧边栏/>下一篇：左侧边栏滑进滑出问题</a></li>
         
@@ -365,7 +367,7 @@ $$(&apos;*&apos;) 表示选择所以元素（将*换成别的即可选择特定�
               <section id="comments">
               
                       <!-- 多说评论框 start -->
-<div class="ds-thread" data-thread-key="post-JavaScript基础知识之面试篇" data-title="JavaScript基础之面试篇" data-url="http://xhuanhuan.github.io/2017/01/10/JavaScript基础知识之面试篇/"></div>
+<div class="ds-thread" data-thread-key="post-JavaScript基础知识之面试篇" data-title="JavaScript基础之面试篇（一）" data-url="http://xhuanhuan.github.io/2017/01/10/JavaScript基础知识之面试篇/"></div>
 <!-- 多说评论框 end -->
 <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 <script type="text/javascript">
