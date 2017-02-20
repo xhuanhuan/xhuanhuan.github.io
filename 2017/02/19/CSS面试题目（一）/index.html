@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Xhuanhuan&#39;s Blog</title>
+    <link rel="Shortcut Icon" href="icon.jpg">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+      <link rel="stylesheet" href="/css/style.css">
+        <link rel="stylesheet" href="/css/font-awesome.min.css">
+        <link rel="stylesheet" href="/css/fontdiao.css">
+    </head>
+<body>
+    <div class="main">
+        
+    <article>
+      <header>
+  <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#my-navbar">
+            <span class="sr-only">切换导航</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+
+        <ul class="nav nav-pills navbar-left" role="tablist">
+        <li><div class="navbar-left" style="margin-top:2px;width:45px;height:45px;border-radius:100%;">
+          <img id="head1" class="img-responsive img-circle" src="/images/head1.JPG">
+        </div></li>
+        <li class="banner">  <a href="/">Xhuanhuan&#39;s Blog</a></li>
+         </ul>
+       </div>
+       
+       <div class="mytittle">
+         HTML基础面试篇（一）
+       </div>
+       
+   <div class="navbar-collapse" id="my-navbar">
+
+    <ul class="nav nav-pills navbar-right menu_list" role="tablist">
+        
+            <li class="navlist"><a href="/" >Home</a></li>
+        
+            <li class="navlist"><a href="/archives" >Archives</a></li>
+        
+            <li class="navlist"><a href="/myworks" >My-Works</a></li>
+        
+    </ul>
+  </div>
+  </nav>
+</header>
+
+      <div class="myfirstarchive">
+        <img src="/images/HTML基础面试篇（一）.JPG ">
+      <div class="title-on-img">
+        <h1 class='post-title' style="color:white;">
+            <span>HTML基础面试篇（一）</span>
+        </h1>
+      </div>
+      </div>
+
+      <div class="container">
+      <div class="row">
+      <div  class = 'col-xs-12 col-xs-offset-0 col-md-7 col-md-offset-1 col-sm-7 col-sm-offset-1 col-lg-7 col-lg-offset-1'>
+        <div class="well">
+          <div style = 'text-align:right'>
+            <button type="button" class="btn btn-success" id='but2'><a href="/archives">返回</a></button>
+            <hr>
+          </div>
+         <div class="postblock">
+          <h1 class='post-title' style="border-bottom:1px solid #f0f0f0;">
+              <span>HTML基础面试篇（一）</span>
+          </h1>
+          <section class='post-content'>
+              <h3 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a><strong>摘要</strong></h3><p>这篇博文主要是针对前端面试常见的css问题进行的总结，也算是博主在就业前夕对js的复习吧，为前端面试做准备。此外也希望可以帮到大家。<br>本文总结的问题并非博主总结，只是对原文的查漏补缺，详见<a href="https://github.com/markyun/My-blog/tree/master/Front-end-Developer-Questions/Questions-and-Answers" target="_blank" rel="external">原文</a><br><a id="more"></a></p>
+<p>####1.介绍一下CSS的盒子模型<br>（1）盒模型： 内容(content)、填充(padding)、边界(margin)、 边框(border).<br>（2）有两种， IE 盒子模型、标准 W3C 盒子模型；IE的content部分包含了 border 和 pading;</p>
+<p>####2.CSS选择符有哪些？哪些属性可以继承？</p>
+<ul>
+<li><p>1.id选择器（ # myid）<br>2.类选择器（.myclassname）<br>3.标签选择器（div, h1, p）<br>4.相邻选择器（h1 + p）<br>5.子选择器（ul &gt; li）//与后代选择器相比，子元素选择器只能选择作为某元素子元素(即直接后代)的元素<br>6.后代选择器（li a）<br>7.通配符选择器（ * ）<br>8.属性选择器（a[rel = “external”]）<br>9.伪类选择器（a: hover, li: nth - child）</p>
+</li>
+<li><p>可继承的样式： font-size font-family color, UL LI DL DD DT;</p>
+</li>
+<li>不可继承的样式：border padding margin width height ;<br>####3.CSS优先级算法如何计算？</li>
+<li>优先级就近原则，同权重情况下样式定义最近者为准;</li>
+<li><p>载入样式以最后载入的定位为准;<br>优先级为:<br> !important &gt;  id &gt; class &gt; tag<br>  important 比 内联优先级高<br>####4.CSS3新增伪类有那些？<br>CSS3新增伪类举例：<br>  p:first-of-type 选择属于其父元素的首个 </p><p> 元素的每个 </p><p> 元素。<br>  p:last-of-type  选择属于其父元素的最后 </p><p> 元素的每个 </p><p> 元素。<br>  p:last-child    选择其父元素的最后子元素(一定是P才行)<br>  p:only-of-type  选择属于其父元素唯一的 </p><p> 元素的每个 </p><p> 元素。<br>  p:only-child    选择属于其父元素的唯一子元素的每个 </p><p> 元素。<br>  p:nth-child(2)  选择属于其父元素的第二个子元素的每个 </p><p> 元素。<br>  :enabled        :disabled 控制表单控件的禁用状态。<br>  :checked        单选框或复选框被选中。<br>####5.如何居中div？如何居中一个浮动元素？如何让绝对定位的div居中？<br>居中一个div</p>
+<p>  给div设置一个宽度，然后添加margin:0 auto属性<br>  div{</p>
+<pre><code>width:200px;
+margin:0 auto;
+</code></pre><p>   }</p>
+</li>
+</ul>
+<p>居中一个浮动元素</p>
+<pre><code>确定容器的宽高 宽500 高 300 的层
+设置层的外边距
+ .div {
+      width:500px ; height:300px;//高度可以不设
+      margin: -150px 0 0 -250px;
+      position:relative;         //相对定位
+      background-color:pink;     //方便看效果
+      left:50%;
+      top:50%;
+ }
+</code></pre><p>让绝对定位的div居中</p>
+<pre><code>position: absolute;
+width: 1200px;
+background: none;
+margin: 0 auto;
+top: 0;
+left: 0;
+bottom: 0;
+right: 0;
+</code></pre><p>####6.display有哪些值？说明他们的作用。</p>
+<pre><code>none    此元素不会被显示。
+block    此元素将显示为块级元素，此元素前后会带有换行符。
+inline    默认。此元素会被显示为内联元素，元素前后没有换行符。
+inline-block    行内块元素,即元素内联,内容块级。（CSS2.1 新增的值）
+list-item    此元素会作为列表显示,块级。
+</code></pre><p>####7.position的值relative和absolute定位原点是？</p>
+<pre><code>absolute
+   生成绝对定位的元素，相对于 static 定位以外的第一个有定位的父元素进行定位，没有则相对于body定位。
+ fixed （老IE不支持）
+   生成绝对定位的元素，相对于浏览器窗口进行定位。
+ relative
+   生成相对定位的元素，相对于其正常位置进行定位。
+ static
+   默认值。没有定位，元素出现在正常的流中
+  （忽略 top, bottom, left, right z-index 声明）。
+ inherit
+   规定从父元素继承 position 属性的值。
+</code></pre><p>####8.CSS3有哪些新特性？</p>
+<pre><code>CSS3实现圆角（border-radius:8px），
+阴影（box-shadow:10px），
+文字特效（text-shadow、），
+线性渐变（gradient），
+旋转（transform）
+transform:rotate(9deg) scale(0.85,0.90) translate(0px,-30px) skew(-9deg,0deg);//旋转,缩放,定位,倾斜
+增加了更多的CSS选择器
+多背景 rgba
+</code></pre><p>####9.请解释一下CSS3的Flexbox（弹性盒布局模型）,以及适用场景？<br>参考阮一峰的<a href="http://www.ruanyifeng.com/blog/2015/07/flex-grammar.html" target="_blank" rel="external">网络日志</a><br>常用于网页布局，垂直居中<br>(一)容器属性</p>
+<ul>
+<li><p>flex-direction 属性决定主轴的方向（即项目的排列方向）。<br>row（默认值）：主轴为水平方向，起点在左端。<br>row-reverse：主轴为水平方向，起点在右端。<br>column：主轴为垂直方向，起点在上沿。<br>column-reverse：主轴为垂直方向，起点在下沿。</p>
+  <figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.box</span> &#123;</div><div class="line">  <span class="attribute">flex-direction</span>: row | row-reverse | column | column-reverse;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>flex-wrap 换行<br>nowrap（默认）：不换行。<br>wrap：换行，第一行在上方。<br>wrap-reverse：换行，第一行在下方。</p>
+  <figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.box</span> &#123;</div><div class="line">  <span class="attribute">flex-wrap</span>: nowrap | wrap | wrap-reverse;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>flex-flow 属性是flex-direction属性和flex-wrap属性的简写形式，默认值为row nowrap。</p>
+</li>
+<li><p>justify-content 定义了项目在主轴上的对齐方式。它可能取5个值，具体对齐方式与轴的方向有关。下面假设主轴为从左到右。<br>flex-start（默认值）：左对齐<br>flex-end：右对齐<br>center： 居中<br>space-between：两端对齐，项目之间的间隔都相等。<br>space-around：每个项目两侧的间隔相等。所以，项目之间的间隔比项目与边框的间隔大一倍。</p>
+  <figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.box</span> &#123;</div><div class="line">  <span class="attribute">justify-content</span>: flex-start | flex-end | center | space-between | space-around;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>align-items属性 定义项目在交叉轴上如何对齐。它可能取5个值。具体的对齐方式与交叉轴的方向有关，下面假设交叉轴从上到下。<br>flex-start：交叉轴的起点对齐。<br>flex-end：交叉轴的终点对齐。<br>center：交叉轴的中点对齐。<br>baseline: 项目的第一行文字的基线对齐。<br>stretch（默认值）：如果项目未设置高度或设为auto，将占满整个容器的高度。</p>
+  <figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.box</span> &#123;</div><div class="line">  <span class="attribute">align-items</span>: flex-start | flex-end | center | baseline | stretch;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>align-content属性 定义了多根轴线的对齐方式。如果项目只有一根轴线，该属性不起作用。</p>
+  <figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.box</span> &#123;</div><div class="line">  <span class="attribute">align-content</span>: flex-start | flex-end | center | space-between | space-around | stretch;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>(二)项目的属性</p>
+<ul>
+<li><p>order属性 定义项目的排列顺序。数值越小，排列越靠前，默认为0。</p>
+  <figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.item</span> &#123;</div><div class="line">  <span class="attribute">order</span>: &lt;integer&gt;;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>flex-grow属性 定义项目的放大比例，默认为0，即如果存在剩余空间，也不放大。</p>
+  <figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.item</span> &#123;</div><div class="line">  <span class="attribute">flex-grow</span>: &lt;number&gt;; <span class="comment">/* default 0 */</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>flex-shrink属性 定义了项目的缩小比例，默认为1，即如果空间不足，该项目将缩小。负值对该属性无效。如果一个项目的flex-shrink属性为0，其他项目都为1，则空间不足时，前者不缩小。</p>
+  <figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.item</span> &#123;</div><div class="line">  <span class="attribute">flex-shrink</span>: &lt;number&gt;; <span class="comment">/* default 1 */</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>flex-basis属性定义了在分配多余空间之前，项目占据的主轴空间（main size）。浏览器根据这个属性，计算主轴是否有多余空间。它的默认值为auto，即项目的本来大小。<br>它可以设为跟width或height属性一样的值（比如350px），则项目将占据固定空间。建议优先使用这个属性，而不是单独写三个分离的属性，因为浏览器会推算相关值。</p>
+  <figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.item</span> &#123;</div><div class="line">  <span class="attribute">flex-basis</span>: &lt;length&gt; | auto; <span class="comment">/* default auto */</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>flex属性是flex-grow, flex-shrink 和 flex-basis的简写，默认值为0 1 auto。后两个属性可选。</p>
+  <figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.item</span> &#123;</div><div class="line">  <span class="attribute">flex</span>: none | [ &lt;<span class="string">'flex-grow'</span>&gt; &lt;<span class="string">'flex-shrink'</span>&gt;? || &lt;<span class="string">'flex-basis'</span>&gt; ]</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>align-self属性允许单个项目有与其他项目不一样的对齐方式，可覆盖align-items属性。默认值为auto，表示继承父元素的align-items属性，如果没有父元素，则等同于stretch</p>
+  <figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.item</span> &#123;</div><div class="line">  <span class="attribute">align-self</span>: auto | flex-start | flex-end | center | baseline | stretch;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>####10.用纯CSS创建一个三角形的原理是什么？<br>把上、左、右三条边隐藏掉（颜色设为 transparent）<br>    <figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="selector-id">#demo</span> &#123;</div><div class="line">  <span class="attribute">width</span>: <span class="number">0</span>;</div><div class="line">  <span class="attribute">height</span>: <span class="number">0</span>;</div><div class="line">  <span class="attribute">border-width</span>: <span class="number">20px</span>;</div><div class="line">  <span class="attribute">border-style</span>: solid;</div><div class="line">  <span class="attribute">border-color</span>: transparent transparent red transparent;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>####11.一个满屏 品 字布局 如何设计?<br>简单的方式：<br>    上面的div宽100%，<br>    下面的两个div分别宽50%，<br>    然后用float.<br>或者使用flexbox:<br>    容器设置display:flex;flex-wrap:wrap；<br>    上面的div宽100%，<br>    下面的两个div分别宽50%</p>
+<p>####12.<strong>常见兼容性问题？</strong></p>
+<ul>
+<li><p>png24位的图片在iE6浏览器上出现背景，解决方案是做成PNG8.</p>
+</li>
+<li><p>浏览器默认的margin和padding不同。解决方案是加一个全局的*{margin:0;padding:0;}来统一。</p>
+</li>
+<li><p>IE6双边距bug:块属性标签float后，又有横行的margin情况下，在ie6显示margin比设置的大。</p>
+<p>浮动ie产生的双倍距离 #box{ float:left; width:10px; margin:0 0 0 100px;}</p>
+<p>这种情况之下IE会产生20px的距离，解决方案是在float的标签样式控制中加入_display:inline;将其转化为行内属性。(-这个符号只有ie6会识别)</p>
+<p>渐进识别的方式，从总体中逐渐排除局部。</p>
+<p>首先，巧妙的使用“\9”这一标记，将IE游览器从所有情况中分离出来。<br>接着，再次使用“+”将IE8和IE7、IE6分离开来，这样IE8已经独立识别。</p>
+  <figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">.bb&#123;</div><div class="line">  background-color:#f1ee18;/*所有识别*/</div><div class="line">  .background-color:#00deff\9; /*IE6、7、8识别*/</div><div class="line">  +background-color:#a200ff;/*IE6、7识别*/</div><div class="line">  _background-color:#1e0bd1;/*IE6识别*/</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>IE下,可以使用获取常规属性的方法来获取自定义属性,<br>也可以使用getAttribute()获取自定义属性;<br>Firefox下,只能使用getAttribute()获取自定义属性。<br>解决方法:统一通过getAttribute()获取自定义属性。</p>
+</li>
+<li><p>IE下,even对象有x,y属性,但是没有pageX,pageY属性;<br>Firefox下,event对象有pageX,pageY属性,但是没有x,y属性。</p>
+</li>
+<li><p>解决方法：（条件注释）缺点是在IE浏览器下可能会增加额外的HTTP请求数。</p>
+</li>
+<li><p>Chrome 中文界面下默认会将小于 12px 的文本强制按照 12px 显示,<br>可通过加入 CSS 属性 -webkit-text-size-adjust: none; 解决。</p>
+</li>
+</ul>
+<p>超链接访问过后hover样式就不出现了 被点击访问过的超链接样式不在具有hover和active了解决方法是改变CSS属性的排列顺序:<br>L-V-H-A :  a:link {} a:visited {} a:hover {} a:active {}</p>
+<p>####13.li与li之间有看不见的空白间隔是什么原因引起的？有什么解决办法？</p>
+<p>####14.</p>
+<p>####15.</p>
+<p>####16.</p>
+<p>####17.</p>
+<p>####17.</p>
+<p>####18.</p>
+<p>####19.</p>
+<p>####20.</p>
+<p>####21.</p>
+<p>####22.</p>
+<p>####23.</p>
+<p>####24.</p>
+<p>####25.</p>
+<p>####26.</p>
+<p>####27.</p>
+<p>####28.</p>
+<p>####29.</p>
+<p>####30.</p>
+<p>####31.</p>
+
+          </section>
+          <section>
+            <ul style="list-style-type:none">
+            
+        
+          <li class="page-next"><a href=/2017/02/11/HTML面试题目/>下一篇：HTML基础面试篇（一）</a></li>
+        
+            </ul>
+          </section>
+          
+              <section id="comments">
+              
+                      <!-- 多说评论框 start -->
+<div class="ds-thread" data-thread-key="post-CSS面试题目（一）" data-title="HTML基础面试篇（一）" data-url="http://xhuanhuan.github.io/2017/02/19/CSS面试题目（一）/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+    var duoshuoQuery = {short_name:'xhuanhuan'};
+      (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] 
+         || document.getElementsByTagName('body')[0]).appendChild(ds);
+      })();
+  </script>
+<!-- 多说公共JS代码 end -->
+
+                  
+              </section>
+          
+          <!-- </article> -->
+        </div>
+        </div>
+          </div>
+          <div id="li-of-post" class = 'col-xs-12 col-xs-offset-0 col-md-3 col-md-offset-0 col-sm-4 col-sm-offset-0 col-lg-3 col-lg-offset-0'>
+          <div class="well here">
+            <div style = 'text-align:left'>
+              <button type="button" class="btn btn-primary" id='but2'>内容列表</button>
+              <hr>
+            </div>
+            <div class="postblock">
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#摘要"><span class="toc-number">1.</span> <span class="toc-text">摘要</span></a></li></ol>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <div style="width:100%;position:fixed;bottom:5px">
+    <button id="up" class="btn btn-default"><i class="icon-angle-up"></i></button>
+    </div>
+    <footer>
+    <div class="info" style="text-align:center;"><span>Powered By <a href="https://hexo.io/" target="blank">Hexo</a></span>&nbsp;&nbsp;&nbsp;&nbsp;<span>Theme by <a href="https://github.com/xhuanhuan/xhuanhuan.github.io/" target="blank">Xhuanhuan</a></span></div>
+</footer>
+
+</article>
+
+
+    </div>
+      <script src="/js/jquery-1.12.3.min.js"></script>
+      <script src="/js/index.js"></script>
+      <script src="/js/bootstrap.min.js"></script>
+      
+</body>
+</html>
