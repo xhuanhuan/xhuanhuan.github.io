@@ -331,7 +331,7 @@ table { border-collapse:collapse; border-spacing:0; }
 <li><p>BFC 可以阻止元素被浮动元素覆盖<br>浮动元素的块级兄弟元素会环绕浮动元素。为该兄弟元素触发 BFC 后可以阻止这种情况的发生。<br>如果浮动元素宽度和它的非浮动兄弟元素宽度都没有超过父元素宽度，但两个元素的宽度加起来超出了父元素宽度的时候，非浮动元素会下降到下一行，否则他们会相邻并列在一行。</p>
 </li>
 </ol>
-<p>四. BFC 与 hasLayout<br>E6-7 并不支持 W3C 的 BFC ，而是使用私有属性 hasLayout。hasLayout 跟 BFC 很相似，设置 IE 特有的 CSS 属性 zoom: 1 触发 hasLayout 。<br>既然 hasLayout 有着跟 BFC 相似的功能，那么在实际开发中，就要为需要触发 BFC 的元素同时触发 hasLayout ，这样 BFC 和 hasLayout 具有的一些特殊性质可以在现代浏览器和 IE 中同时产生，避免一个元素在不同浏览器间的表现因为 BFC 或 hasLayout 出现差异。</p>
+<p>四. BFC 与 hasLayout<br>IE6-7 并不支持 W3C 的 BFC ，而是使用私有属性 hasLayout。hasLayout 跟 BFC 很相似，设置 IE 特有的 CSS 属性 zoom: 1 触发 hasLayout 。<br>既然 hasLayout 有着跟 BFC 相似的功能，那么在实际开发中，就要为需要触发 BFC 的元素同时触发 hasLayout ，这样 BFC 和 hasLayout 具有的一些特殊性质可以在现代浏览器和 IE 中同时产生，避免一个元素在不同浏览器间的表现因为 BFC 或 hasLayout 出现差异。</p>
 <h4 id="css定义的权重"><a href="#css定义的权重" class="headerlink" title="css定义的权重"></a>css定义的权重</h4><p>以下是权重的规则：标签的权重为1，class的权重为10，id的权重为100，以下例子是演示各种定义的权重值：</p>
 <pre><code>/*权重为1*/
 div{
@@ -374,12 +374,18 @@ div{
   visibility:hidden;
 }
 </code></pre><p>(3) 给父元素添加overflow:hidden,触发BFC机制。</p>
-<h4 id="移动端的布局用过媒体查询吗？"><a href="#移动端的布局用过媒体查询吗？" class="headerlink" title="移动端的布局用过媒体查询吗？"></a>移动端的布局用过媒体查询吗？</h4><p>通过媒体查询可以为不同大小和尺寸的媒体定义不同的css，适合相应的设备显示；即响应式布局<br>@media screen and (min-width: 400px) and (max-width: 700px) { … }<br>@media handheld and (min-width: 20em), screen and (min-width: 20em) { … }<br>@media not print and (max-width: 1200px){样式代码}//使用关键词“not”是用来排除某种制定的媒体类型</p>
-<p><link rel="stylesheet" media="screen and (max-device-width:480px)" href="iphone.css"></p>
-<p><linkrel="stylesheet" media="only screen and (max-device-width:240px)" href="android240.css">//only用来指定某种特定的媒体类型</linkrel="stylesheet"></p>
-<h4 id="使用-CSS-预处理器吗？喜欢那个？"><a href="#使用-CSS-预处理器吗？喜欢那个？" class="headerlink" title="使用 CSS 预处理器吗？喜欢那个？"></a>使用 CSS 预处理器吗？喜欢那个？</h4><pre><code>SASS (SASS、LESS没有本质区别，只因为团队前端都是用的SASS)
-</code></pre><h4 id="CSS优化、提高性能的方法有哪些？"><a href="#CSS优化、提高性能的方法有哪些？" class="headerlink" title="CSS优化、提高性能的方法有哪些？"></a>CSS优化、提高性能的方法有哪些？</h4><p>参考博客<a href="http://blog.csdn.net/borishuai/article/details/8671929" target="_blank" rel="external">BorisHuai前端修炼 &gt; CSS性能优化探讨</a></p>
-<h4 id="浏览器是怎样解析CSS选择器的？"><a href="#浏览器是怎样解析CSS选择器的？" class="headerlink" title="浏览器是怎样解析CSS选择器的？"></a>浏览器是怎样解析CSS选择器的？</h4><p>从上到下，从右到左。参考知乎链接：<a href="https://www.zhihu.com/question/20185756/answer/14263713" target="_blank" rel="external">https://www.zhihu.com/question/20185756/answer/14263713</a><br>如果正向解析，例如「div div p em」，我们首先就要检查当前元素到 html 的整条路径，找到最上层的 div，再往下找，如果遇到不匹配就必须回到最上层那个 div，往下再去匹配选择器中的第一个 div，回溯若干次才能确定匹配与否，效率很低。<br>逆向匹配则不同，如果当前的 DOM 元素是 div，而不是 selector 最后的 em，那只要一步就能排除。只有在匹配时，才会不断向上找父节点进行验证。</p>
+<h4 id="移动端的布局用过媒体查询吗？"><a href="#移动端的布局用过媒体查询吗？" class="headerlink" title="移动端的布局用过媒体查询吗？"></a>移动端的布局用过媒体查询吗？</h4><p>通过媒体查询可以为不同大小和尺寸的媒体定义不同的css，适合相应的设备显示；即响应式布局</p>
+<pre><code>@media screen and (min-width: 400px) and (max-width: 700px) { … }
+@media handheld and (min-width: 20em), screen and (min-width: 20em) { … }
+@media not print and (max-width: 1200px){样式代码}//使用关键词“not”是用来排除某种制定的媒体类型
+&lt;link rel=&quot;stylesheet&quot; media=&quot;screen and (max-device-width:480px)&quot; href=&quot;iphone.css&quot; /&gt;
+&lt;lin krel=&quot;stylesheet&quot; media=&quot;only screen and (max-device-width:240px)&quot; href=&quot;android240.css&quot; /&gt;//only用来指定某种特定的媒体类型
+</code></pre><h4 id="使用-CSS-预处理器吗？喜欢那个？"><a href="#使用-CSS-预处理器吗？喜欢那个？" class="headerlink" title="使用 CSS 预处理器吗？喜欢那个？"></a>使用 CSS 预处理器吗？喜欢那个？</h4><pre><code>SASS (SASS、LESS没有本质区别，只因为团队前端都是用的SASS)
+</code></pre><h4 id="CSS优化、提高性能的方法有哪些？"><a href="#CSS优化、提高性能的方法有哪些？" class="headerlink" title="CSS优化、提高性能的方法有哪些？"></a>CSS优化、提高性能的方法有哪些？</h4><p>参考博客<a href="http://blog.csdn.net/borishuai/article/details/8671929" target="_blank" rel="external">BorisHuai前端修炼 &gt; CSS性能优化探讨</a><br>总结一下三点：</p>
+<pre><code>1,从上到下，从右到左
+2,减少选择器规则，规则越多越慢
+3，避免使用expression(只支持IE)，filter(只支持IE6)
+</code></pre><h4 id="浏览器是怎样解析CSS选择器的？"><a href="#浏览器是怎样解析CSS选择器的？" class="headerlink" title="浏览器是怎样解析CSS选择器的？"></a>浏览器是怎样解析CSS选择器的？</h4><p>从上到下，从右到左。参考知乎链接：<a href="https://www.zhihu.com/question/20185756/answer/14263713" target="_blank" rel="external">https://www.zhihu.com/question/20185756/answer/14263713</a><br>如果正向解析，例如「div div p em」，我们首先就要检查当前元素到 html 的整条路径，找到最上层的 div，再往下找，如果遇到不匹配就必须回到最上层那个 div，往下再去匹配选择器中的第一个 div，回溯若干次才能确定匹配与否，效率很低。<br>逆向匹配则不同，如果当前的 DOM 元素是 div，而不是 selector 最后的 em，那只要一步就能排除。只有在匹配时，才会不断向上找父节点进行验证。</p>
 <h4 id="在网页中的应该使用奇数还是偶数的字体？为什么呢？"><a href="#在网页中的应该使用奇数还是偶数的字体？为什么呢？" class="headerlink" title="在网页中的应该使用奇数还是偶数的字体？为什么呢？"></a>在网页中的应该使用奇数还是偶数的字体？为什么呢？</h4><ul>
 <li><p>偶数字号相对更容易和 web 设计的其他部分构成比例关系。比如：当我用了 14 px 的正文字号，我可能会在一些地方用 14 × 0.5 = 7 px 的 margin，在另一些地方用 14 × 1.5 = 21 px 的标题字号。</p>
 </li>
@@ -391,57 +397,138 @@ div{
 </li>
 </ul>
 <h4 id="26-margin和padding分别适合什么场景使用？"><a href="#26-margin和padding分别适合什么场景使用？" class="headerlink" title="26.margin和padding分别适合什么场景使用？"></a>26.margin和padding分别适合什么场景使用？</h4><pre><code>margin用于隔开兄弟元素，padding用于隔开父子元素
-</code></pre><h4 id="抽离样式模块怎么写，说出思路，有无实践经验？-阿里航旅的面试题"><a href="#抽离样式模块怎么写，说出思路，有无实践经验？-阿里航旅的面试题" class="headerlink" title="抽离样式模块怎么写，说出思路，有无实践经验？[阿里航旅的面试题]"></a><strong>抽离样式模块怎么写，说出思路，有无实践经验？[阿里航旅的面试题]</strong></h4><h4 id="元素竖向的百分比设定是相对于容器的高度吗？"><a href="#元素竖向的百分比设定是相对于容器的高度吗？" class="headerlink" title="元素竖向的百分比设定是相对于容器的高度吗？"></a>元素竖向的百分比设定是相对于容器的高度吗？</h4><p>1.width、height属性取值百分比，是分别对于容器宽度、高度的。<br>2.竖向间距 margin-top、margin-bottom、padding-top、padding-bottom 参考的其实是容器的宽度。<br>3.line-height 则是相对于自身字号font-size。</p>
-<h4 id="全屏滚动的原理是什么？用到了CSS的那些属性？"><a href="#全屏滚动的原理是什么？用到了CSS的那些属性？" class="headerlink" title="全屏滚动的原理是什么？用到了CSS的那些属性？"></a>全屏滚动的原理是什么？用到了CSS的那些属性？</h4><p>overflow/height/width/position/</p>
-<h4 id="什么是响应式设计？响应式设计的基本原理是什么？如何兼容低版本的IE？"><a href="#什么是响应式设计？响应式设计的基本原理是什么？如何兼容低版本的IE？" class="headerlink" title="什么是响应式设计？响应式设计的基本原理是什么？如何兼容低版本的IE？"></a>什么是响应式设计？响应式设计的基本原理是什么？如何兼容低版本的IE？</h4><p>响应式网页设计指可以自动识别屏幕宽度、并做出相应调整的网页设计,即一个网站能够兼容多个终端——而不是为每个终端做一个特定的版本。<br>响应式设计的基本原理是通过媒体查询检测不同的设备屏幕尺寸做处理。页面头部必须有meta声明viewport：<br>（一）Meta标签<br>    <figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"viewport"</span> <span class="attr">content</span>=<span class="string">"width=device-width, initial-scale=1"</span> /&gt;</span></div></pre></td></tr></table></figure></p>
-<p>viewport是网页默认的宽度和高度，上面这行代码的意思是，网页宽度默认等于屏幕宽度（width=device-width），原始缩放比例（initial-scale=1）为1.0，即网页初始大小占屏幕面积的100%。</p>
-<p>IE8或者更早的浏览器并不支持Media Query。你可以使用media-queries.js或者respond.js来为IE添加Media Query支持。<br>    <figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="comment">&lt;!--[if lt IE 9]&gt;</span></div><div class="line">&lt;script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"&gt;&lt;/script&gt;</div><div class="line">&lt;![endif]--&gt;</div></pre></td></tr></table></figure></p>
-<p>（二）HTML结构<br>(1).由于网页会根据屏幕宽度调整布局，所以不能使用绝对宽度的布局，也不能使用具有绝对宽度的元素。这一条非常重要。<br>(2).字体也不能使用绝对大小(px)，而只能使用相对大小(em)。<br>(3).流动布局（fluid grid）,各个区块的位置都是浮动的，不是固定不变的。<br>(4).另外，绝对定位（position: absolute）的使用，也要非常小心。<br>（三）媒介查询-Media Queries 选择加载 CSS 和 CSS的@media规则<br>CSS3 Media Query-媒介查询是响应式设计的核心。它根据条件告诉浏览器如何为指定视图宽度渲染页面。<br>媒介查询的目的在于为指定的视图宽度指定不同的CSS规则，来实现不同的布局。媒介查询可以写在同一个或者单独的样式表中。<br>    <figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">    　<span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"stylesheet"</span> <span class="attr">type</span>=<span class="string">"text/css"</span> <span class="attr">media</span>=<span class="string">"screen and (max-device-width: 400px)"</span> <span class="attr">href</span>=<span class="string">"tinyScreen.css"</span> /&gt;</span></div></pre></td></tr></table></figure></p>
-<p>上面的代码意思是，如果屏幕宽度小于400像素（max-device-width: 400px），就加载tinyScreen.css文件<br>    <figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">@<span class="keyword">media</span> screen and (max-device-width: <span class="number">400px</span>) &#123;</div><div class="line">　　　　<span class="selector-class">.column</span> &#123;</div><div class="line">　　　　　　<span class="attribute">float</span>: none;</div><div class="line">　　　　　　<span class="attribute">width</span>:auto;</div><div class="line">　　　　&#125;</div><div class="line">　　　　<span class="selector-id">#sidebar</span> &#123;</div><div class="line">　　　　　　<span class="attribute">display</span>:none;</div><div class="line">　　　　&#125;</div><div class="line">　　&#125;</div></pre></td></tr></table></figure></p>
-<p>（四）图片的自适应（fluid image）<br>    <figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">img</span> &#123; <span class="attribute">max-width</span>: <span class="number">100%</span>;&#125;</div><div class="line"><span class="selector-tag">img</span> &#123; <span class="attribute">width</span>: <span class="number">100%</span>;&#125;<span class="comment">/*老版本IE*/</span></div></pre></td></tr></table></figure></p>
-<h4 id="视差滚动效果，如何给每页做不同的动画？（回到顶部，向下滑动要再次出现，和只出现一次分别怎么做？）"><a href="#视差滚动效果，如何给每页做不同的动画？（回到顶部，向下滑动要再次出现，和只出现一次分别怎么做？）" class="headerlink" title="视差滚动效果，如何给每页做不同的动画？（回到顶部，向下滑动要再次出现，和只出现一次分别怎么做？）"></a><strong>视差滚动效果，如何给每页做不同的动画？（回到顶部，向下滑动要再次出现，和只出现一次分别怎么做？）</strong></h4><p>视差滚动（Parallax Scrolling）是指多层背景以不同的速度移动，形成立体的运动效果，带来非常出色的视觉体验。<br>一般把网页解剖为：背景层、内容层和悬浮层(贴图层)。<br>当滚动鼠标滚轮的时候，各图层以不同速度移动，形成视差的效果。这就是时差滚动的大致原理。</p>
-<p>在CSS中定义背景滚动方式的属性是backgroud-attacthment。取值: scroll | fixed | inherit<br>scroll: 默认值。背景图像会随着页面其余部分的滚动而移动。<br>fixed: 当页面的其余部分滚动时，背景图像不会移动。<br>inherit: 规定应该从父元素继承 background-attachment 属性的设置。<br>初始值: scroll<br>继承性: 否<br>适用于: 所有元素// ie6只支持写在body或html元素</p>
-<p>事件绑定，则会多次执行；若想只执行一次，可以在事件调用之后移除事件绑定，或者使用jquery的one方法。</p>
-<h4 id="before-和-after中双冒号和单冒号-有什么区别？解释一下这2个伪元素的作用。"><a href="#before-和-after中双冒号和单冒号-有什么区别？解释一下这2个伪元素的作用。" class="headerlink" title="::before 和 :after中双冒号和单冒号 有什么区别？解释一下这2个伪元素的作用。"></a>::before 和 :after中双冒号和单冒号 有什么区别？解释一下这2个伪元素的作用。</h4><p>首先，阅读 w3c 对两者的定义：<br>‘:’——CSS伪类,用于向某些选择器添加特殊的效果（:first-child ，:link，：vistited，:hover，:active，:focus，:lang ）<br>‘::’——CSS伪元素，用于将特殊的效果添加到某些选择器（:first-line，:first-letter，:before，:after  ）。</p>
-<p>通俗讲：伪类的效果可以通过添加一个实际的类来达到，而伪元素的效果则需要通过添加一个实际的元素才能达到，这也是为什么他们一个称为伪类，一个称为伪元素的原因。<br>css3 为了区分两者，已经明确规定了伪类用一个冒号来表示，而伪元素则用两个冒号来表示。对于CSS2之前已有的伪元素，比如:before，单冒号和双冒号的写法::before作用是一样的。<br>作用是：在选择器内容 前、后 加上一个元素使达到某种效果，例如清除浮动等。</p>
-<h4 id="如何修改chrome记住密码后自动填充表单的黄色背景-？"><a href="#如何修改chrome记住密码后自动填充表单的黄色背景-？" class="headerlink" title="如何修改chrome记住密码后自动填充表单的黄色背景 ？"></a>如何修改chrome记住密码后自动填充表单的黄色背景 ？</h4><p>表单自动填充元素在chrome下会有一个默认样式 （如下），并且优先级最高，无法覆盖（!important也无法覆盖）。<br>解决方法:设置边框阴影，并将外部阴影 (outset) 改为内部阴影（inset）。<br>    <figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">input</span><span class="selector-pseudo">:-webkit-autofill</span> &#123;</div><div class="line">     <span class="attribute">-webkit-box-shadow</span>: <span class="number">0</span> <span class="number">0</span> <span class="number">0px</span> <span class="number">1000px</span> white inset;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<h4 id="你对line-height是如何理解的？"><a href="#你对line-height是如何理解的？" class="headerlink" title="你对line-height是如何理解的？"></a><strong>你对line-height是如何理解的？</strong></h4><p>参考博客<a href="http://www.cnblogs.com/fengzheng126/archive/2012/05/18/2507632.html" target="_blank" rel="external">http://www.cnblogs.com/fengzheng126/archive/2012/05/18/2507632.html</a></p>
+</code></pre><h4 id="抽离样式模块怎么写，说出思路，有无实践经验？-阿里航旅的面试题"><a href="#抽离样式模块怎么写，说出思路，有无实践经验？-阿里航旅的面试题" class="headerlink" title="抽离样式模块怎么写，说出思路，有无实践经验？[阿里航旅的面试题]"></a><strong>抽离样式模块怎么写，说出思路，有无实践经验？[阿里航旅的面试题]</strong></h4><h4 id="元素竖向的百分比设定是相对于容器的高度吗？"><a href="#元素竖向的百分比设定是相对于容器的高度吗？" class="headerlink" title="元素竖向的百分比设定是相对于容器的高度吗？"></a>元素竖向的百分比设定是相对于容器的高度吗？</h4><pre><code>1.width、height属性取值百分比，是分别对于容器宽度、高度的。
+2.竖向间距 margin-top、margin-bottom、padding-top、padding-bottom 参考的其实是容器的宽度。
+3.line-height 则是相对于自身字号font-size。
+</code></pre><h4 id="全屏滚动的原理是什么？用到了CSS的那些属性？"><a href="#全屏滚动的原理是什么？用到了CSS的那些属性？" class="headerlink" title="全屏滚动的原理是什么？用到了CSS的那些属性？"></a>全屏滚动的原理是什么？用到了CSS的那些属性？</h4><pre><code>overflow/position/animation
+</code></pre><h4 id="什么是响应式设计？响应式设计的基本原理是什么？如何兼容低版本的IE？"><a href="#什么是响应式设计？响应式设计的基本原理是什么？如何兼容低版本的IE？" class="headerlink" title="什么是响应式设计？响应式设计的基本原理是什么？如何兼容低版本的IE？"></a>什么是响应式设计？响应式设计的基本原理是什么？如何兼容低版本的IE？</h4><p>响应式网页设计指可以自动识别屏幕宽度、并做出相应调整的网页设计,即一个网站能够兼容多个终端——而不是为每个终端做一个特定的版本。</p>
+<p>响应式设计的基本原理是通过媒体查询检测不同的设备屏幕尺寸做处理。页面头部必须有meta声明viewport：<br>（一）Meta标签</p>
+<pre><code>&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot; /&gt;
+</code></pre><p>viewport是网页默认的宽度和高度，上面这行代码的意思是，网页宽度默认等于屏幕宽度（width=device-width），原始缩放比例（initial-scale=1）为1.0，即网页初始大小占屏幕面积的100%。</p>
+<p>IE8或者更早的浏览器并不支持Media Query。你可以使用media-queries.js或者respond.js来为IE添加Media Query支持。</p>
+<pre><code>&lt;!--[if lt IE 9]&gt;
+&lt;script src=&quot;http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js&quot;&gt;&lt;/script&gt;
+&lt;![endif]--&gt;
+</code></pre><p>（二）HTML结构</p>
+<pre><code>(1).由于网页会根据屏幕宽度调整布局，所以不能使用绝对宽度的布局，也不能使用具有绝对宽度的元素。这一条非常重要。
+(2).字体也不能使用绝对大小(px)，而只能使用相对大小(em)。
+(3).流动布局（fluid grid）,各个区块的位置都是浮动的，不是固定不变的。
+(4).另外，绝对定位（position: absolute）的使用，也要非常小心。
+</code></pre><p>（三）媒介查询-Media Queries 选择加载 CSS 和 CSS的@media规则<br>CSS3 Media Query-媒介查询是响应式设计的核心。它根据条件告诉浏览器如何为指定视图宽度渲染页面。<br>媒介查询的目的在于为指定的视图宽度指定不同的CSS规则，来实现不同的布局。媒介查询可以写在同一个或者单独的样式表中。</p>
+<pre><code>　&lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; media=&quot;screen and (max-device-width: 400px)&quot; href=&quot;tinyScreen.css&quot; /&gt;
+</code></pre><p>上面的代码意思是，如果屏幕宽度小于400像素（max-device-width: 400px），就加载tinyScreen.css文件</p>
+<pre><code>@media screen and (max-device-width: 400px) {
+</code></pre><p>　　　　.column {<br>　　　　　　float: none;<br>　　　　　　width:auto;<br>　　　　}<br>　　　　#sidebar {<br>　　　　　　display:none;<br>　　　　}<br>　　}</p>
+<p>（四）图片的自适应（fluid image）</p>
+<pre><code>img { max-width: 100%;}
+img { width: 100%;}/*老版本IE*/
+</code></pre><h4 id="视差滚动效果，如何给每页做不同的动画？（回到顶部，向下滑动要再次出现，和只出现一次分别怎么做？）"><a href="#视差滚动效果，如何给每页做不同的动画？（回到顶部，向下滑动要再次出现，和只出现一次分别怎么做？）" class="headerlink" title="视差滚动效果，如何给每页做不同的动画？（回到顶部，向下滑动要再次出现，和只出现一次分别怎么做？）"></a><strong>视差滚动效果，如何给每页做不同的动画？（回到顶部，向下滑动要再次出现，和只出现一次分别怎么做？）</strong></h4><pre><code>视差滚动（Parallax Scrolling）是指多层背景以不同的速度移动，形成立体的运动效果，带来非常出色的视觉体验。
+一般把网页解剖为：背景层、内容层和悬浮层(贴图层)。
+当滚动鼠标滚轮的时候，各图层以不同速度移动，形成视差的效果。这就是时差滚动的大致原理。
+
+在CSS中定义背景滚动方式的属性是backgroud-attacthment。取值: scroll | fixed | inherit
+scroll: 默认值。背景图像会随着页面其余部分的滚动而移动。
+fixed: 当页面的其余部分滚动时，背景图像不会移动。
+inherit: 规定应该从父元素继承 background-attachment 属性的设置。
+初始值: scroll
+继承性: 否
+适用于: 所有元素// ie6只支持写在body或html元素
+
+事件绑定，则会多次执行；若想只执行一次，可以在事件调用之后移除事件绑定，或者使用jquery的one方法。
+</code></pre><h4 id="before-和-after中双冒号和单冒号-有什么区别？解释一下这2个伪元素的作用。"><a href="#before-和-after中双冒号和单冒号-有什么区别？解释一下这2个伪元素的作用。" class="headerlink" title="::before 和 :after中双冒号和单冒号 有什么区别？解释一下这2个伪元素的作用。"></a>::before 和 :after中双冒号和单冒号 有什么区别？解释一下这2个伪元素的作用。</h4><p>首先，阅读 w3c 对两者的定义：</p>
+<pre><code>&apos;:&apos;——CSS伪类,用于向某些选择器添加特殊的效果（:first-child ，:link，：vistited，:hover，:active，:focus，:lang ）
+&apos;::&apos;——CSS伪元素，用于将特殊的效果添加到某些选择器（:first-line，:first-letter，:before，:after  ）。
+</code></pre><p>通俗讲：伪类的效果可以通过添加一个实际的类来达到，而伪元素的效果则需要通过添加一个实际的元素才能达到。</p>
+<p>css3 为了区分两者，已经明确规定了伪类用一个冒号来表示，而伪元素则用两个冒号来表示。对于CSS2之前已有的伪元素，比如:before，单冒号和双冒号的写法::before作用是一样的。</p>
+<p>为元素的主要作用是：在选择器内容 前、后 加上一个元素使达到某种效果，例如清除浮动等。</p>
+<h4 id="如何修改chrome记住密码后自动填充表单的黄色背景-？"><a href="#如何修改chrome记住密码后自动填充表单的黄色背景-？" class="headerlink" title="如何修改chrome记住密码后自动填充表单的黄色背景 ？"></a>如何修改chrome记住密码后自动填充表单的黄色背景 ？</h4><p>表单自动填充元素在chrome下会有一个默认样式 （如下），并且优先级最高，无法覆盖（!important也无法覆盖）。</p>
+<p>解决方法:设置边框阴影，并将外部阴影 (outset) 改为内部阴影（inset）。</p>
+<pre><code>input:-webkit-autofill {
+     -webkit-box-shadow: 0 0 0px 1000px white inset;
+}
+</code></pre><h4 id="你对line-height是如何理解的？"><a href="#你对line-height是如何理解的？" class="headerlink" title="你对line-height是如何理解的？"></a><strong>你对line-height是如何理解的？</strong></h4><p>参考博客<a href="http://www.cnblogs.com/fengzheng126/archive/2012/05/18/2507632.html" target="_blank" rel="external">http://www.cnblogs.com/fengzheng126/archive/2012/05/18/2507632.html</a></p>
 <ul>
-<li>一些字面意思:“行高”顾名思意指一行文字的高度。具体来说是指两行文字间基线之间的距离。<br>css中起高度作用的应该就是height以及line-height了吧！<br>有一个空的div，<div></div>，如果没有设置至少大于1像素高度height值时，该div的高度就是个0。如果该div里面打入了一个空格或是文字，则此div就会有一个高度。有人会跟认为是：文字撑开的！文字占据空间，但是事实上，根本不是文字撑开了div的高度，而是line-height！要证明很简单(如下测试代码)：  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">.test1&#123;font-size:20px; line-height:0; border:1px solid #cccccc; background:#eeeeee;&#125;</div><div class="line">.test2&#123;font-size:0; line-height:20px; border:1px solid #cccccc; background:#eeeeee;&#125;</div><div class="line">&lt;div class=&quot;test1&quot;&gt;测试&lt;/div&gt;</div><div class="line">&lt;div class=&quot;test2&quot;&gt;测试&lt;/div&gt;</div></pre></td></tr></table></figure>
+<li><p>一些字面意思:“行高”顾名思意指一行文字的高度。具体来说是指两行文字间基线之间的距离。<br>css中起高度作用的应该就是height以及line-height了吧！<br>有一个空的div，<div></div>，如果没有设置至少大于1像素高度height值时，该div的高度就是个0。如果该div里面打入了一个空格或是文字，则此div就会有一个高度。有人会跟认为是：文字撑开的！文字占据空间，但是事实上，根本不是文字撑开了div的高度，而是line-height！要证明很简单(如下测试代码)：</p>
+<p>  .test1{font-size:20px; line-height:0; border:1px solid #cccccc; background:#eeeeee;}<br>  .test2{font-size:0; line-height:20px; border:1px solid #cccccc; background:#eeeeee;}</p>
+  <div class="test1">测试</div><br>  <div class="test2">测试</div>
+
 </li>
 </ul>
 <p>test1 div有文字大小，但行高为0，结果div的高度就是个0；test2 div文字大小为0，但是有行高，为20像素，结果div高度就是20像素。这就说明撑开div高度的是line-height不是文字内容。</p>
 <ul>
-<li><p>你可以有5种方式来定义line-height。<br>1.line-height可以被定义为：body{line-height:normal;}<br>2.line-height可以被定义为：body{line-height:inherit;}<br>3.line-height可以使用一个百分比的值body{line-height:120%;}<br>4.line-height可以被定义为一个长度值(px,em等) body{line-height:25px;}<br>5.line-height也可以被定义为纯数字， body{line-height:1.2}<br>其中，百分比和px都会直接换算成px继承，所以继承的元素都会使用这个行高，不会随着font-size做缩放，导致较大字会很拥挤，小字会很稀疏；而normal和数字会灵活按比例缩放，继承元素的行高为自身font-size*数字 决定。<br>line-height其实是由line box高度而来的，line box是又一个个inline box组成的，line box 的高度是由inline box中最高的那个决定。</p>
-<h4 id="设置元素浮动后，该元素的display值是多少？"><a href="#设置元素浮动后，该元素的display值是多少？" class="headerlink" title="设置元素浮动后，该元素的display值是多少？"></a>设置元素浮动后，该元素的display值是多少？</h4><p>  自动变成display:block</p>
+<li><p>你可以有5种方式来定义line-height:</p>
+<p>  1.line-height可以被定义为：body{line-height:normal;}<br>  2.line-height可以被定义为：body{line-height:inherit;}<br>  3.line-height可以使用一个百分比的值body{line-height:120%;}<br>  4.line-height可以被定义为一个长度值(px,em等) body{line-height:25px;}<br>  5.line-height也可以被定义为纯数字， body{line-height:1.2}<br>  其中，百分比和px都会直接换算成px继承，所以继承的元素都会使用这个行高，不会随着font-size做缩放，导致较大字会很拥挤，小字会很稀疏；而normal和数字会灵活按比例缩放，继承元素的行高为自身font-size*数字 决定。<br>  line-height其实是由line box高度而来的，line box是又一个个inline box组成的，line box 的高度是由inline box中最高的那个决定。</p>
 </li>
 </ul>
-<h4 id="怎么让Chrome支持小于12px-的文字？"><a href="#怎么让Chrome支持小于12px-的文字？" class="headerlink" title="怎么让Chrome支持小于12px 的文字？"></a>怎么让Chrome支持小于12px 的文字？</h4><pre><code>方法1.设置css属性 -webkit-text-size-adjust:none;
+<h4 id="设置元素浮动后，该元素的display值是多少？"><a href="#设置元素浮动后，该元素的display值是多少？" class="headerlink" title="设置元素浮动后，该元素的display值是多少？"></a>设置元素浮动后，该元素的display值是多少？</h4><pre><code>自动变成display:block
+</code></pre><h4 id="怎么让Chrome支持小于12px-的文字？"><a href="#怎么让Chrome支持小于12px-的文字？" class="headerlink" title="怎么让Chrome支持小于12px 的文字？"></a>怎么让Chrome支持小于12px 的文字？</h4><pre><code>方法1.设置css属性 -webkit-text-size-adjust:none;
 //谷歌新版本已不适用
 方法2：设置transform属性 -webkit-transform:scale(0.8)//相对于自身的font-size缩放
 //transform:scale()这个属性只为可以缩放可以定义宽高的元素，不能是内联元素。
 </code></pre><h4 id="让页面里的字体变清晰，变细用CSS怎么做？"><a href="#让页面里的字体变清晰，变细用CSS怎么做？" class="headerlink" title="让页面里的字体变清晰，变细用CSS怎么做？"></a>让页面里的字体变清晰，变细用CSS怎么做？</h4><pre><code>-webkit-font-smoothing: antialiased;
-</code></pre><h4 id="font-style属性可以让它赋值为“oblique”-oblique是什么意思？"><a href="#font-style属性可以让它赋值为“oblique”-oblique是什么意思？" class="headerlink" title="font-style属性可以让它赋值为“oblique” oblique是什么意思？"></a>font-style属性可以让它赋值为“oblique” oblique是什么意思？</h4><p>使文字向右倾斜。<br>oblique跟Italic的区别：<br>italic：斜体，是为手写体。对于没有斜体变量的特殊字体，将应用 oblique<br>oblique：倾斜的字体，即单纯的倾斜文字。<br>可以理解成Italic是使用文字的斜体，Oblique是让没有斜体属性的文字倾斜！</p>
-<h4 id="position-fixed-在android下无效怎么处理？"><a href="#position-fixed-在android下无效怎么处理？" class="headerlink" title="position:fixed;在android下无效怎么处理？"></a><strong>position:fixed;在android下无效怎么处理？</strong></h4><p>方法1：</p>
-<p><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no"><br>方法2：使用absolute</p>
-<h4 id="如果需要手动写动画，你认为最小时间间隔是多久，为什么？（阿里）"><a href="#如果需要手动写动画，你认为最小时间间隔是多久，为什么？（阿里）" class="headerlink" title="如果需要手动写动画，你认为最小时间间隔是多久，为什么？（阿里）"></a>如果需要手动写动画，你认为最小时间间隔是多久，为什么？（阿里）</h4><p>多数显示器默认频率是60Hz，即1秒刷新60次，所以理论上最小间隔为1/60＊1000ms ＝ 16.7ms</p>
-<h4 id="display-inline-block-什么时候会显示间隙？-携程"><a href="#display-inline-block-什么时候会显示间隙？-携程" class="headerlink" title="display:inline-block 什么时候会显示间隙？(携程)"></a>display:inline-block 什么时候会显示间隙？(携程)</h4><p>移除空格、使用margin负值、使用font-size:0、letter-spacing、word-spacing</p>
-<h4 id="overflow-scroll时不能平滑滚动的问题怎么处理？"><a href="#overflow-scroll时不能平滑滚动的问题怎么处理？" class="headerlink" title="overflow: scroll时不能平滑滚动的问题怎么处理？"></a>overflow: scroll时不能平滑滚动的问题怎么处理？</h4><p>overflow: scroll;<br>-webkit-overflow-scrolling: touch;/<em>控制元素在移动设备上是否使用滚动回弹效果.</em>/<br>它有两个可能的值：auto和touch.<br>auto:使用普通滚动, 当手指从触摸屏上移开，滚动会立即停止。<br>touch:使用具有回弹效果的滚动, 当手指从触摸屏上移开，内容会继续保持一段时间的滚动效果。继续滚动的速度和持续的时间和滚动手势的强烈程度成正比。</p>
-<h4 id="有一个高度固定的div，里面有两个div，一个高度100px，希望另一个填满剩下的高度。"><a href="#有一个高度固定的div，里面有两个div，一个高度100px，希望另一个填满剩下的高度。" class="headerlink" title="有一个高度固定的div，里面有两个div，一个高度100px，希望另一个填满剩下的高度。"></a>有一个高度固定的div，里面有两个div，一个高度100px，希望另一个填满剩下的高度。</h4><p>container设置display:flex;flex-direction: column;<br>div1设置 height:100px;<br>div2设置 flex-grow:1;</p>
-<h4 id="png、jpg、gif-这些图片格式解释一下，分别什么时候用。有没有了解过webp？"><a href="#png、jpg、gif-这些图片格式解释一下，分别什么时候用。有没有了解过webp？" class="headerlink" title="png、jpg、gif 这些图片格式解释一下，分别什么时候用。有没有了解过webp？"></a>png、jpg、gif 这些图片格式解释一下，分别什么时候用。有没有了解过webp？</h4><ul>
-<li><p>GIF 意为Graphics Interchange format（图形交换格式.GIF是一种索引颜色格式，在颜色数很少的情况下，产生的文件极小，它的优点主要有：<br>(1)透明性:Gif是一种布尔透明类型，既它可以是全透明，也可以是全不透明，但是它并没有半透明（alpha 透明）。<br>(2)动画:Gif这种格式支持动画。<br>(3)无损耗性:Gif是一种无损耗的图像格式，这也意味着你可以对gif图片做任何操作也不会使 得图像质量产生损耗。<br>(4)水平扫描:Gif是使用了一种叫作LZW的算法进行压缩的，当压缩gif的过程中，像素是由上到下水平压缩的，这也意味着同等条件下，横向的gif图片比竖向的gif图片更加小。例如500<em>10的图片比10</em>500的图片更加小<br>(4)间隔渐进显示:Gif支持可选择性的间隔渐进显示<br>它适合做对颜色要求不高的图形。</p>
-</li>
-<li><p>JPEG 代表Joint Photograhic Experts Group（联合图像专家组），这种格式经常写成JPG.他的特点：<br>（1）它并不支持透明。<br>（2）它也不支持动画。<br>（3）损耗性：除了一些比如说旋转（仅仅是90、180、270度旋转），裁切，从标准类型到先进类型，编辑图片的原数据之外，所有其它操作对jpeg图像的处理都会使得它的质量损失。所以我们在编辑过程一般用png作为过渡格式。<br>（4）隔行渐进显示：它支持隔行渐进显示（但是ie浏览器并不支持这个属性，但是ie会在整个图像信息完全到达的时候显示）。<br>由上可以看出Jpeg是最适web上面的摄影图片和数字照相机中。  </p>
-</li>
-<li><p>PNG意为可移植网络图形格式(Portable Network Graphic Format)<br>（1）透明性：Png是完全支持alpha透明的(透明，半透明，不透明)，尽管有两个怪异的现象在ie6(下面详细讨论)<br>（2）它不支持动画<br>（3）无损耗性：png是一种无损耗的图像格式，这也意味着你可以对png图片做任何操作也不会使得图像质量产生损耗。这也使得png可以作为jpeg编辑的过渡格式<br>（4）水平扫描：像GIF一样，png也是水平扫描的，这样意味着水平重复颜色比垂直重复颜色的图片更小<br>（5）间隔渐进显示：它支持间隔渐进显示，但是会造成图片大小变得更大</p>
-</li>
-<li><p>WebP（发音 weppy，项目主页），是一种支持有损压缩和无损压缩的图片文件格式，派生自图像编码格式 VP8。<br>WebP 的优势体现在它具有更优的图像数据压缩算法，能带来更小的图片体积，而且拥有肉眼识别无差异的图像质量；同时具备了无损和有损的压缩模式、Alpha 透明以及动画的特性，在 JPEG 和 PNG 上的转化效果都非常优秀、稳定和统一。<br>1、若使用场景是浏览器，可以：<br>JavaScript 能力检测，对支持 WebP 的用户输出 WebP 图片<br>使用 WebP 支持插件：WebPJS<br>2、若使用场景是 App，可以：<br>Android 4.0 以下 WebP 解析库（链接）<br>iOS WebP 解析库（链接）<br>3、转换工具：<br>智图<br>iSparta</p>
-<h4 id="什么是Cookie-隔离？（或者说：请求资源的时候不要让它带cookie怎么做）"><a href="#什么是Cookie-隔离？（或者说：请求资源的时候不要让它带cookie怎么做）" class="headerlink" title="什么是Cookie 隔离？（或者说：请求资源的时候不要让它带cookie怎么做）"></a><strong>什么是Cookie 隔离？（或者说：请求资源的时候不要让它带cookie怎么做）</strong></h4><p>参考<a href="http://blog.csdn.net/taozi8023/article/details/51423144" target="_blank" rel="external">http://blog.csdn.net/taozi8023/article/details/51423144</a><br>如果静态文件都放在主域名下，那静态文件请求的时候都带有的cookie的数据提交给server的，非常浪费流量，<br>所以不如隔离开。</p>
-</li>
-</ul>
-<p>因为cookie有域的限制，因此不能跨域提交请求，故使用非主要域名的时候，请求头中就不会带有cookie数据，<br>这样可以降低请求头的大小，降低请求时间，从而达到降低整体请求延时的目的。</p>
-<p>同时这种方式不会将cookie传入Web Server，也减少了Web Server对cookie的处理分析环节，<br>提高了webserver的http请求的解析速度。</p>
+</code></pre><h4 id="font-style属性可以让它赋值为“oblique”-oblique是什么意思？"><a href="#font-style属性可以让它赋值为“oblique”-oblique是什么意思？" class="headerlink" title="font-style属性可以让它赋值为“oblique” oblique是什么意思？"></a>font-style属性可以让它赋值为“oblique” oblique是什么意思？</h4><pre><code>使文字向右倾斜。
 
+oblique跟Italic的区别：
+italic：斜体，是为手写体。对于没有斜体变量的特殊字体，将应用 oblique
+oblique：倾斜的字体，即单纯的倾斜文字。
+可以理解成Italic是使用文字的斜体，Oblique是让没有斜体属性的文字倾斜！
+</code></pre><h4 id="position-fixed-在android下无效怎么处理？"><a href="#position-fixed-在android下无效怎么处理？" class="headerlink" title="position:fixed;在android下无效怎么处理？"></a><strong>position:fixed;在android下无效怎么处理？</strong></h4><pre><code>方法1：
+&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no&quot;/&gt;
+
+方法2：使用absolute
+</code></pre><h4 id="如果需要手动写动画，你认为最小时间间隔是多久，为什么？（阿里）"><a href="#如果需要手动写动画，你认为最小时间间隔是多久，为什么？（阿里）" class="headerlink" title="如果需要手动写动画，你认为最小时间间隔是多久，为什么？（阿里）"></a>如果需要手动写动画，你认为最小时间间隔是多久，为什么？（阿里）</h4><pre><code>多数显示器默认频率是60Hz，即1秒刷新60次，所以理论上最小间隔为1/60＊1000ms ＝ 16.7ms
+</code></pre><h4 id="display-inline-block-什么时候会显示间隙？-携程"><a href="#display-inline-block-什么时候会显示间隙？-携程" class="headerlink" title="display:inline-block 什么时候会显示间隙？(携程)"></a>display:inline-block 什么时候会显示间隙？(携程)</h4><pre><code>移除空格、使用margin负值、使用font-size:0、letter-spacing、word-spacing
+</code></pre><h4 id="overflow-scroll时不能平滑滚动的问题怎么处理？"><a href="#overflow-scroll时不能平滑滚动的问题怎么处理？" class="headerlink" title="overflow: scroll时不能平滑滚动的问题怎么处理？"></a>overflow: scroll时不能平滑滚动的问题怎么处理？</h4><pre><code>overflow: scroll;
+-webkit-overflow-scrolling: touch;/*控制元素在移动设备上是否使用滚动回弹效果.*/
+它有两个可能的值：auto和touch.
+auto:使用普通滚动, 当手指从触摸屏上移开，滚动会立即停止。
+touch:使用具有回弹效果的滚动, 当手指从触摸屏上移开，内容会继续保持一段时间的滚动效果。继续滚动的速度和持续的时间和滚动手势的强烈程度成正比。
+</code></pre><h4 id="有一个高度固定的div，里面有两个div，一个高度100px，希望另一个填满剩下的高度。"><a href="#有一个高度固定的div，里面有两个div，一个高度100px，希望另一个填满剩下的高度。" class="headerlink" title="有一个高度固定的div，里面有两个div，一个高度100px，希望另一个填满剩下的高度。"></a>有一个高度固定的div，里面有两个div，一个高度100px，希望另一个填满剩下的高度。</h4><pre><code>container设置display:flex;flex-direction: column;
+div1设置 height:100px;
+div2设置 flex-grow:1;
+</code></pre><h4 id="png、jpg、gif-这些图片格式解释一下，分别什么时候用。有没有了解过webp？"><a href="#png、jpg、gif-这些图片格式解释一下，分别什么时候用。有没有了解过webp？" class="headerlink" title="png、jpg、gif 这些图片格式解释一下，分别什么时候用。有没有了解过webp？"></a>png、jpg、gif 这些图片格式解释一下，分别什么时候用。有没有了解过webp？</h4><pre><code>* GIF 意为Graphics Interchange format（图形交换格式.GIF是一种索引颜色格式，在颜色数很少的情况下，产生的文件极小，它的优点主要有：
+(1)透明性:Gif是一种布尔透明类型，既它可以是全透明，也可以是全不透明，但是它并没有半透明（alpha 透明）。
+(2)动画:Gif这种格式支持动画。
+(3)无损耗性:Gif是一种无损耗的图像格式，这也意味着你可以对gif图片做任何操作也不会使 得图像质量产生损耗。
+(4)水平扫描:Gif是使用了一种叫作LZW的算法进行压缩的，当压缩gif的过程中，像素是由上到下水平压缩的，这也意味着同等条件下，横向的gif图片比竖向的gif图片更加小。例如500*10的图片比10*500的图片更加小
+(4)间隔渐进显示:Gif支持可选择性的间隔渐进显示
+它适合做对颜色要求不高的图形。
+
+* JPEG 代表Joint Photograhic Experts Group（联合图像专家组），这种格式经常写成JPG.他的特点：
+（1）它并不支持透明。
+（2）它也不支持动画。
+（3）损耗性：除了一些比如说旋转（仅仅是90、180、270度旋转），裁切，从标准类型到先进类型，编辑图片的原数据之外，所有其它操作对jpeg图像的处理都会使得它的质量损失。所以我们在编辑过程一般用png作为过渡格式。
+（4）隔行渐进显示：它支持隔行渐进显示（但是ie浏览器并不支持这个属性，但是ie会在整个图像信息完全到达的时候显示）。
+由上可以看出Jpeg是最适web上面的摄影图片和数字照相机中。  
+
+* PNG意为可移植网络图形格式(Portable Network Graphic Format)
+（1）透明性：Png是完全支持alpha透明的(透明，半透明，不透明)，尽管有两个怪异的现象在ie6(下面详细讨论)
+（2）它不支持动画
+（3）无损耗性：png是一种无损耗的图像格式，这也意味着你可以对png图片做任何操作也不会使得图像质量产生损耗。这也使得png可以作为jpeg编辑的过渡格式
+（4）水平扫描：像GIF一样，png也是水平扫描的，这样意味着水平重复颜色比垂直重复颜色的图片更小
+（5）间隔渐进显示：它支持间隔渐进显示，但是会造成图片大小变得更大
+
+* WebP（发音 weppy，项目主页），是一种支持有损压缩和无损压缩的图片文件格式，派生自图像编码格式 VP8。
+WebP 的优势体现在它具有更优的图像数据压缩算法，能带来更小的图片体积，而且拥有肉眼识别无差异的图像质量；同时具备了无损和有损的压缩模式、Alpha 透明以及动画的特性，在 JPEG 和 PNG 上的转化效果都非常优秀、稳定和统一。
+1、若使用场景是浏览器，可以：
+JavaScript 能力检测，对支持 WebP 的用户输出 WebP 图片
+使用 WebP 支持插件：WebPJS
+2、若使用场景是 App，可以：
+Android 4.0 以下 WebP 解析库（链接）
+iOS WebP 解析库（链接）
+3、转换工具：
+智图
+iSparta
+</code></pre><h4 id="什么是Cookie-隔离？（或者说：请求资源的时候不要让它带cookie怎么做）"><a href="#什么是Cookie-隔离？（或者说：请求资源的时候不要让它带cookie怎么做）" class="headerlink" title="什么是Cookie 隔离？（或者说：请求资源的时候不要让它带cookie怎么做）"></a><strong>什么是Cookie 隔离？（或者说：请求资源的时候不要让它带cookie怎么做）</strong></h4><pre><code>参考[http://blog.csdn.net/taozi8023/article/details/51423144](http://blog.csdn.net/taozi8023/article/details/51423144)
+如果静态文件都放在主域名下，那静态文件请求的时候都带有的cookie的数据提交给server的，非常浪费流量，
+所以不如隔离开。
+
+因为cookie有域的限制，因此不能跨域提交请求，故使用非主要域名的时候，请求头中就不会带有cookie数据，
+这样可以降低请求头的大小，降低请求时间，从而达到降低整体请求延时的目的。
+
+同时这种方式不会将cookie传入Web Server，也减少了Web Server对cookie的处理分析环节，
+提高了webserver的http请求的解析速度。
+</code></pre>
           </section>
           <section>
             <ul style="list-style-type:none">
