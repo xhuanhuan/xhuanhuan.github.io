@@ -233,18 +233,17 @@ transform:rotate(9deg) scale(0.85,0.90) translate(0px,-30px) skew(-9deg,0deg);//
 <ul>
 <li>8、父子标签间用margin的问题，表现在有时除IE(6/7)外的浏览器子标签margin转移到了父标签上，IE6&amp;7下没有转移。解决办法就是父子标签间的间隔建议用padding，兄弟标签间用margin。<br>9、假设两块div，第一块浮动而第二块没有浮动，IE6下第二块就会跑到第一块边上，并且二者之间还留有间距，但标准浏览器中是第二块重合于第一块。</li>
 <li><p>10、父子关系的标签，子标签浮动导致父标签不再包裹子标签。解决方案是清除浮动。</p>
-   <div class="parent1"><br>     <div class="one1">One</div><br>     <div style="clear:both;"></div><br>   </div>
+ <div class="parent1"><br>   <div class="one1">One</div><br>   <div style="clear:both;"></div><br> </div>
 
-<p> 或者采用 伪元素 ：after</p>
-<p>   .parent:after{ /<em>–for other broswer–</em>/</p>
+</li>
+</ul>
+<p>或者采用 伪元素 ：after<br>   .parent:after{</p>
 <pre><code>content:&quot;.&quot;;
 display:block;
 line-height:0;
 clear:both;
 visibility:hidden;
 </code></pre><p>   }</p>
-</li>
-</ul>
 </li>
 </ul>
 <h4 id="li与li之间有看不见的空白间隔是什么原因引起的？有什么解决办法？"><a href="#li与li之间有看不见的空白间隔是什么原因引起的？有什么解决办法？" class="headerlink" title="li与li之间有看不见的空白间隔是什么原因引起的？有什么解决办法？"></a>li与li之间有看不见的空白间隔是什么原因引起的？有什么解决办法？</h4><p>浏览器的默认行为是把inline元素间的空白字符（空格换行tab）渲染成一个空格，也就是<li>换行后会产生换行字符，而它会变成一个空格，当然空格就占用一个字符的宽度。<br>解决办法：<br>(1)直接不要换行</li></p>
