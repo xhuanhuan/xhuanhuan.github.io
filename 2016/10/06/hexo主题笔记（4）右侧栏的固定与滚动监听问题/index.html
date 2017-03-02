@@ -87,30 +87,30 @@ overflow:auto;
 width:22%;
 }
 </code></pre><h4 id="js控制"><a href="#js控制" class="headerlink" title="js控制"></a>js控制</h4><p>给浏览器滚动条添加监听事件，计算右侧栏顶部到浏览器顶部的距离mtop，当滚动距离scrotop大于mtop时添加fixhere类，否则移除该类。</p>
-<pre><code>document.addEventListener(&apos;scroll&apos;,function(){
+<pre><code>document.addEventListener(&#39;scroll&#39;,function(){
 var scrotop=window.pageYOffset;
-var mTop = document.getElementById(&apos;li-of-post&apos;).offsetTop-document.body.scrollTop;
+var mTop = document.getElementById(&#39;li-of-post&#39;).offsetTop-document.body.scrollTop;
 if(mTop&lt;=scrotop){
   if(window.screen.width&gt;767){
-  var w= $(&apos;#li-of-post&apos;).width();
-  $(&apos;.fixhere&apos;).css({&apos;width&apos;:w});
-  $(&apos;.here&apos;).addClass(&apos;fixhere&apos;);
+  var w= $(&#39;#li-of-post&#39;).width();
+  $(&#39;.fixhere&#39;).css({&#39;width&#39;:w});
+  $(&#39;.here&#39;).addClass(&#39;fixhere&#39;);
 }
 }
 else{
-  $(&apos;.here&apos;).removeClass(&apos;fixhere&apos;);
+  $(&#39;.here&#39;).removeClass(&#39;fixhere&#39;);
   }
   })
 </code></pre><p>为了适用于手机界面，我设计的是只在非手机端查看该页面时会有有侧边栏，所以加上了屏幕判断语句if(window.screen.width&gt;767)，大家可根据自己的设想自行设计的哦。</p>
 <h3 id="滚动监听"><a href="#滚动监听" class="headerlink" title="滚动监听"></a>滚动监听</h3><p>滚动监听的效果就是点击有侧边栏小标题页面会滑到相应处，滑动页面时侧边栏小标题会提示滑到此处。</p>
 <h4 id="点击-定位效果"><a href="#点击-定位效果" class="headerlink" title="点击-定位效果"></a>点击-定位效果</h4><p>右侧栏的每一个连接都对应着一个锚，即href的值对应着一个类。首先获取所以的连接，然后为每个连接绑定一个点击事件函数，该函数计算相应类相对浏览器顶部的距离，使滚动条滑动该距离。</p>
-<pre><code>var link = document.getElementsByClassName(&apos;toc-link&apos;);
+<pre><code>var link = document.getElementsByClassName(&#39;toc-link&#39;);
 for(var i=0;i&lt;link.length;i++)
 {
      var mao = /#.*/;
      link[i].onclick = function(){
       //var temp = $(this.href.match(mao)[0]);
-      $(&apos;html,body&apos;).animate({scrollTop:$(this.href.match(mao)[0]).offset().top-70},500);
+      $(&#39;html,body&#39;).animate({scrollTop:$(this.href.match(mao)[0]).offset().top-70},500);
       return false;
     }
 }
@@ -121,9 +121,9 @@ for(var i=0;i&lt;link.length;i++)
   var mao = /#.*/;
   var h=$(link[i].href.match(mao)[0]).offset().top-document.body.scrollTop;
   if(h&lt;80 &amp;&amp; h&gt;20){
-    $(link[i]).css(&apos;background-color&apos;,&apos;#d0d0d0&apos;);
+    $(link[i]).css(&#39;background-color&#39;,&#39;#d0d0d0&#39;);
   }else{
-    $(link[i]).css(&apos;background-color&apos;,&apos;white&apos;);
+    $(link[i]).css(&#39;background-color&#39;,&#39;white&#39;);
   }
 }
 </code></pre><p>其中if(h<80 &&="" h="">20)即为判断是否到达页面顶部，<80是为了防止被导航栏遮挡，>20是为了及时让背景色还原，大家可以自行改变的。此外，这里的h增加了document.body.scrollTop，减去了浏览器滚动条已经滑动的距离，目的是为了计算相对于浏览器顶部的距离，该距离是变化的而不是固定的，以此来作为判别方式。这一点不同于上述点击事件，因为我们判断的是该类是否到达浏览器顶部，这本身是个相对距离，页面的位置是变化的，其相对距离也是变化的。</80是为了防止被导航栏遮挡，></80></p>
