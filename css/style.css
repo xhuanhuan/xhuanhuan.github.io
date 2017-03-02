@@ -115,8 +115,7 @@ body {
   .postblock{
     width:100%;
     margin:8px auto;
-    padding:1% 2%;
-    background-color:white;
+    padding:1% 0;
     opacity:0.8;
     border-radius:1%;
     /*border:1px solid gray;*/
@@ -344,4 +343,13 @@ ol.toc{
 }
 .highlight{
   overflow: scroll;
+}
+pre{
+  padding:0;
+}
+pre code{
+  white-space: pre;
+}
+.hljs{
+  overflow:scroll;;
 }

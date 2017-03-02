@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>Xhuanhuan&#39;s Blog</title>
     <link rel="Shortcut Icon" href="icon.jpg">
+    <link href="http://cdn.bootcss.com/highlight.js/8.0/styles/monokai_sublime.min.css" rel="stylesheet">
+    <script src="http://cdn.bootcss.com/highlight.js/8.0/highlight.min.js"></script>
     <link rel="stylesheet" href="/css/bootstrap.min.css">
       <link rel="stylesheet" href="/css/style.css">
         <link rel="stylesheet" href="/css/font-awesome.min.css">
@@ -76,94 +78,467 @@
               <h4 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a><strong>摘要</strong></h4><p>这篇博文主要是针对前端面试常见的js问题进行的总结，也算是博主在就业前夕对js的复习吧，为前端面试做准备。此外也希望可以帮到大家。<br>本文总结的问题并非博主总结，只是对原文的查漏补缺，详见<a href="https://github.com/markyun/My-blog/tree/master/Front-end-Developer-Questions/Questions-and-Answers" target="_blank" rel="external">原文</a><br><a id="more"></a></p>
 <h4 id="31-同步和异步的区别？"><a href="#31-同步和异步的区别？" class="headerlink" title="31.同步和异步的区别？"></a>31.同步和异步的区别？</h4><p>同步：浏览器访问服务器请求，用户看得到页面刷新，重新发请求,等请求完，页面刷新，新内容出现，用户看到新内容,j进行下一步操作。就是在发出一个功能调用时，在没有得到结果之前，该调用就不返回。也就是必须一件一件事做,等前一件做完了才能做下一件事；<br>异步：浏览器访问服务器请求，用户正常操作，浏览器后端进行请求。等请求完，页面不刷新，新内容也会出现，用户看到新内容。异步的概念和同步相对。当一个异步过程调用发出后，调用者不能立刻得到结果。实际处理这个调用的部件在完成后，通过状态、通知和回调来通知调用者。</p>
 <h4 id="32-如何解决跨域问题？"><a href="#32-如何解决跨域问题？" class="headerlink" title="32.如何解决跨域问题？"></a>32.如何解决跨域问题？</h4><p>跨域就是 JavaScript出于安全方面的考虑，不允许跨域调用其他页面的对象。<br>解决办法主要包括：</p>
-<pre><code>jsonp、 iframe、window.name、window.postMessage、location.hash、cors、服务器上设置代理页面。
-</code></pre><h6 id="32-1-jsonp"><a href="#32-1-jsonp" class="headerlink" title="32.1 jsonp"></a>32.1 jsonp</h6><p>ajax请求，dataType为jsonp。这种形式需要请求在服务端调整为返回callback([json-object])的形式。如果服务端返回的是普通json对象。那么调试的时候，在chrome浏览器的控制台会报”Uncaught SyntaxError: Unexpected token”错误；在firefox浏览器的控制台会报”SyntaxError: missing ; before statement”错误。<br>比如，有个a.html页面，它里面的代码需要利用ajax获取一个不同域上的json数据，假设这个json数据地址是<a href="http://damonare.cn/data.php" target="_blank" rel="external">http://damonare.cn/data.php</a>, 那么a.html中的代码就可以这样：<br>    <figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&lt;script type="text/javascript"&gt;</div><div class="line">    function dosomething(jsondata)&#123;</div><div class="line">        //处理获得的json数据</div><div class="line">    &#125;</div><div class="line">&lt;/script&gt;</div><div class="line">&lt;script src="http://example.com/data.php?callback=dosomething"&gt;&lt;/script&gt;</div></pre></td></tr></table></figure></p>
-<p>因为是当做一个js文件来引入的，所以<a href="http://damonare.cn/data.php" target="_blank" rel="external">http://damonare.cn/data.php</a> 返回的必须是一个能执行的js文件，所以这个页面的php代码可能是这样的(一定要和后端约定好哦):<br>    <figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line">$callback = $_GET[<span class="string">'callback'</span>];<span class="comment">//得到回调函数名</span></div><div class="line">$data = <span class="keyword">array</span>(<span class="string">'a'</span>,<span class="string">'b'</span>,<span class="string">'c'</span>);<span class="comment">//要返回的数据</span></div><div class="line"><span class="keyword">echo</span> $callback.<span class="string">'('</span>.json_encode($data).<span class="string">')'</span>;<span class="comment">//输出</span></div><div class="line"><span class="meta">?&gt;</span></div></pre></td></tr></table></figure></p>
+<pre><code class="js">jsonp、 iframe、window.name、window.postMessage、location.hash、cors、服务器上设置代理页面。
+</code></pre>
+<h6 id="32-1-jsonp"><a href="#32-1-jsonp" class="headerlink" title="32.1 jsonp"></a>32.1 jsonp</h6><p>ajax请求，dataType为jsonp。这种形式需要请求在服务端调整为返回callback([json-object])的形式。如果服务端返回的是普通json对象。那么调试的时候，在chrome浏览器的控制台会报”Uncaught SyntaxError: Unexpected token”错误；在firefox浏览器的控制台会报”SyntaxError: missing ; before statement”错误。<br>比如，有个a.html页面，它里面的代码需要利用ajax获取一个不同域上的json数据，假设这个json数据地址是<a href="http://damonare.cn/data.php" target="_blank" rel="external">http://damonare.cn/data.php</a>, 那么a.html中的代码就可以这样：</p>
+<pre><code class="js">&lt;script type=&quot;text/javascript&quot;&gt;
+    function dosomething(jsondata){
+        //处理获得的json数据
+    }
+&lt;/script&gt;
+&lt;script src=&quot;http://example.com/data.php?callback=dosomething&quot;&gt;&lt;/script&gt;
+</code></pre>
+<p>因为是当做一个js文件来引入的，所以<a href="http://damonare.cn/data.php" target="_blank" rel="external">http://damonare.cn/data.php</a> 返回的必须是一个能执行的js文件，所以这个页面的php代码可能是这样的(一定要和后端约定好哦):</p>
+<pre><code class="php">&lt;?php
+$callback = $_GET[&#39;callback&#39;];//得到回调函数名
+$data = array(&#39;a&#39;,&#39;b&#39;,&#39;c&#39;);//要返回的数据
+echo $callback.&#39;(&#39;.json_encode($data).&#39;)&#39;;//输出
+?&gt;
+</code></pre>
 <p>最终，输出结果为：dosomething([‘a’,’b’,’c’]);</p>
-<h6 id="32-2-iframe"><a href="#32-2-iframe" class="headerlink" title="32.2 iframe"></a>32.2 iframe</h6><p>页面中增加一个iframe元素，在需要调用get请求的时候，将iframe的src设置为get请求的url即可发起get请求的调用。iframe方式强于jsonp，除了可以处理http请求，还能够跨域实现js调用。<br>    <figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> url = <span class="string">"http://xxx.xxx.xxx?p1=1&amp;p2=2"</span>;</div><div class="line">$(<span class="string">"#iframe"</span>).attr(<span class="string">"src"</span>, url);<span class="comment">//跨域，使用iframe</span></div></pre></td></tr></table></figure></p>
-<h6 id="32-3-window-name"><a href="#32-3-window-name" class="headerlink" title="32.3 window.name"></a>32.3 window.name</h6><p>window对象有个name属性，该属性有个特征：即在一个窗口(window)的生命周期内,窗口载入的所有的页面都是共享一个window.name的，每个页面对window.name都有读写的权限，window.name是持久存在一个窗口载入过的所有页面中的，并不会因新页面的载入而进行重置。<br>比如：我们在任意一个页面输入<br>    <figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">window</span>.name = <span class="string">"My window's name"</span>;</div><div class="line">setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    <span class="built_in">window</span>.location.href = <span class="string">"http://damonare.cn/"</span>;</div><div class="line">&#125;,<span class="number">1000</span>)</div></pre></td></tr></table></figure></p>
-<p>进入damonare.cn页面后我们再检测再检测 window.name :<br>    <figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">window</span>.name; <span class="comment">// My window's name</span></div></pre></td></tr></table></figure></p>
+<h6 id="32-2-iframe"><a href="#32-2-iframe" class="headerlink" title="32.2 iframe"></a>32.2 iframe</h6><p>页面中增加一个iframe元素，在需要调用get请求的时候，将iframe的src设置为get请求的url即可发起get请求的调用。iframe方式强于jsonp，除了可以处理http请求，还能够跨域实现js调用。</p>
+<pre><code class="js">var url = &quot;http://xxx.xxx.xxx?p1=1&amp;p2=2&quot;;
+$(&quot;#iframe&quot;).attr(&quot;src&quot;, url);//跨域，使用iframe
+</code></pre>
+<h6 id="32-3-window-name"><a href="#32-3-window-name" class="headerlink" title="32.3 window.name"></a>32.3 window.name</h6><p>window对象有个name属性，该属性有个特征：即在一个窗口(window)的生命周期内,窗口载入的所有的页面都是共享一个window.name的，每个页面对window.name都有读写的权限，window.name是持久存在一个窗口载入过的所有页面中的，并不会因新页面的载入而进行重置。<br>比如：我们在任意一个页面输入</p>
+<pre><code class="js">window.name = &quot;My window&#39;s name&quot;;
+setTimeout(function(){
+    window.location.href = &quot;http://damonare.cn/&quot;;
+},1000)
+</code></pre>
+<p>进入damonare.cn页面后我们再检测再检测 window.name :</p>
+<pre><code class="js">window.name; // My window&#39;s name
+</code></pre>
 <p>可以看到，如果在一个标签里面跳转网页的话，我们的 window.name 是不会改变的。<br>基于这个思想，我们可以在某个页面设置好 window.name 的值，然后跳转到另外一个页面。在这个页面中就可以获取到我们刚刚设置的 window.name 了。</p>
 <h6 id="32-4-window-postMessage"><a href="#32-4-window-postMessage" class="headerlink" title="32.4 window.postMessage"></a>32.4 window.postMessage</h6><p>高级浏览器Internet Explorer 8+, chrome，Firefox , Opera 和 Safari 都将支持这个功能。这个功能主要包括接受信息的”message”事件和发送消息的”postMessage”方法。比如damonare.cn域的A页面通过iframe嵌入了一个google.com域的B页面，可以通过以下方法实现A和B的通信。</p>
-<pre><code>postMessage的使用方法：
-otherWindow.postMessage(message, targetOrigin);
-otherWindow:指目标窗口，也就是给哪个window发消息，是 window.frames 属性的成员或者由 window.open 方法创建的窗口
-message: 是要发送的消息，类型为 String、Object (IE8、9 不支持)
-targetOrigin: 是限定消息接收范围，不限制请使用 *
-</code></pre><p>A页面通过postMessage方法发送消息：<br>    <figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">window</span>.onload = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;  </div><div class="line">    <span class="keyword">var</span> ifr = <span class="built_in">document</span>.getElementById(<span class="string">'ifr'</span>);  </div><div class="line">    <span class="keyword">var</span> targetOrigin = <span class="string">"http://www.google.com"</span>;  </div><div class="line">    ifr.contentWindow.postMessage(<span class="string">'hello world!'</span>, targetOrigin);  </div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
-<p>B页面通过message事件监听并接受消息:<br>    <figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> onmessage = <span class="function"><span class="keyword">function</span> (<span class="params">event</span>) </span>&#123;  </div><div class="line">  <span class="keyword">var</span> data = event.data;<span class="comment">//消息  </span></div><div class="line">  <span class="keyword">var</span> origin = event.origin;<span class="comment">//消息来源地址  </span></div><div class="line">  <span class="keyword">var</span> source = event.source;<span class="comment">//源Window对象  </span></div><div class="line">  <span class="keyword">if</span>(origin==<span class="string">"http://www.baidu.com"</span>)&#123;  </div><div class="line"><span class="built_in">console</span>.log(data);<span class="comment">//hello world!  </span></div><div class="line">  &#125;  </div><div class="line">&#125;;  </div><div class="line"><span class="keyword">if</span> (<span class="keyword">typeof</span> <span class="built_in">window</span>.addEventListener != <span class="string">'undefined'</span>) &#123;  </div><div class="line">  <span class="built_in">window</span>.addEventListener(<span class="string">'message'</span>, onmessage, <span class="literal">false</span>);  </div><div class="line">&#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="keyword">typeof</span> <span class="built_in">window</span>.attachEvent != <span class="string">'undefined'</span>) &#123;  </div><div class="line">  <span class="comment">//for ie  </span></div><div class="line">  <span class="built_in">window</span>.attachEvent(<span class="string">'onmessage'</span>, onmessage);  </div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>postMessage的使用方法：<br>otherWindow.postMessage(message, targetOrigin);<br>otherWindow:指目标窗口，也就是给哪个window发消息，是 window.frames 属性的成员或者由 window.open 方法创建的窗口<br>message: 是要发送的消息，类型为 String、Object (IE8、9 不支持)<br>targetOrigin: 是限定消息接收范围，不限制请使用 *</p>
+<p>A页面通过postMessage方法发送消息：</p>
+<pre><code class="js">window.onload = function() {  
+    var ifr = document.getElementById(&#39;ifr&#39;);  
+    var targetOrigin = &quot;http://www.google.com&quot;;  
+    ifr.contentWindow.postMessage(&#39;hello world!&#39;, targetOrigin);  
+};
+</code></pre>
+<p>B页面通过message事件监听并接受消息:</p>
+<pre><code class="js">var onmessage = function (event) {  
+  var data = event.data;//消息  
+  var origin = event.origin;//消息来源地址  
+  var source = event.source;//源Window对象  
+  if(origin==&quot;http://www.baidu.com&quot;){  
+console.log(data);//hello world!  
+  }  
+};  
+if (typeof window.addEventListener != &#39;undefined&#39;) {  
+  window.addEventListener(&#39;message&#39;, onmessage, false);  
+} else if (typeof window.attachEvent != &#39;undefined&#39;) {  
+  //for ie  
+  window.attachEvent(&#39;onmessage&#39;, onmessage);  
+}
+</code></pre>
 <h6 id="32-5-location-hash"><a href="#32-5-location-hash" class="headerlink" title="32.5 location.hash"></a>32.5 location.hash</h6><p>此方法的原理就是改变URL的hash部分来进行双向通信。每个window通过改变其他 window的location来发送消息（由于两个页面不在同一个域下IE、Chrome不允许修改parent.location.hash的值，所以要借助于父窗口域名下的一个代理iframe），并通过监听自己的URL的变化来接收消息。</p>
 <p>假如父页面是baidu.com/a.html,iframe嵌入的页面为google.com/b.html（此处省略了域名等url属性），要实现此两个页面间的通信可以通过以下方法:</p>
-<pre><code>a.html传送数据到b.html:
-a.html下修改iframe的src为google.com/b.html#paco
-b.html监听到url发生变化，触发相应操作
-
-b.html传送数据到a.html:由于两个页面不在同一个域下IE、Chrome不允许修改parent.location.hash的值，所以要借助于父窗口域名下的一个代理iframe
-b.html下创建一个隐藏的iframe，此iframe的src是baidu.com域下的，并挂上要传送的hash数据，如src=&quot;http://www.baidu.com/proxy.html#data&quot;
-proxy.html监听到url发生变化，修改a.html的url（因为a.html和proxy.html同域，所以proxy.html可修改a.html的url hash）
-a.html监听到url发生变化，触发相应操作
-</code></pre><p>b.html页面的关键代码如下:<br>    <figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">try</span> &#123;  </div><div class="line">    parent.location.hash = <span class="string">'data'</span>;  </div><div class="line">&#125; <span class="keyword">catch</span> (e) &#123;  </div><div class="line">    <span class="comment">// ie、chrome的安全机制无法修改parent.location.hash，  </span></div><div class="line">    <span class="keyword">var</span> ifrproxy = <span class="built_in">document</span>.createElement(<span class="string">'iframe'</span>);  </div><div class="line">    ifrproxy.style.display = <span class="string">'none'</span>;  </div><div class="line">    ifrproxy.src = <span class="string">"http://www.baidu.com/proxy.html#data"</span>;  </div><div class="line">    <span class="built_in">document</span>.body.appendChild(ifrproxy);  </div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>proxy.html页面的关键代码如下 :<br>    <figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//因为parent.parent（即baidu.com/a.html）和baidu.com/proxy.html属于同一个域，所以可以改变其location.hash的值  </span></div><div class="line">parent.parent.location.hash = self.location.hash.substring(<span class="number">1</span>);</div></pre></td></tr></table></figure></p>
-<h6 id="32-6-document-domain"><a href="#32-6-document-domain" class="headerlink" title="32.6 document.domain"></a>32.6 document.domain</h6><p>把两个页面的document.domain都设成相同的域名就可以了。但要注意的是，document.domain的设置是有限制的，我们只能把document.domain设置成自身或更高一级的父域，且主域必须相同。<br>    <figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&lt;iframe id = <span class="string">"iframe"</span> src=<span class="string">"http://damonare.cn/b.html"</span> onload = <span class="string">"test()"</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">iframe</span>&gt;</span></span></div><div class="line">&lt;script type=<span class="string">"text/javascript"</span>&gt;</div><div class="line">    <span class="built_in">document</span>.domain = <span class="string">'damonare.cn'</span>;<span class="comment">//设置成主域</span></div><div class="line">    <span class="function"><span class="keyword">function</span> <span class="title">test</span>(<span class="params"></span>)</span>&#123;</div><div class="line">        alert(<span class="built_in">document</span>.getElementById(<span class="string">'iframe'</span>).contentWindow);<span class="comment">//contentWindow 可取得子窗口的 window 对象</span></div><div class="line">    &#125;</div><div class="line">&lt;<span class="regexp">/script&gt;</span></div></pre></td></tr></table></figure></p>
+<p>a.html传送数据到b.html:<br>a.html下修改iframe的src为google.com/b.html#paco<br>b.html监听到url发生变化，触发相应操作</p>
+<p>b.html传送数据到a.html:由于两个页面不在同一个域下IE、Chrome不允许修改parent.location.hash的值，所以要借助于父窗口域名下的一个代理iframe<br>b.html下创建一个隐藏的iframe，此iframe的src是baidu.com域下的，并挂上要传送的hash数据，如src=”<a href="http://www.baidu.com/proxy.html#data" target="_blank" rel="external">http://www.baidu.com/proxy.html#data</a>“<br>proxy.html监听到url发生变化，修改a.html的url（因为a.html和proxy.html同域，所以proxy.html可修改a.html的url hash）<br>a.html监听到url发生变化，触发相应操作</p>
+<p>b.html页面的关键代码如下:</p>
+<pre><code class="js">try {  
+    parent.location.hash = &#39;data&#39;;  
+} catch (e) {  
+    // ie、chrome的安全机制无法修改parent.location.hash，  
+    var ifrproxy = document.createElement(&#39;iframe&#39;);  
+    ifrproxy.style.display = &#39;none&#39;;  
+    ifrproxy.src = &quot;http://www.baidu.com/proxy.html#data&quot;;  
+    document.body.appendChild(ifrproxy);  
+}
+</code></pre>
+<p>proxy.html页面的关键代码如下 :</p>
+<pre><code class="js">//因为parent.parent（即baidu.com/a.html）和baidu.com/proxy.html属于同一个域，所以可以改变其location.hash的值  
+parent.parent.location.hash = self.location.hash.substring(1);
+</code></pre>
+<h6 id="32-6-document-domain"><a href="#32-6-document-domain" class="headerlink" title="32.6 document.domain"></a>32.6 document.domain</h6><p>把两个页面的document.domain都设成相同的域名就可以了。但要注意的是，document.domain的设置是有限制的，我们只能把document.domain设置成自身或更高一级的父域，且主域必须相同。</p>
+<pre><code class="js">&lt;iframe id = &quot;iframe&quot; src=&quot;http://damonare.cn/b.html&quot; onload = &quot;test()&quot;&gt;&lt;/iframe&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
+    document.domain = &#39;damonare.cn&#39;;//设置成主域
+    function test(){
+        alert(document.getElementById(&#39;iframe&#39;).contentWindow);//contentWindow 可取得子窗口的 window 对象
+    }
+&lt;/script&gt;
+</code></pre>
 <h6 id="32-7-CORS"><a href="#32-7-CORS" class="headerlink" title="32.7 CORS"></a>32.7 CORS</h6><p>CORS背后的基本思想就是使用自定义的HTTP头部让浏览器与服务器进行沟通，从而决定请求或响应是应该成功还是失败。目前，所有浏览器都支持该功能，IE浏览器不能低于IE10。整个CORS通信过程，都是浏览器自动完成，不需要用户参与。对于开发者来说，CORS通信与同源的AJAX通信没有差别，代码完全一样。浏览器一旦发现AJAX请求跨源，就会自动添加一些附加的头信息，有时还会多出一次附加的请求，但用户不会有感觉。<br>因此，实现CORS通信的关键是服务器。只要服务器实现了CORS接口，就可以跨源通信。<br>如果我们要使用CORS，ajax部分将相对路径改为绝对路径；服务器端设置 Access-Control-Allow-Origin.</p>
 <p>####33.页面编码和被请求的资源编码如果不一致如何处理？</p>
-<pre><code>在&lt;script&gt;标签中设置charset
-</code></pre><p>####34.模块化开发怎么做？<br>立即执行函数,不暴露私有成员<br>    <figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> module1 = (<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">　　　　<span class="keyword">var</span> _count = <span class="number">0</span>;</div><div class="line">　　　　<span class="keyword">var</span> m1 = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">　　　　　　<span class="comment">//...</span></div><div class="line">　　　　&#125;;</div><div class="line">　　　　<span class="keyword">var</span> m2 = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">　　　　　　<span class="comment">//...</span></div><div class="line">　　　　&#125;;</div><div class="line">　　　　<span class="keyword">return</span> &#123;</div><div class="line">　　　　　　<span class="attr">m1</span> : m1,</div><div class="line">　　　　　　<span class="attr">m2</span> : m2</div><div class="line">　　　　&#125;;</div><div class="line">　　&#125;)();</div></pre></td></tr></table></figure></p>
-<p>####35.<strong>AMD（Modules/Asynchronous-Definition）、CMD（Common Module Definition）规范区别？</strong><br>AMD 规范在这里：<a href="https://github.com/amdjs/amdjs-api/wiki/AMD" target="_blank" rel="external">https://github.com/amdjs/amdjs-api/wiki/AMD</a><br>CMD 规范在这里：<a href="https://github.com/seajs/seajs/issues/242" target="_blank" rel="external">https://github.com/seajs/seajs/issues/242</a></p>
+<p>在<script>标签中设置charset</p>
+<p>####34.模块化开发怎么做？<br>立即执行函数,不暴露私有成员</p>
+<pre><code class="js">var module1 = (function(){
+　　　　var _count = 0;
+　　　　var m1 = function(){
+　　　　　　//...
+　　　　};
+　　　　var m2 = function(){
+　　　　　　//...
+　　　　};
+　　　　return {
+　　　　　　m1 : m1,
+　　　　　　m2 : m2
+　　　　};
+　　})();
+</code></pre>
+<p>####35.<strong>AMD（Modules/Asynchronous-Definition）、CMD（Common Module Definition）规范区别？</strong><br>AMD 规范在这里：<a href="https://github.com/amdjs/amdjs-api/wiki/AMD">https://github.com/amdjs/amdjs-api/wiki/AMD</a><br>CMD 规范在这里：<a href="https://github.com/seajs/seajs/issues/242">https://github.com/seajs/seajs/issues/242</a></p>
 <p>Asynchronous Module Definition，异步模块定义，所有的模块将被异步加载，模块加载不影响后面语句运行。所有依赖某些模块的语句均放置在回调函数中。<br>区别：</p>
 <ol>
 <li>对于依赖的模块，AMD 是提前执行，CMD 是延迟执行。不过 RequireJS 从 2.0 开始，也改成可以延迟执行（根据写法不同，处理方式不同）。CMD 推崇 as lazy as possible.</li>
-<li>CMD 推崇依赖就近，AMD 推崇依赖前置。看代码： <figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// CMD</span></div><div class="line">define(<span class="function"><span class="keyword">function</span>(<span class="params">require, exports, module</span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> a = <span class="built_in">require</span>(<span class="string">'./a'</span>)</div><div class="line">    a.doSomething()</div><div class="line">    <span class="comment">// 此处略去 100 行</span></div><div class="line">    <span class="keyword">var</span> b = <span class="built_in">require</span>(<span class="string">'./b'</span>) <span class="comment">// 依赖可以就近书写</span></div><div class="line">    b.doSomething()</div><div class="line">    <span class="comment">// ...</span></div><div class="line">&#125;)</div><div class="line"><span class="comment">// AMD 默认推荐</span></div><div class="line">define([<span class="string">'./a'</span>, <span class="string">'./b'</span>], <span class="function"><span class="keyword">function</span>(<span class="params">a, b</span>) </span>&#123; <span class="comment">// 依赖必须一开始就写好</span></div><div class="line">    a.doSomething()</div><div class="line">    <span class="comment">// 此处略去 100 行</span></div><div class="line">    b.doSomething()</div><div class="line">    <span class="comment">// ...</span></div><div class="line">&#125;)</div></pre></td></tr></table></figure>
-</li>
+<li>CMD 推崇依赖就近，AMD 推崇依赖前置。看代码：</li>
 </ol>
+<pre><code class="js">// CMD
+define(function(require, exports, module) {
+    var a = require(&#39;./a&#39;)
+    a.doSomething()
+    // 此处略去 100 行
+    var b = require(&#39;./b&#39;) // 依赖可以就近书写
+    b.doSomething()
+    // ...
+})
+// AMD 默认推荐
+define([&#39;./a&#39;, &#39;./b&#39;], function(a, b) { // 依赖必须一开始就写好
+    a.doSomething()
+    // 此处略去 100 行
+    b.doSomething()
+    // ...
+})
+</code></pre>
 <p>####36.<strong>requireJS的核心原理是什么？（如何动态加载的？如何避免多次加载的？如何缓存的？）</strong><br>核心是js的加载模块，通过正则匹配模块以及模块的依赖关系，保证文件加载的先后顺序，根据文件的路径对加载过的文件做了缓存。</p>
 <p>####37.谈一谈你对ECMAScript6的了解？<br>ECMAScript 6.0（以下简称ES6）是JavaScript语言的下一代标准，已经在2015年6月正式发布了。它的目标，是使得JavaScript语言可以用来编写复杂的大型应用程序，成为企业级开发语言。<br>ECMAScript和JavaScript的关系是，前者是后者的规格，后者是前者的一种实现。<br>ES6既是一个历史名词，也是一个泛指，含义是5.1版以后的JavaScript的下一代标准，涵盖了ES2015、ES2016、ES2017等等，而ES2015则是正式名称，特指该年发布的正式版本的语言标准。</p>
-<p>####38.ECMAScript6 怎么写class么，为什么会出现class这种东西?<br>ES6 class基本语法：<br>ES6的类，完全可以看作构造函数的另一种写法。<br>    <figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Point</span> </span>&#123;</div><div class="line">  <span class="comment">// ...</span></div><div class="line">&#125;</div><div class="line"><span class="keyword">typeof</span> Point <span class="comment">// "function"</span></div><div class="line">Point === Point.prototype.constructor <span class="comment">// true</span></div></pre></td></tr></table></figure></p>
-<p>上面代码表明，类的数据类型就是函数，类本身就指向构造函数。<br>使用的时候，也是直接对类使用new命令，跟构造函数的用法完全一致。<br>    <figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Bar</span> </span>&#123;</div><div class="line">  doStuff() &#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">'stuff'</span>);</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"><span class="keyword">var</span> b = <span class="keyword">new</span> Bar();</div><div class="line">b.doStuff() <span class="comment">// "stuff"</span></div></pre></td></tr></table></figure></p>
-<p>构造函数的prototype属性，在ES6的“类”上面继续存在。事实上，类的所有方法都定义在类的prototype属性上面。<br>    <figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Point</span> </span>&#123;</div><div class="line">  <span class="keyword">constructor</span>()&#123;</div><div class="line">    <span class="comment">// ...</span></div><div class="line">  &#125;</div><div class="line">  toString()&#123;</div><div class="line">    <span class="comment">// ...</span></div><div class="line">  &#125;</div><div class="line">  toValue()&#123;</div><div class="line">    <span class="comment">// ...</span></div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"><span class="comment">// 等同于</span></div><div class="line">Point.prototype = &#123;</div><div class="line">  toString()&#123;&#125;,</div><div class="line">  toValue()&#123;&#125;</div><div class="line">&#125;;</div><div class="line"><span class="comment">//在类的实例上面调用方法，其实就是调用原型上的方法。</span></div><div class="line"><span class="keyword">let</span> p = <span class="keyword">new</span> Point();</div><div class="line">p.constructor === Point.prototype.constructor <span class="comment">// true</span></div></pre></td></tr></table></figure></p>
+<p>####38.ECMAScript6 怎么写class么，为什么会出现class这种东西?<br>ES6 class基本语法：<br>ES6的类，完全可以看作构造函数的另一种写法。</p>
+<pre><code class="js">class Point {
+  // ...
+}
+typeof Point // &quot;function&quot;
+Point === Point.prototype.constructor // true
+</code></pre>
+<p>上面代码表明，类的数据类型就是函数，类本身就指向构造函数。<br>使用的时候，也是直接对类使用new命令，跟构造函数的用法完全一致。</p>
+<pre><code class="js">class Bar {
+  doStuff() {
+    console.log(&#39;stuff&#39;);
+  }
+}
+var b = new Bar();
+b.doStuff() // &quot;stuff&quot;
+</code></pre>
+<p>构造函数的prototype属性，在ES6的“类”上面继续存在。事实上，类的所有方法都定义在类的prototype属性上面。</p>
+<pre><code class="js">class Point {
+  constructor(){
+    // ...
+  }
+  toString(){
+    // ...
+  }
+  toValue(){
+    // ...
+  }
+}
+// 等同于
+Point.prototype = {
+  toString(){},
+  toValue(){}
+};
+//在类的实例上面调用方法，其实就是调用原型上的方法。
+let p = new Point();
+p.constructor === Point.prototype.constructor // true
+</code></pre>
 <p>class出现的原因：<br>基本上，ES6的class可以看作只是一个语法糖，它的绝大部分功能，ES5都可以做到，新的class写法只是让对象原型的写法更加清晰、更像面向对象编程的语法而已。</p>
-<p>####39.异步加载JS的方式有哪些？<br>(1) defer，只支持IE<br>defer属性的定义和用法： 属性规定是否对脚本执行进行延迟，直到页面加载为止。有的 javascript 脚本 document.write 方法来创建当前的文档内容，其他脚本就不一定是了。<br>如果您的脚本不会改变文档的内容，可将 defer 属性加入到 <script> 标签中，以便加快处理文档的速度。因为浏览器知道它将能够安全地读取文档的剩余部分而不用执行脚本，它将推迟对脚本的解释，直到文档已经显示给用户为止。<br>    <figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&lt;script type=<span class="string">"text/javascript"</span> defer=<span class="string">"defer"</span>&gt;</div><div class="line">alert(<span class="built_in">document</span>.getElementById(<span class="string">"p1"</span>).firstChild.nodeValue);</div><div class="line"><span class="xml"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></div></pre></td></tr></table></figure></p>
+<p>####39.异步加载JS的方式有哪些？<br>(1) defer，只支持IE<br>defer属性的定义和用法： 属性规定是否对脚本执行进行延迟，直到页面加载为止。有的 javascript 脚本 document.write 方法来创建当前的文档内容，其他脚本就不一定是了。<br>如果您的脚本不会改变文档的内容，可将 defer 属性加入到 <script> 标签中，以便加快处理文档的速度。因为浏览器知道它将能够安全地读取文档的剩余部分而不用执行脚本，它将推迟对脚本的解释，直到文档已经显示给用户为止。</p>
+<pre><code class="js">&lt;script type=&quot;text/javascript&quot; defer=&quot;defer&quot;&gt;
+alert(document.getElementById(&quot;p1&quot;).firstChild.nodeValue);
+&lt;/script&gt;
+</code></pre>
 <p>(2) async：</p>
-<p><async>属性是HTML5中新增的异步支持。此方法被称为Script DOM Element 方法。Google Analytics 和 Google+ Badge 都使用了这种异步加载代码。<br>async 属性规定一旦脚本可用，则会异步执行。<br>注释：async 属性仅适用于外部脚本（只有在使用 src 属性时）。<br>注释：有多种执行外部脚本的方法：<br>如果 async=”async”：脚本相对于页面的其余部分异步地执行（当页面继续进行解析时，脚本将被执行）<br>如果不使用 async 且 defer=”defer”：脚本将在页面完成解析时执行<br>如果既不使用 async 也不使用 defer：在浏览器继续解析页面之前，立即读取并执行脚本<br>    <figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;script type=<span class="string">"text/javascript"</span> src=<span class="string">"demo_async.js"</span> <span class="keyword">async</span>=<span class="string">"async"</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></div></pre></td></tr></table></figure></p>
-<p>但是这种加载方式执行完之前会阻止onload事件的触发，而现在很多页面的代码都在onload时还执行额外的渲染工作，所以还是会阻塞部分页面的初始化处理。<br>(3) 创建script，插入到DOM中，加载完毕后callBack<br>    <figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">loadScript</span>(<span class="params">url, callback</span>)</span>&#123;</div><div class="line"><span class="keyword">var</span> script=<span class="built_in">document</span>.creatElment(<span class="string">"script"</span>);</div><div class="line">script.type=<span class="string">"text/javascript"</span>;</div><div class="line"><span class="keyword">if</span>(script.readyState)&#123;  ie</div><div class="line">     script.onReadyState=<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">       <span class="keyword">if</span>(script.readyState =<span class="string">"load"</span> || script.readyState = <span class="string">"complete"</span>)&#123;</div><div class="line">          script.onReadyState=<span class="literal">null</span>;</div><div class="line">          callback();</div><div class="line">       &#125;<span class="keyword">else</span>&#123;</div><div class="line">       script.onload=<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">          callback();</div><div class="line">&#125;</div><div class="line">&#125;</div><div class="line">&#125;</div><div class="line">  &#125;</div><div class="line">     script.src=url;</div><div class="line"><span class="built_in">document</span>.body.appendChild(script);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>(4)AJAX eval（使用AJAX得到脚本内容，然后通过eval_r(xmlhttp.responseText)来运行脚本）<br>    <figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//采用Http请求get方式;open()方法的第三个参数表示采用异步(true)还是同步(false)处理</span></div><div class="line"> <span class="keyword">var</span> xmlHttp = getXmlHttp();</div><div class="line"> xmlHttp.open(<span class="string">"GET"</span>, <span class="string">"http://cdn.bootcss.com/jquery/3.0.0-beta1/jquery.min.js"</span>, <span class="literal">true</span>);</div><div class="line"> xmlHttp.send();</div><div class="line"> xmlHttp.onreadystatechange = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">     <span class="keyword">if</span> (xmlHttp.readyState == <span class="number">4</span> &amp;&amp; xmlHttp.status == <span class="number">200</span>)&#123;</div><div class="line">         <span class="built_in">eval</span>(xmlHttp.responseText);</div><div class="line">         <span class="comment">//alert($);//可以弹出$,表明JS已经加载进来。click事件放在其它出会出问题，应该是还没加载进来</span></div><div class="line">         $(<span class="string">"#btn1"</span>).click(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">             alert($(<span class="keyword">this</span>).text());</div><div class="line">         &#125;);</div><div class="line">     &#125;</div><div class="line"> &#125;</div></pre></td></tr></table></figure></p>
-<p>(5)iframe方式:在父窗口插入一个iframe元素，然后再iframe中执行加载JS的操作。<br>    <figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> insertJS = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;alert(<span class="number">2</span>)&#125;;</div><div class="line"><span class="keyword">var</span> iframe = <span class="built_in">document</span>.createElement(<span class="string">"iframe"</span>);</div><div class="line"><span class="built_in">document</span>.body.appendChild(iframe);</div><div class="line"><span class="keyword">var</span> doc = iframe.contentWindow.document;<span class="comment">//获取iframe中的window要用contentWindow属性。</span></div><div class="line">doc.open();</div><div class="line">doc.write(<span class="string">"&lt;script&gt;var insertJS = function()&#123;&#125;;&lt;\/script&gt;&lt;body onload='insertJS()'&gt;&lt;/body&gt;"</span>);</div><div class="line">doc.close();</div></pre></td></tr></table></figure></p>
+<p><async>属性是HTML5中新增的异步支持。此方法被称为Script DOM Element 方法。Google Analytics 和 Google+ Badge 都使用了这种异步加载代码。<br>async 属性规定一旦脚本可用，则会异步执行。<br>注释：async 属性仅适用于外部脚本（只有在使用 src 属性时）。<br>注释：有多种执行外部脚本的方法：<br>如果 async=”async”：脚本相对于页面的其余部分异步地执行（当页面继续进行解析时，脚本将被执行）<br>如果不使用 async 且 defer=”defer”：脚本将在页面完成解析时执行<br>如果既不使用 async 也不使用 defer：在浏览器继续解析页面之前，立即读取并执行脚本</p>
+<pre><code class="js">&lt;script type=&quot;text/javascript&quot; src=&quot;demo_async.js&quot; async=&quot;async&quot;&gt;&lt;/script&gt;
+</code></pre>
+<p>但是这种加载方式执行完之前会阻止onload事件的触发，而现在很多页面的代码都在onload时还执行额外的渲染工作，所以还是会阻塞部分页面的初始化处理。<br>(3) 创建script，插入到DOM中，加载完毕后callBack</p>
+<pre><code class="js">function loadScript(url, callback){
+var script=document.creatElment(&quot;script&quot;);
+script.type=&quot;text/javascript&quot;;
+if(script.readyState){  ie
+     script.onReadyState=function(){
+       if(script.readyState =&quot;load&quot; || script.readyState = &quot;complete&quot;){
+          script.onReadyState=null;
+          callback();
+       }else{
+       script.onload=function(){
+          callback();
+}
+}
+}
+  }
+     script.src=url;
+document.body.appendChild(script);
+}
+</code></pre>
+<p>(4)AJAX eval（使用AJAX得到脚本内容，然后通过eval_r(xmlhttp.responseText)来运行脚本）</p>
+<pre><code class="js">//采用Http请求get方式;open()方法的第三个参数表示采用异步(true)还是同步(false)处理
+ var xmlHttp = getXmlHttp();
+ xmlHttp.open(&quot;GET&quot;, &quot;http://cdn.bootcss.com/jquery/3.0.0-beta1/jquery.min.js&quot;, true);
+ xmlHttp.send();
+ xmlHttp.onreadystatechange = function(){
+     if (xmlHttp.readyState == 4 &amp;&amp; xmlHttp.status == 200){
+         eval(xmlHttp.responseText);
+         //alert($);//可以弹出$,表明JS已经加载进来。click事件放在其它出会出问题，应该是还没加载进来
+         $(&quot;#btn1&quot;).click(function(){
+             alert($(this).text());
+         });
+     }
+ }
+</code></pre>
+<p>(5)iframe方式:在父窗口插入一个iframe元素，然后再iframe中执行加载JS的操作。</p>
+<pre><code class="js">var insertJS = function(){alert(2)};
+var iframe = document.createElement(&quot;iframe&quot;);
+document.body.appendChild(iframe);
+var doc = iframe.contentWindow.document;//获取iframe中的window要用contentWindow属性。
+doc.open();
+doc.write(&quot;&lt;script&gt;var insertJS = function(){};&lt;\/script&gt;&lt;body onload=&#39;insertJS()&#39;&gt;&lt;/body&gt;&quot;);
+doc.close();
+</code></pre>
 <p>####39.documen.write和 innerHTML的区别</p>
-<pre><code>document.write只能重绘整个页面
-innerHTML可以重绘页面的一部分
-</code></pre><p>####40.DOM操作——怎样添加、移除、移动、复制、创建和查找节点?<br>（1）创建新节点<br>  <figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">createDocumentFragment()    <span class="comment">//创建一个DOM片段</span></div><div class="line">createElement()   <span class="comment">//创建一个具体的元素</span></div><div class="line">createTextNode()   <span class="comment">//创建一个文本节点</span></div></pre></td></tr></table></figure></p>
-<p>（2）添加、移除、替换、插入<br>  <figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">appendChild()</div><div class="line">removeChild()</div><div class="line">replaceChild()</div><div class="line">insertBefore() <span class="comment">//在已有的子节点前插入一个新的子节点</span></div></pre></td></tr></table></figure></p>
-<p>（3）查找<br>  <figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">getElementsByTagName()    <span class="comment">//通过标签名称</span></div><div class="line">getElementsByName()    <span class="comment">//通过元素的Name属性的值(IE容错能力较强，会得到一个数组，其中包括id等于name值的)</span></div><div class="line">getElementById()    <span class="comment">//通过元素Id，唯一性</span></div></pre></td></tr></table></figure></p>
+<p>document.write只能重绘整个页面<br>innerHTML可以重绘页面的一部分</p>
+<p>####40.DOM操作——怎样添加、移除、移动、复制、创建和查找节点?<br>（1）创建新节点</p>
+<pre><code class="js">createDocumentFragment()    //创建一个DOM片段
+createElement()   //创建一个具体的元素
+createTextNode()   //创建一个文本节点
+</code></pre>
+<p>（2）添加、移除、替换、插入</p>
+<pre><code class="js">appendChild()
+removeChild()
+replaceChild()
+insertBefore() //在已有的子节点前插入一个新的子节点
+</code></pre>
+<p>（3）查找</p>
+<pre><code class="js">getElementsByTagName()    //通过标签名称
+getElementsByName()    //通过元素的Name属性的值(IE容错能力较强，会得到一个数组，其中包括id等于name值的)
+getElementById()    //通过元素Id，唯一性
+</code></pre>
 <p>####41. .call() 和 .apply() 的区别？<br>两个方法产生的作用是完全一样的;区别在于传递的参数不同。<br>call方法: call([thisObj,arg1, arg2,   ,.argN)<br>apply方法：apply([thisObj,argArray)</p>
-<p>例子中用 add 来替换 sub，add.call(sub,3,1) == add(3,1) ，所以运行结果为：alert(4);<br>注意：js 中的函数其实是对象，函数名是对 Function 对象的引用。<br>    <figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">add</span>(<span class="params">a,b</span>)</div><div class="line"></span>&#123;</div><div class="line">    alert(a+b);</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">sub</span>(<span class="params">a,b</span>)</div><div class="line"></span>&#123;</div><div class="line">    alert(a-b);</div><div class="line">&#125;</div><div class="line">add.call(sub,<span class="number">3</span>,<span class="number">1</span>);</div><div class="line">add.apply(sub,[<span class="number">3</span>,<span class="number">1</span>]);<span class="comment">//二者等价</span></div></pre></td></tr></table></figure></p>
-<p>####42.组和对象有哪些原生方法，列举一下？<br>（1）检测数组<br>    <figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">value <span class="keyword">instanceof</span> <span class="built_in">Array</span></div><div class="line"><span class="built_in">Array</span>.isArray(value)<span class="comment">//es5</span></div></pre></td></tr></table></figure></p>
-<p>(2)转换方法<br>    <figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">value.toLocaleString();<span class="comment">//返回字符串</span></div><div class="line">value.toString();<span class="comment">//返回字符串</span></div><div class="line">value.valueOf();<span class="comment">//返回数组</span></div><div class="line">value.join(<span class="string">'某连接符'</span>);<span class="comment">//返回所有项由连接符连接起来的字符串</span></div></pre></td></tr></table></figure></p>
-<p>(3)栈方法<br>    <figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">value.push(a);<span class="comment">//返回 a,添加 a 到数组末尾</span></div><div class="line">value.pop();<span class="comment">//返回value末尾项，删除末尾项</span></div></pre></td></tr></table></figure></p>
-<p>(4)队列方法<br>    <figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">value.shift();<span class="comment">//返回数组第一项,并删除第一项</span></div><div class="line">value.unshift(arg1,arg2,...);<span class="comment">//添加项到数组前面，返回新数组的长度</span></div></pre></td></tr></table></figure></p>
-<p>(5)重排序方法<br>    <figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">value.reverse();<span class="comment">//反转数组顺序</span></div><div class="line">value.sort();<span class="comment">//将每一项按字符串 升序排列</span></div><div class="line"><span class="comment">//sort常接收一个比较函数，即正常排序</span></div><div class="line">value.sort(<span class="function"><span class="keyword">function</span>(<span class="params">a,b</span>)</span>&#123;</div><div class="line">  <span class="keyword">return</span> a-b;<span class="comment">//升序 or b-a降序</span></div><div class="line">&#125;)</div></pre></td></tr></table></figure></p>
-<p>(6)操作方法<br>    <figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">value1.contact(value2);<span class="comment">//返回由value1和value2连接的 新数组</span></div><div class="line">value.slice(a,b);<span class="comment">//返回位置在a-b之间的项构成的 新数组，b缺省时即到数组末尾</span></div><div class="line">value.splice(a,b);<span class="comment">//删除 从a位置起的b项，返回删除的项</span></div><div class="line">value.splice(a,<span class="number">0</span>,arg1,...);<span class="comment">//插入 从位置a处插入arg1...</span></div><div class="line">value.splice(a,b,arg1,...);<span class="comment">//替换 将a处的b项替换成arg1...</span></div></pre></td></tr></table></figure></p>
-<p>(7)位置方法<br>    <figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">value.indexOf(a);<span class="comment">//从头开始查找 a，返回所在位置，不存在则返回-1</span></div><div class="line">value.lastIndexOf(a);<span class="comment">//从末尾开始查找 a，返回所在位置，不存在则返回-1</span></div></pre></td></tr></table></figure></p>
-<p>(8)迭代方法<br>    <figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">value.every(<span class="function"><span class="keyword">function</span>(<span class="params">item</span>)</span>&#123;...&#125;);<span class="comment">//对每一项执行指定函数，每一项true则返回true</span></div><div class="line">value.filter(<span class="function"><span class="keyword">function</span>(<span class="params">item</span>)</span>&#123;...&#125;);<span class="comment">//对每一项执行指定函数，返回true所在项</span></div><div class="line">value.forEach(<span class="function"><span class="keyword">function</span>(<span class="params">item</span>)</span>&#123;...&#125;);<span class="comment">//对每一项执行指定函数,没有返回值</span></div><div class="line">value.map(<span class="function"><span class="keyword">function</span>(<span class="params">item</span>)</span>&#123;...&#125;);<span class="comment">//对每一项执行指定函数,返回调用结果组成的数组</span></div><div class="line">value.some(<span class="function"><span class="keyword">function</span>(<span class="params">item</span>)</span>&#123;...&#125;);<span class="comment">//对每一项执行指定函数,任意一项返回true则true</span></div></pre></td></tr></table></figure></p>
-<p>(9)缩小方法<br>    <figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">value.reduce(<span class="function"><span class="keyword">function</span>(<span class="params">pre,cur,index,array</span>)</span>&#123;...&#125;);<span class="comment">//前一个值，当前值，项的索引，数组对象。第一次prev是数组第一项，之后为函数的调用结果</span></div><div class="line">value.reduceRight(<span class="function"><span class="keyword">function</span>(<span class="params">pre,cur,index,array</span>)</span>&#123;...&#125;);<span class="comment">//与reduce相反，第一次pre是数组最后项。。</span></div></pre></td></tr></table></figure></p>
-<p>####43.JS 怎么实现一个类。怎么实例化这个类。<br>JavaScript语言的传统方法是通过构造函数，定义并生成新对象。<br>    <figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Point</span>(<span class="params">x, y</span>) </span>&#123;</div><div class="line">  <span class="keyword">this</span>.x = x;</div><div class="line">  <span class="keyword">this</span>.y = y;</div><div class="line">&#125;</div><div class="line">Point.prototype.toString = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="keyword">return</span> <span class="string">'('</span> + <span class="keyword">this</span>.x + <span class="string">', '</span> + <span class="keyword">this</span>.y + <span class="string">')'</span>;</div><div class="line">&#125;;</div><div class="line"><span class="keyword">var</span> p = <span class="keyword">new</span> Point(<span class="number">1</span>, <span class="number">2</span>);</div><div class="line">p.toString();<span class="comment">//(1,2)</span></div></pre></td></tr></table></figure></p>
-<p>####44.JavaScript中的作用域与变量声明提升？<br>作用域：全局作用域和函数作用域<br>    <figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> x = <span class="number">1</span>;<span class="comment">//全局作用域</span></div><div class="line"><span class="built_in">console</span>.log(x); <span class="comment">// 1</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">s</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> x = <span class="number">2</span>;<span class="comment">//函数作用域，不会影响外部的x</span></div><div class="line">    <span class="built_in">console</span>.log(x); <span class="comment">// 2</span></div><div class="line">&#125;</div><div class="line">s();</div><div class="line"><span class="built_in">console</span>.log(x); <span class="comment">// 1</span></div><div class="line"></div><div class="line"><span class="comment">//注意：js没有块级作用域</span></div><div class="line"><span class="keyword">if</span>(<span class="literal">true</span>)&#123;</div><div class="line">  <span class="keyword">var</span> x=<span class="number">2</span>;<span class="comment">//非函数作用域，为全局作用域，修改了全局x</span></div><div class="line">&#125;</div><div class="line"><span class="built_in">console</span>.log(x); <span class="comment">// 2</span></div></pre></td></tr></table></figure></p>
-<p>变量名提升：函数声明和变量定义通常会被解释器移动到其所在作用域的最顶部。<br>    所以变量的上升（Hoisting）只是其定义上升，而变量的赋值并不会上升：<br>    <figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">if</span> (<span class="literal">false</span>) &#123;</div><div class="line">        <span class="keyword">var</span> x = <span class="number">1</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span>;</div><div class="line">    <span class="keyword">var</span> y = <span class="number">1</span>;</div><div class="line">&#125;</div><div class="line"><span class="comment">//等价于</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> x, y;</div><div class="line">    <span class="keyword">if</span> (<span class="literal">false</span>) &#123;</div><div class="line">        x = <span class="number">1</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span>;</div><div class="line">    y = <span class="number">1</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>我们都知道，创建一个函数的方法有两种，一种是通过函数声明function foo(){}，另一种是通过定义一个变量var foo = function(){}。前一种，由于函数本身也是一种变量，所以也存在变量上升的现象，但是它是上升了整个函数；后一种只会把声明 var foo 提到最前面，此时的foo为undefined,所以执行报错。<br>    <figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    foo(); <span class="comment">// TypeError "foo is not a function"</span></div><div class="line">    bar(); <span class="comment">// "this will run!"</span></div><div class="line">    <span class="keyword">var</span> foo = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">        alert(<span class="string">"this won't run!"</span>);</div><div class="line">    &#125;</div><div class="line">    <span class="function"><span class="keyword">function</span> <span class="title">bar</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        alert(<span class="string">"this will run!"</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">test();</div><div class="line"><span class="comment">//等价于</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> foo;</div><div class="line">    <span class="function"><span class="keyword">function</span> <span class="title">bar</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        alert(<span class="string">"this will run!"</span>);</div><div class="line">    &#125;</div><div class="line">    foo(); <span class="comment">// TypeError "foo is not a function"</span></div><div class="line">    bar(); <span class="comment">// "this will run!"</span></div><div class="line">    foo = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">        alert(<span class="string">"this won't run!"</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">test();</div></pre></td></tr></table></figure></p>
+<p>例子中用 add 来替换 sub，add.call(sub,3,1) == add(3,1) ，所以运行结果为：alert(4);<br>注意：js 中的函数其实是对象，函数名是对 Function 对象的引用。</p>
+<pre><code class="js">function add(a,b)
+{
+    alert(a+b);
+}
+function sub(a,b)
+{
+    alert(a-b);
+}
+add.call(sub,3,1);
+add.apply(sub,[3,1]);//二者等价
+</code></pre>
+<p>####42.组和对象有哪些原生方法，列举一下？<br>（1）检测数组</p>
+<pre><code class="js">value instanceof Array
+Array.isArray(value)//es5
+</code></pre>
+<p>(2)转换方法</p>
+<pre><code class="js">value.toLocaleString();//返回字符串
+value.toString();//返回字符串
+value.valueOf();//返回数组
+value.join(&#39;某连接符&#39;);//返回所有项由连接符连接起来的字符串
+</code></pre>
+<p>(3)栈方法</p>
+<pre><code class="js">value.push(a);//返回 a,添加 a 到数组末尾
+value.pop();//返回value末尾项，删除末尾项
+</code></pre>
+<p>(4)队列方法</p>
+<pre><code class="js">value.shift();//返回数组第一项,并删除第一项
+value.unshift(arg1,arg2,...);//添加项到数组前面，返回新数组的长度
+</code></pre>
+<p>(5)重排序方法</p>
+<pre><code class="js">value.reverse();//反转数组顺序
+value.sort();//将每一项按字符串 升序排列
+//sort常接收一个比较函数，即正常排序
+value.sort(function(a,b){
+  return a-b;//升序 or b-a降序
+})
+</code></pre>
+<p>(6)操作方法</p>
+<pre><code class="js">value1.contact(value2);//返回由value1和value2连接的 新数组
+value.slice(a,b);//返回位置在a-b之间的项构成的 新数组，b缺省时即到数组末尾
+value.splice(a,b);//删除 从a位置起的b项，返回删除的项
+value.splice(a,0,arg1,...);//插入 从位置a处插入arg1...
+value.splice(a,b,arg1,...);//替换 将a处的b项替换成arg1...
+</code></pre>
+<p>(7)位置方法</p>
+<pre><code class="js">value.indexOf(a);//从头开始查找 a，返回所在位置，不存在则返回-1
+value.lastIndexOf(a);//从末尾开始查找 a，返回所在位置，不存在则返回-1
+</code></pre>
+<p>(8)迭代方法</p>
+<pre><code class="js">value.every(function(item){...});//对每一项执行指定函数，每一项true则返回true
+value.filter(function(item){...});//对每一项执行指定函数，返回true所在项
+value.forEach(function(item){...});//对每一项执行指定函数,没有返回值
+value.map(function(item){...});//对每一项执行指定函数,返回调用结果组成的数组
+value.some(function(item){...});//对每一项执行指定函数,任意一项返回true则true
+</code></pre>
+<p>(9)缩小方法</p>
+<pre><code class="js">value.reduce(function(pre,cur,index,array){...});//前一个值，当前值，项的索引，数组对象。第一次prev是数组第一项，之后为函数的调用结果
+value.reduceRight(function(pre,cur,index,array){...});//与reduce相反，第一次pre是数组最后项。。
+</code></pre>
+<p>####43.JS 怎么实现一个类。怎么实例化这个类。<br>JavaScript语言的传统方法是通过构造函数，定义并生成新对象。</p>
+<pre><code class="js">function Point(x, y) {
+  this.x = x;
+  this.y = y;
+}
+Point.prototype.toString = function () {
+  return &#39;(&#39; + this.x + &#39;, &#39; + this.y + &#39;)&#39;;
+};
+var p = new Point(1, 2);
+p.toString();//(1,2)
+</code></pre>
+<p>####44.JavaScript中的作用域与变量声明提升？<br>作用域：全局作用域和函数作用域</p>
+<pre><code class="js">var x = 1;//全局作用域
+console.log(x); // 1
+function s() {
+    var x = 2;//函数作用域，不会影响外部的x
+    console.log(x); // 2
+}
+s();
+console.log(x); // 1
+
+//注意：js没有块级作用域
+if(true){
+  var x=2;//非函数作用域，为全局作用域，修改了全局x
+}
+console.log(x); // 2
+</code></pre>
+<p>变量名提升：函数声明和变量定义通常会被解释器移动到其所在作用域的最顶部。<br>所以变量的上升（Hoisting）只是其定义上升，而变量的赋值并不会上升：</p>
+<pre><code class="js">function foo() {
+    if (false) {
+        var x = 1;
+    }
+    return;
+    var y = 1;
+}
+//等价于
+function foo() {
+    var x, y;
+    if (false) {
+        x = 1;
+    }
+    return;
+    y = 1;
+}
+</code></pre>
+<p>我们都知道，创建一个函数的方法有两种，一种是通过函数声明function foo(){}，另一种是通过定义一个变量var foo = function(){}。前一种，由于函数本身也是一种变量，所以也存在变量上升的现象，但是它是上升了整个函数；后一种只会把声明 var foo 提到最前面，此时的foo为undefined,所以执行报错。</p>
+<pre><code class="js">
+function test() {
+    foo(); // TypeError &quot;foo is not a function&quot;
+    bar(); // &quot;this will run!&quot;
+    var foo = function () {
+        alert(&quot;this won&#39;t run!&quot;);
+    }
+    function bar() {
+        alert(&quot;this will run!&quot;);
+    }
+}
+test();
+//等价于
+function test() {
+    var foo;
+    function bar() {
+        alert(&quot;this will run!&quot;);
+    }
+    foo(); // TypeError &quot;foo is not a function&quot;
+    bar(); // &quot;this will run!&quot;
+    foo = function () {
+        alert(&quot;this won&#39;t run!&quot;);
+    }
+}
+test();
+</code></pre>
 <p>####45.<strong>如何编写高性能的Javascript？</strong><br>参考<a href="http://www.admin10000.com/document/4988.html">编写高性能JavaScript</a></p>
-<p>####46.哪些操作会造成内存泄漏？<br>内存泄露是指一块被分配的内存既不能使用，又不能回收，直到浏览器进程结束，由于浏览器垃圾回收方法有bug，会产生内存泄露。<br>参考：<br><a href="http://www.jb51.net/article/37685.htm">http://www.jb51.net/article/37685.htm</a><br><a href="http://blog.csdn.net/yq_oxygen/article/details/51893047">http://blog.csdn.net/yq_oxygen/article/details/51893047</a><br><a href="http://www.cnblogs.com/chuaWeb/p/5196330.html">http://www.cnblogs.com/chuaWeb/p/5196330.html</a><br>（1）当页面中元素被移除或替换时，若元素绑定的事件仍没被移除，在IE中不会作出恰当处理，此时要先手工移除事件，不然会存在内存泄露。<br>    <figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"myDiv"</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">value</span>=<span class="string">"Click me"</span> <span class="attr">id</span>=<span class="string">"myBtn"</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure></p>
-<pre><code><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> btn = <span class="built_in">document</span>.getElementById(<span class="string">"myBtn"</span>);</div><div class="line">btn.onclick = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line"><span class="built_in">document</span>.getElementById(<span class="string">"myDiv"</span>).innerHTML = <span class="string">"Processing..."</span>;</div><div class="line">&#125;</div><div class="line"><span class="comment">//改成</span></div><div class="line"><span class="keyword">var</span> btn = <span class="built_in">document</span>.getElementById(<span class="string">"myBtn"</span>);</div><div class="line">btn.onclick = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">btn.onclick=<span class="literal">null</span>;<span class="comment">//手动移除事件</span></div><div class="line"><span class="built_in">document</span>.getElementById(<span class="string">"myDiv"</span>).innerHTML = <span class="string">"Processing..."</span>;</div><div class="line">&#125;</div><div class="line"><span class="comment">//or采用事件委托</span></div><div class="line"><span class="built_in">document</span>.onclick = <span class="function"><span class="keyword">function</span>(<span class="params">event</span>)</span>&#123;</div><div class="line">event = event || <span class="built_in">window</span>.event;</div><div class="line"><span class="keyword">if</span>(event.target.id == <span class="string">"myBtn"</span>)&#123;</div><div class="line"><span class="built_in">document</span>.getElementById(<span class="string">"myDiv"</span>).innerHTML = <span class="string">"Processing..."</span>;</div><div class="line">&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</code></pre><p>（2）IE7/8 DOM对象或者ActiveX对象循环引用导致内存泄漏。<br>    第一种：多个对象循环引用<br>    <figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> a=<span class="built_in">document</span>.getElementById(<span class="string">"#xx"</span>);</div><div class="line"><span class="keyword">var</span> b=<span class="built_in">document</span>.getElementById(<span class="string">"#xxx"</span>);</div><div class="line">a.r=b;</div><div class="line">b.r=a;</div></pre></td></tr></table></figure></p>
-<p>　　第二种：循环引用自己<br>    <figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> a=<span class="built_in">document</span>.getElementById(<span class="string">"#xx"</span>);</div><div class="line">a.r=a;</div></pre></td></tr></table></figure></p>
-<p>（3）给DOM对象用attachEvent绑定事件。<br>    <figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">doClick</span>(<span class="params"></span>) </span>&#123;&#125;   </div><div class="line">element.attachEvent(<span class="string">"onclick"</span>, doClick);  <span class="comment">//解决方法：在onunload事件在绑定上事件</span></div></pre></td></tr></table></figure></p>
-<p>（4）从外到内执行appendChild。这时即使调用removeChild也无法释放<br>    <figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> parentDiv = <span class="built_in">document</span>.createElement(<span class="string">"div"</span>);   </div><div class="line"><span class="keyword">var</span> childDiv = <span class="built_in">document</span>.createElement(<span class="string">"div"</span>);   </div><div class="line"><span class="built_in">document</span>.body.appendChild(parentDiv);   </div><div class="line">parentDiv.appendChild(childDiv);   </div><div class="line"><span class="comment">//改为从内到外</span></div><div class="line">parentDiv.appendChild(childDiv);   </div><div class="line"><span class="built_in">document</span>.body.appendChild(parentDiv);</div></pre></td></tr></table></figure></p>
-<p>（5）反复重写同一个属性会造成内存大量占用(但关闭IE后内存会被释放)。<br>    <figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; <span class="number">5000</span>; i++) &#123;</div><div class="line">hostElement.text = <span class="string">"asdfasdfasdf"</span>;</div><div class="line">&#125;</div><div class="line"><span class="comment">//这种方式相当于定义了5000个属性！</span></div></pre></td></tr></table></figure></p>
-<p>（6）执行这段代码之后b.x的值依然是1.由于已经删除的属性引用依然存在，因此在JavaScript的某些实现中，可能因为这种不严谨的代码而造成内存泄露。所以在销毁对象的时候，要遍历属性中属性，依次删除。<br>    <figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">a = &#123;<span class="attr">p</span>: &#123;<span class="attr">x</span>: <span class="number">1</span>&#125;&#125;;</div><div class="line">b = a.p;</div><div class="line"><span class="keyword">delete</span> a.p;</div></pre></td></tr></table></figure></p>
-<p>（7）这段代码把一个匿名函数注册为一个DOM结点的click事件处理函数，函数内引用了一个DOM对象elem，就形成了闭包。这就会产生一个循环引用，即：DOM-&gt;闭包-&gt;DOM-&gt;闭包…DOM对象在闭包释放之前不会被释放；而闭包作为DOM对象的事件处理函数存在，所以在DOM对象释放前闭包不会释放，即使DOM对象在DOM tree中删除，由于这个循环引用的存在，DOM对象和闭包都不会被释放。<br>    <figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> elem = <span class="built_in">document</span>.getElementById(<span class="string">'test'</span>);</div><div class="line">elem.addEventListener(<span class="string">'click'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">alert(<span class="string">'You clicked '</span> + elem.tagName); <span class="comment">//应将elem.tagName改为this.tagName</span></div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
-<p>（8）当原有的DOM被移除时，子结点引用没有被移除则无法回收。<br>    <figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> select = <span class="built_in">document</span>.querySelector;</div><div class="line"><span class="keyword">var</span> treeRef = select(<span class="string">'#tree'</span>);</div><div class="line"><span class="keyword">var</span> leafRef = select(<span class="string">'#leaf'</span>);   <span class="comment">//在COM树中leafRef是treeFre的一个子结点</span></div><div class="line">select(<span class="string">'body'</span>).removeChild(treeRef);<span class="comment">//#tree不能被回收入，因为treeRef还在</span></div></pre></td></tr></table></figure></p>
-<pre><code>解决方法:
-<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">treeRef = <span class="literal">null</span>;<span class="comment">//tree还不能被回收，因为叶子结果leafRef还在</span></div><div class="line">leafRef = <span class="literal">null</span>;<span class="comment">//现在#tree可以被释放了</span></div></pre></td></tr></table></figure>
-</code></pre><p>（9）timer定时器泄漏<br>    <figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> val = <span class="number">0</span>;</div><div class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; <span class="number">90000</span>; i++) &#123;</div><div class="line">  <span class="keyword">var</span> buggyObject = &#123;</div><div class="line">    <span class="attr">callAgain</span>: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">      <span class="keyword">var</span> ref = <span class="keyword">this</span>;</div><div class="line">      val = setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        ref.callAgain();</div><div class="line">      &#125;, <span class="number">90000</span>);</div><div class="line">  &#125;</div><div class="line">&#125;&#125;</div><div class="line">buggyObject.callAgain();</div></pre></td></tr></table></figure></p>
-<p>这个时候你无法回收buggyObject,解决办法，先停止timer然后再回收:<br>    <figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">clearTimeout(val);</div><div class="line">buggyObject = <span class="literal">null</span>;</div></pre></td></tr></table></figure></p>
+<p>####46.哪些操作会造成内存泄漏？<br>内存泄露是指一块被分配的内存既不能使用，又不能回收，直到浏览器进程结束，由于浏览器垃圾回收方法有bug，会产生内存泄露。<br>参考链接：<br><a href="http://www.jb51.net/article/37685.htm">1</a><br><a href="http://blog.csdn.net/yq_oxygen/article/details/51893047">2</a><br><a href="http://www.cnblogs.com/chuaWeb/p/5196330.html">3</a><br>（1）当页面中元素被移除或替换时，若元素绑定的事件仍没被移除，在IE中不会作出恰当处理，此时要先手工移除事件，不然会存在内存泄露。</p>
+<pre><code class="html">&lt;div id=&quot;myDiv&quot;&gt;
+&lt;input type=&quot;button&quot; value=&quot;Click me&quot; id=&quot;myBtn&quot;&gt;
+&lt;/div&gt;
+</code></pre>
+<pre><code class="js">var btn = document.getElementById(&quot;myBtn&quot;);
+btn.onclick = function(){
+document.getElementById(&quot;myDiv&quot;).innerHTML = &quot;Processing...&quot;;
+}
+//改成
+var btn = document.getElementById(&quot;myBtn&quot;);
+btn.onclick = function(){
+btn.onclick=null;//手动移除事件
+document.getElementById(&quot;myDiv&quot;).innerHTML = &quot;Processing...&quot;;
+}
+//or采用事件委托
+document.onclick = function(event){
+event = event || window.event;
+if(event.target.id == &quot;myBtn&quot;){
+document.getElementById(&quot;myDiv&quot;).innerHTML = &quot;Processing...&quot;;
+}
+}
+</code></pre>
+<p>（2）IE7/8 DOM对象或者ActiveX对象循环引用导致内存泄漏。<br>第一种：多个对象循环引用</p>
+<pre><code class="js">var a=document.getElementById(&quot;#xx&quot;);
+var b=document.getElementById(&quot;#xxx&quot;);
+a.r=b;
+b.r=a;
+</code></pre>
+<p>第二种：循环引用自己</p>
+<pre><code class="js">var a=document.getElementById(&quot;#xx&quot;);
+a.r=a;
+</code></pre>
+<p>（3）给DOM对象用attachEvent绑定事件。</p>
+<pre><code class="js">function doClick() {}   
+element.attachEvent(&quot;onclick&quot;, doClick);  //解决方法：在onunload事件在绑定上事件
+</code></pre>
+<p>（4）从外到内执行appendChild。这时即使调用removeChild也无法释放</p>
+<pre><code class="js">var parentDiv = document.createElement(&quot;div&quot;);   
+var childDiv = document.createElement(&quot;div&quot;);   
+document.body.appendChild(parentDiv);   
+parentDiv.appendChild(childDiv);   
+//改为从内到外
+parentDiv.appendChild(childDiv);   
+document.body.appendChild(parentDiv);
+</code></pre>
+<p>（5）反复重写同一个属性会造成内存大量占用(但关闭IE后内存会被释放)。</p>
+<pre><code class="js">for(i = 0; i &lt; 5000; i++) {
+hostElement.text = &quot;asdfasdfasdf&quot;;
+}
+//这种方式相当于定义了5000个属性！
+</code></pre>
+<p>（6）执行这段代码之后b.x的值依然是1.由于已经删除的属性引用依然存在，因此在JavaScript的某些实现中，可能因为这种不严谨的代码而造成内存泄露。所以在销毁对象的时候，要遍历属性中属性，依次删除。</p>
+<pre><code class="js">a = {p: {x: 1}};
+b = a.p;
+delete a.p;
+</code></pre>
+<p>（7）这段代码把一个匿名函数注册为一个DOM结点的click事件处理函数，函数内引用了一个DOM对象elem，就形成了闭包。这就会产生一个循环引用，即：DOM-&gt;闭包-&gt;DOM-&gt;闭包…DOM对象在闭包释放之前不会被释放；而闭包作为DOM对象的事件处理函数存在，所以在DOM对象释放前闭包不会释放，即使DOM对象在DOM tree中删除，由于这个循环引用的存在，DOM对象和闭包都不会被释放。</p>
+<pre><code class="js">var elem = document.getElementById(&#39;test&#39;);
+elem.addEventListener(&#39;click&#39;, function() {
+alert(&#39;You clicked &#39; + elem.tagName); //应将elem.tagName改为this.tagName
+});
+</code></pre>
+<p>（8）当原有的DOM被移除时，子结点引用没有被移除则无法回收。</p>
+<pre><code class="js">var select = document.querySelector;
+var treeRef = select(&#39;#tree&#39;);
+var leafRef = select(&#39;#leaf&#39;);   //在COM树中leafRef是treeFre的一个子结点
+select(&#39;body&#39;).removeChild(treeRef);//#tree不能被回收入，因为treeRef还在
+</code></pre>
+<p>解决方法:</p>
+<pre><code class="js">treeRef = null;//tree还不能被回收，因为叶子结果leafRef还在
+leafRef = null;//现在#tree可以被释放了
+</code></pre>
+<p>（9）timer定时器泄漏</p>
+<pre><code class="js">var val = 0;
+for (var i = 0; i &lt; 90000; i++) {
+  var buggyObject = {
+    callAgain: function() {
+      var ref = this;
+      val = setTimeout(function() {
+        ref.callAgain();
+      }, 90000);
+  }
+}}
+buggyObject.callAgain();
+</code></pre>
+<p>这个时候你无法回收buggyObject,解决办法，先停止timer然后再回收:</p>
+<pre><code class="js">clearTimeout(val);
+buggyObject = null;
+</code></pre>
 <p>####47.需求：实现一个页面操作不会整页刷新的网站，并且能在浏览器前进、后退时正确响应。给出你的技术实现方案？</p>
 <p>####48.如何判断当前脚本运行在浏览器还是node环境中？（阿里）<br>通过判断Global对象是否为window，如果不为window，当前脚本没有运行在浏览器中</p>
 <p>####49.移动端最小触控区域是多大？</p>
@@ -182,7 +557,17 @@ innerHTML可以重绘页面的一部分
 <p>####62.前端templating(Mustache, underscore, handlebars)是干嘛的, 怎么用?</p>
 <p>####63.简述一下 Handlebars 的基本用法？</p>
 <p>####64.简述一下 Handlerbars 的对模板的基本处理流程， 如何编译的？如何缓存的？</p>
-<p>####65.用js实现千位分隔符?(来源：前端农民工，提示：正则+replace)<br>    <figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">commafy</span>(<span class="params">num</span>) </span>&#123;</div><div class="line">     num = num + <span class="string">''</span>;</div><div class="line">     <span class="keyword">var</span> reg = <span class="regexp">/(-?d+)(d&#123;3&#125;)/</span>;</div><div class="line"></div><div class="line">    <span class="keyword">if</span>(reg.test(num))&#123;</div><div class="line">     num = num.replace(reg, <span class="string">'$1,$2'</span>);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> num;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>####65.用js实现千位分隔符?(来源：前端农民工，提示：正则+replace)</p>
+<pre><code class="js">function commafy(num) {
+     num = num + &#39;&#39;;
+     var reg = /(-?d+)(d{3})/;
+
+    if(reg.test(num)){
+     num = num.replace(reg, &#39;$1,$2&#39;);
+    }
+    return num;
+}
+</code></pre>
 <p>####66.检测浏览器版本版本有哪些方式？</p>
 </script></p>
           </section>
@@ -192,7 +577,7 @@ innerHTML可以重绘页面的一部分
               <li class="page-prev"><a href=/2017/02/01/JavaScript基础知识之面试篇（三）/>上一篇：JavaScript基础之面试篇（三）</a></li>
         
         
-          <li class="page-next"><a href=/2017/01/10/JavaScript基础知识之面试篇/>下一篇：JavaScript基础之面试篇（一）</a></li>
+          <li class="page-next"><a href=/2017/01/10/JavaScript基础知识之面试篇(一)/>下一篇：JavaScript基础之面试篇（一）</a></li>
         
             </ul>
           </section>
@@ -252,5 +637,8 @@ innerHTML可以重绘页面的一部分
       <script src="/js/index.js"></script>
       <script src="/js/bootstrap.min.js"></script>
       
+    <script>
+        hljs.initHighlightingOnLoad();
+    </script>
 </body>
 </html>
