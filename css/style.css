@@ -342,3 +342,6 @@ ol.toc{
   margin:2% 20%;
   border:1px solid black;
 }
+.highlight{
+  overflow: scroll;
+}

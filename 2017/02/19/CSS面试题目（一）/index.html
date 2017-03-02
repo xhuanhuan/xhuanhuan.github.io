@@ -228,7 +228,7 @@ transform:rotate(9deg) scale(0.85,0.90) translate(0px,-30px) skew(-9deg,0deg);//
 <li><p>Chrome 中文界面下默认会将小于 12px 的文本强制按照 12px 显示,<br>解决方法：可通过加入 CSS 属性 -webkit-text-size-adjust: none。</p>
 </li>
 <li><p>超链接访问过后hover样式就不出现了 被点击访问过的超链接样式不在具有hover和active了。<br>解决方法是改变CSS属性的排列顺序:L-V-H-A 即 a:link {} a:visited {} a:hover {} a:active {}</p>
-<p>补充部分，参考博客<a href="http://www.cnblogs.com/lgmcolin/archive/2013/02/12/2910179.html" target="_blank" rel="external">http://www.cnblogs.com/lgmcolin/archive/2013/02/12/2910179.html</a></p>
+<p>补充部分，参考<a href="http://www.cnblogs.com/lgmcolin/archive/2013/02/12/2910179.html" target="_blank" rel="external">博客</a></p>
 </li>
 </ul>
 <p>3、在ie6，ie7中元素高度超出自己设置高度。原因是IE8以前的浏览器中会给元素设置默认的行高的高度导致的。解决方案是加上overflow:hidden或设置line-height为更小的高度。<br>4、min-height在IE6下不起作用。解决方案是添加 height:auto !important;height:??px;其中??就是min-height设置的值。<br>5、透明度 IE用filter:Alpha(Opacity=60)，而其他主流浏览器用 opacity:0.6;<br>6、a(有href属性)标签嵌套下的img标签，在IE下会带有边框。解决办法是加上a img{border:none;}样式。<br>7、input边框问题。去掉input边框一般用border:none;就可以，但由于IE6在解析input样式时的BUG(优先级问题)，在IE6下无效。　解决<br>方案是用:border:0或border:0 none;或border:none:border-color:transparent;，推荐用第三种方案。<br>8、父子标签间用margin的问题，表现在有时除IE(6/7)外的浏览器子标签margin转移到了父标签上，IE6&amp;7下没有转移。解决办法就是父子标签间的间隔建议用padding，兄弟标签间用margin。<br>9、假设两块div，第一块浮动而第二块没有浮动，IE6下第二块就会跑到第一块边上，并且二者之间还留有间距，但标准浏览器中是第二块重合于第一块。<br>10、父子关系的标签，子标签浮动导致父标签不再包裹子标签。解决方案是清除浮动。</p>
