@@ -74,7 +74,7 @@
           </h1>
           <section class='post-content'>
               <h4 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a><strong>摘要</strong></h4><p>这篇博文主要是针对前端面试常见的css问题进行的总结，也算是博主在就业前夕对js的复习吧，为前端面试做准备。此外也希望可以帮到大家。<br>本文总结的问题并非博主总结，只是对原文的查漏补缺，详见<a href="https://github.com/markyun/My-blog/tree/master/Front-end-Developer-Questions/Questions-and-Answers" target="_blank" rel="external">原文</a><br><a id="more"></a></p>
-<h4 id="1-介绍一下CSS的盒子模型"><a href="#1-介绍一下CSS的盒子模型" class="headerlink" title="1.介绍一下CSS的盒子模型"></a>1.介绍一下CSS的盒子模型</h4><p>（1）盒模型： 内容(content)、填充(padding)、边界(margin)、 边框(border).<br>（2）有两种， IE 盒子模型、标准 W3C 盒子模型；IE的content部分包含了 border 和 pading;</p>
+<h4 id="1-介绍一下CSS的盒子模型"><a href="#1-介绍一下CSS的盒子模型" class="headerlink" title="1.介绍一下CSS的盒子模型"></a>1.介绍一下CSS的盒子模型</h4><p>（1）盒模型： 内容(content)、填充(padding)、边界(margin)、 边框(border).<br>（2）有两种， IE 盒子模型、标准 W3C 盒子模型；IE的content部分包含了 border 和 pading;<br>（3）两种模型切换，设置box-sizing:concontent-box(w3c)|border-box(IE)|inherit(继承父类)</p>
 <h4 id="2-CSS选择符有哪些？哪些属性可以继承？"><a href="#2-CSS选择符有哪些？哪些属性可以继承？" class="headerlink" title="2.CSS选择符有哪些？哪些属性可以继承？"></a>2.CSS选择符有哪些？哪些属性可以继承？</h4><ul>
 <li><p>1.id选择器（ # myid）<br>2.类选择器（.myclassname）<br>3.标签选择器（div, h1, p）<br>4.相邻选择器（h1 + p）<br>5.子选择器（ul &gt; li）//与后代选择器相比，子元素选择器只能选择作为某元素子元素(即直接后代)的元素<br>6.后代选择器（li a）<br>7.通配符选择器（ * ）<br>8.属性选择器（a[rel = “external”]）<br>9.伪类选择器（a: hover, li: nth - child）</p>
 </li>
@@ -83,15 +83,17 @@
 <li>不可继承的样式：border padding margin width height ;<h4 id="3-CSS优先级算法如何计算？"><a href="#3-CSS优先级算法如何计算？" class="headerlink" title="3.CSS优先级算法如何计算？"></a>3.CSS优先级算法如何计算？</h4></li>
 <li>优先级就近原则，同权重情况下样式定义最近者为准;</li>
 <li><p>载入样式以最后载入的定位为准;<br>优先级为:<br> !important &gt;  id &gt; class &gt; tag<br>  important 比 内联优先级高</p>
-<h4 id="4-CSS3新增伪类有那些？"><a href="#4-CSS3新增伪类有那些？" class="headerlink" title="4.CSS3新增伪类有那些？"></a>4.CSS3新增伪类有那些？</h4><p>CSS3新增伪类举例：<br>  p:first-of-type 选择属于其父元素的首个 </p><p> 元素的每个 </p><p> 元素。<br>  p:last-of-type  选择属于其父元素的最后 </p><p> 元素的每个 </p><p> 元素。<br>  p:last-child    选择其父元素的最后子元素(一定是P才行)<br>  p:only-of-type  选择属于其父元素唯一的 </p><p> 元素的每个 </p><p> 元素。<br>  p:only-child    选择属于其父元素的唯一子元素的每个 </p><p> 元素。<br>  p:nth-child(2)  选择属于其父元素的第二个子元素的每个 </p><p> 元素。<br>  :enabled        :disabled 控制表单控件的禁用状态。<br>  :checked        单选框或复选框被选中。</p>
-<h4 id="5-如何居中div？如何居中一个浮动元素？如何让绝对定位的div居中？"><a href="#5-如何居中div？如何居中一个浮动元素？如何让绝对定位的div居中？" class="headerlink" title="5.如何居中div？如何居中一个浮动元素？如何让绝对定位的div居中？"></a>5.如何居中div？如何居中一个浮动元素？如何让绝对定位的div居中？</h4><p>居中一个div</p>
-<p>  给div设置一个宽度，然后添加margin:0 auto属性<br>  div{</p>
-<pre><code>width:200px;
-margin:0 auto;
-</code></pre><p>   }</p>
+<h4 id="4-CSS3新增伪类有那些？"><a href="#4-CSS3新增伪类有那些？" class="headerlink" title="4.CSS3新增伪类有那些？"></a>4.CSS3新增伪类有那些？</h4><p>CSS3新增伪类举例：</p>
+<p>  p:first-of-type 选择属于其父元素的首个</p><p>元素的每个</p><p>元素。<br>  p:last-of-type  选择属于其父元素的最后</p><p>元素的每个</p><p>元素。<br>  p:last-child    选择其父元素的最后子元素(一定是P才行)<br>  p:only-of-type  选择属于其父元素唯一的</p><p>元素的每个</p><p>元素。<br>  p:only-child    选择属于其父元素的唯一子元素的每个</p><p>元素。<br>  p:nth-child(2)  选择属于其父元素的第二个子元素的每个</p><p>元素。<br>  :enabled        :disabled 控制表单控件的禁用状态。<br>  :checked        单选框或复选框被选中。</p>
 </li>
 </ul>
-<p>居中一个浮动元素</p>
+<h4 id="5-如何居中div？如何居中一个浮动元素？如何让绝对定位的div居中？"><a href="#5-如何居中div？如何居中一个浮动元素？如何让绝对定位的div居中？" class="headerlink" title="5.如何居中div？如何居中一个浮动元素？如何让绝对定位的div居中？"></a>5.如何居中div？如何居中一个浮动元素？如何让绝对定位的div居中？</h4><p>居中一个div</p>
+<pre><code>给div设置一个宽度，然后添加margin:0 auto属性
+div{
+    width:200px;
+    margin:0 auto;
+ }
+</code></pre><p>居中一个浮动元素</p>
 <pre><code>确定容器的宽高 宽500 高 300 的层
 设置层的外边距
  .div {
