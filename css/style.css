@@ -342,7 +342,7 @@ ol.toc{
   border:1px solid black;
 }
 .highlight{
-  overflow: scroll;
+  overflow: auto;
 }
 pre{
   padding:0;
@@ -351,5 +351,5 @@ pre code{
   white-space: pre;
 }
 .hljs{
-  overflow:scroll;;
+  overflow:auto;;
 }
