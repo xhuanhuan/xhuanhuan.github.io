@@ -233,9 +233,16 @@ transform:rotate(9deg) scale(0.85,0.90) translate(0px,-30px) skew(-9deg,0deg);//
 <ul>
 <li>8、父子标签间用margin的问题，表现在有时除IE(6/7)外的浏览器子标签margin转移到了父标签上，IE6&amp;7下没有转移。解决办法就是父子标签间的间隔建议用padding，兄弟标签间用margin。<br>9、假设两块div，第一块浮动而第二块没有浮动，IE6下第二块就会跑到第一块边上，并且二者之间还留有间距，但标准浏览器中是第二块重合于第一块。</li>
 <li><p>10、父子关系的标签，子标签浮动导致父标签不再包裹子标签。解决方案是清除浮动。</p>
- <figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"parent1"</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"one1"</span>&gt;</span>One<span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">style</span>=<span class="string">"clear:both;"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure>
+   <div class="parent1"><br>     <div class="one1">One</div><br>     <div style="clear:both;"></div><br>   </div>
+
 <p> 或者采用 伪元素 ：after</p>
- <figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.parent</span><span class="selector-pseudo">:after</span>&#123; <span class="comment">/*--for other broswer--*/</span></div><div class="line">  <span class="attribute">content</span>:<span class="string">"."</span>;</div><div class="line">  <span class="attribute">display</span>:block;</div><div class="line">  <span class="attribute">line-height</span>:<span class="number">0</span>;</div><div class="line">  <span class="attribute">clear</span>:both;</div><div class="line">  <span class="attribute">visibility</span>:hidden;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>   .parent:after{ /<em>–for other broswer–</em>/</p>
+<pre><code>content:&quot;.&quot;;
+display:block;
+line-height:0;
+clear:both;
+visibility:hidden;
+</code></pre><p>   }</p>
 </li>
 </ul>
 </li>
@@ -440,16 +447,23 @@ inherit: 规定应该从父元素继承 background-attachment 属性的设置。
 </code></pre><h4 id="你对line-height是如何理解的？"><a href="#你对line-height是如何理解的？" class="headerlink" title="你对line-height是如何理解的？"></a><strong>你对line-height是如何理解的？</strong></h4><p>参考博客<a href="http://www.cnblogs.com/fengzheng126/archive/2012/05/18/2507632.html" target="_blank" rel="external">http://www.cnblogs.com/fengzheng126/archive/2012/05/18/2507632.html</a></p>
 <ul>
 <li><p>一些字面意思:“行高”顾名思意指一行文字的高度。具体来说是指两行文字间基线之间的距离。<br>css中起高度作用的应该就是height以及line-height了吧！<br>有一个空的div，<div></div>，如果没有设置至少大于1像素高度height值时，该div的高度就是个0。如果该div里面打入了一个空格或是文字，则此div就会有一个高度。有人会跟认为是：文字撑开的！文字占据空间，但是事实上，根本不是文字撑开了div的高度，而是line-height！要证明很简单(如下测试代码)：</p>
-<p>  .test1{font-size:20px; line-height:0; border:1px solid #cccccc; background:#eeeeee;}<br>  .test2{font-size:0; line-height:20px; border:1px solid #cccccc; background:#eeeeee;}</p>
-  <div class="test1">测试</div><br>  <div class="test2">测试</div>
-
-</li>
+<pre><code>.test1{font-size:20px; line-height:0; border:1px solid #cccccc; background:#eeeeee;}
+.test2{font-size:0; line-height:20px; border:1px solid #cccccc; background:#eeeeee;}
+&lt;div class=&quot;test1&quot;&gt;测试&lt;/div&gt;
+&lt;div class=&quot;test2&quot;&gt;测试&lt;/div&gt;
+</code></pre></li>
 </ul>
 <p>test1 div有文字大小，但行高为0，结果div的高度就是个0；test2 div文字大小为0，但是有行高，为20像素，结果div高度就是20像素。这就说明撑开div高度的是line-height不是文字内容。</p>
 <ul>
 <li><p>你可以有5种方式来定义line-height:</p>
-<p>  1.line-height可以被定义为：body{line-height:normal;}<br>  2.line-height可以被定义为：body{line-height:inherit;}<br>  3.line-height可以使用一个百分比的值body{line-height:120%;}<br>  4.line-height可以被定义为一个长度值(px,em等) body{line-height:25px;}<br>  5.line-height也可以被定义为纯数字， body{line-height:1.2}<br>  其中，百分比和px都会直接换算成px继承，所以继承的元素都会使用这个行高，不会随着font-size做缩放，导致较大字会很拥挤，小字会很稀疏；而normal和数字会灵活按比例缩放，继承元素的行高为自身font-size*数字 决定。<br>  line-height其实是由line box高度而来的，line box是又一个个inline box组成的，line box 的高度是由inline box中最高的那个决定。</p>
-</li>
+<pre><code>1.line-height可以被定义为：body{line-height:normal;}
+2.line-height可以被定义为：body{line-height:inherit;}
+3.line-height可以使用一个百分比的值body{line-height:120%;}
+4.line-height可以被定义为一个长度值(px,em等) body{line-height:25px;}
+5.line-height也可以被定义为纯数字， body{line-height:1.2}
+其中，百分比和px都会直接换算成px继承，所以继承的元素都会使用这个行高，不会随着font-size做缩放，导致较大字会很拥挤，小字会很稀疏；而normal和数字会灵活按比例缩放，继承元素的行高为自身font-size*数字 决定。
+line-height其实是由line box高度而来的，line box是又一个个inline box组成的，line box 的高度是由inline box中最高的那个决定。
+</code></pre></li>
 </ul>
 <h4 id="设置元素浮动后，该元素的display值是多少？"><a href="#设置元素浮动后，该元素的display值是多少？" class="headerlink" title="设置元素浮动后，该元素的display值是多少？"></a>设置元素浮动后，该元素的display值是多少？</h4><pre><code>自动变成display:block
 </code></pre><h4 id="怎么让Chrome支持小于12px-的文字？"><a href="#怎么让Chrome支持小于12px-的文字？" class="headerlink" title="怎么让Chrome支持小于12px 的文字？"></a>怎么让Chrome支持小于12px 的文字？</h4><pre><code>方法1.设置css属性 -webkit-text-size-adjust:none;
