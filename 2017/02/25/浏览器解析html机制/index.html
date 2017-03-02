@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Xhuanhuan&#39;s Blog</title>
+    <link rel="Shortcut Icon" href="icon.jpg">
+    <link href="http://cdn.bootcss.com/highlight.js/8.0/styles/monokai_sublime.min.css" rel="stylesheet">
+    <script src="http://cdn.bootcss.com/highlight.js/8.0/highlight.min.js"></script>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+      <link rel="stylesheet" href="/css/style.css">
+        <link rel="stylesheet" href="/css/font-awesome.min.css">
+        <link rel="stylesheet" href="/css/fontdiao.css">
+    </head>
+<body>
+    <div class="main">
+        
+    <article>
+      <header>
+  <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#my-navbar">
+            <span class="sr-only">切换导航</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+
+        <ul class="nav nav-pills navbar-left" role="tablist">
+        <li><div class="navbar-left" style="margin-top:2px;width:45px;height:45px;border-radius:100%;">
+          <img id="head1" class="img-responsive img-circle" src="/images/head1.JPG">
+        </div></li>
+        <li class="banner">  <a href="/">Xhuanhuan&#39;s Blog</a></li>
+         </ul>
+       </div>
+       
+       <div class="mytittle">
+         浏览器解析html文档机制
+       </div>
+       
+   <div class="navbar-collapse" id="my-navbar">
+
+    <ul class="nav nav-pills navbar-right menu_list" role="tablist">
+        
+            <li class="navlist"><a href="/" >Home</a></li>
+        
+            <li class="navlist"><a href="/archives" >Archives</a></li>
+        
+            <li class="navlist"><a href="/myworks" >My-Works</a></li>
+        
+    </ul>
+  </div>
+  </nav>
+</header>
+
+      <div class="myfirstarchive">
+        <img src="/images/浏览器解析html文档机制.JPG ">
+      <div class="title-on-img">
+        <h1 class='post-title' style="color:white;">
+            <span>浏览器解析html文档机制</span>
+        </h1>
+      </div>
+      </div>
+
+      <div class="container">
+      <div class="row">
+      <div  class = 'col-xs-12 col-xs-offset-0 col-md-7 col-md-offset-1 col-sm-7 col-sm-offset-1 col-lg-7 col-lg-offset-1'>
+        <div class="well">
+          <div style = 'text-align:right'>
+            <button type="button" class="btn btn-success" id='but2'><a href="/archives">返回</a></button>
+            <hr>
+          </div>
+         <div class="postblock">
+          <h1 class='post-title' style="border-bottom:1px solid #f0f0f0;">
+              <span>浏览器解析html文档机制</span>
+          </h1>
+          <section class='post-content'>
+              <h4 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h4><p>本文主要总结了浏览器解析html的机制。我对浏览器做的工作的一些理解用一句话来说就是：下载我的资源，解析，生成一个dom树，一个css规则树，然后合成render tree，然后展示到用户面前。DOM Tree 》Render Tree》layout》paint<br><a id="more"></a></p>
+<h4 id="1-浏览器下载HTML文件并开始解析DOM"><a href="#1-浏览器下载HTML文件并开始解析DOM" class="headerlink" title="1.浏览器下载HTML文件并开始解析DOM"></a>1.浏览器下载HTML文件并开始解析DOM</h4><h4 id="2-遇到link-rel-stylesheet-的时候，将其加入资源下载队列，继续解析dom（css没有阻塞dom解析）"><a href="#2-遇到link-rel-stylesheet-的时候，将其加入资源下载队列，继续解析dom（css没有阻塞dom解析）" class="headerlink" title="2.遇到link[rel=stylesheet]的时候，将其加入资源下载队列，继续解析dom（css没有阻塞dom解析）"></a>2.遇到link[rel=stylesheet]的时候，将其加入资源下载队列，继续解析dom（css没有阻塞dom解析）</h4><h4 id="3-当遇到script的时候，之后有三种情况："><a href="#3-当遇到script的时候，之后有三种情况：" class="headerlink" title="3.当遇到script的时候，之后有三种情况："></a>3.当遇到script的时候，之后有三种情况：</h4><ol>
+<li><p>如果之前的stylesheet没有下载解析完毕，则并行下载js，阻塞dom，等待css下载解析完毕再执行js代码，然后再继续解析dom。（此时会阻塞dom,直接原因是js的下载和执行,但也有css的原因，css会阻塞js的执行，如果css没有解析完毕，即使js下载好了也不会执行，这样也阻塞了dom解析）</p>
+</li>
+<li><p>如果css都下载解析完成，则下载script,完毕之后立即执行js代码。（js下载和执行都会阻塞dom解析,即js阻塞了dom）</p>
+</li>
+<li><p>script有defer,async标签，下载好之后立即执行（两者下载均不会阻塞dom的解析）。其中，对于defer，js脚本的执行需要等到文档所有元素解析完成之后，DOMContentLoaded事件触发执行之前；对于sync，下载完毕直接执行。两者的执行都会阻塞dom解析，不过defer执行的时候dom的解析就只剩下执行这个script了），执行完之后继续解析dom。关于defer和async，下一节的截图。</p>
+</li>
+</ol>
+<h4 id="4-整个dom解析完成，触发DOMContentLoaded。（dom解析跟css解析不一定有关系，比如说css放body最后，dom解析完毕才会开始下载解析css）"><a href="#4-整个dom解析完成，触发DOMContentLoaded。（dom解析跟css解析不一定有关系，比如说css放body最后，dom解析完毕才会开始下载解析css）" class="headerlink" title="4.整个dom解析完成，触发DOMContentLoaded。（dom解析跟css解析不一定有关系，比如说css放body最后，dom解析完毕才会开始下载解析css）"></a>4.整个dom解析完成，触发DOMContentLoaded。（dom解析跟css解析不一定有关系，比如说css放body最后，dom解析完毕才会开始下载解析css）</h4><h4 id="5-css下载完毕（有可能在4之前，如果在4之前则进行等待dom解析，如果没有下载完毕（比如css放后面），即便dom树已经构建完成，chrome是不会展示页面的，因为render-tree（由dom-tree和css规则树共同构建）没有构建，无法paint），渲染，展示页面（这个就是一般访问国外网站很久都是一片空白的原因，css阻塞了渲染）"><a href="#5-css下载完毕（有可能在4之前，如果在4之前则进行等待dom解析，如果没有下载完毕（比如css放后面），即便dom树已经构建完成，chrome是不会展示页面的，因为render-tree（由dom-tree和css规则树共同构建）没有构建，无法paint），渲染，展示页面（这个就是一般访问国外网站很久都是一片空白的原因，css阻塞了渲染）" class="headerlink" title="5.css下载完毕（有可能在4之前，如果在4之前则进行等待dom解析，如果没有下载完毕（比如css放后面），即便dom树已经构建完成，chrome是不会展示页面的，因为render tree（由dom tree和css规则树共同构建）没有构建，无法paint），渲染，展示页面（这个就是一般访问国外网站很久都是一片空白的原因，css阻塞了渲染）"></a>5.css下载完毕（有可能在4之前，如果在4之前则进行等待dom解析，如果没有下载完毕（比如css放后面），即便dom树已经构建完成，chrome是不会展示页面的，因为render tree（由dom tree和css规则树共同构建）没有构建，无法paint），渲染，展示页面（这个就是一般访问国外网站很久都是一片空白的原因，css阻塞了渲染）</h4><h4 id="6-等待图片等别的类似资源加载完毕，触发onload事件"><a href="#6-等待图片等别的类似资源加载完毕，触发onload事件" class="headerlink" title="6.等待图片等别的类似资源加载完毕，触发onload事件"></a>6.等待图片等别的类似资源加载完毕，触发onload事件</h4><p>参考：<a href="http://www.jianshu.com/p/8fd296377539?utm_campaign=haruki&amp;utm_content=note&amp;utm_medium=reader_share&amp;utm_source=qq" target="_blank" rel="external">链接</a></p>
+<h4 id="script标签中defer和async属性的区别"><a href="#script标签中defer和async属性的区别" class="headerlink" title="script标签中defer和async属性的区别"></a>script标签中defer和async属性的区别</h4><p>有了async属性，表示后续文档的加载和渲染与js脚本的下载和执行是并行进行的，即异步执行；<br>有了defer属性，加载后续文档的过程和js脚本的下载(此时仅加载不执行)是并行进行的(异步)，js脚本的执行需要等到文档所有元素解析完成之后，DOMContentLoaded事件触发执行之前。<br>二者下载不会阻塞dom解析，但执行会。<br> 参考：<a href="http://www.cnblogs.com/neusc/archive/2016/08/12/5764162.html" target="_blank" rel="external">链接</a></p>
+<h4 id="优化页面的方法"><a href="#优化页面的方法" class="headerlink" title="优化页面的方法"></a>优化页面的方法</h4><p>基本思路就是要让页面尽早展现在用户面前<br>1.css放前面，利用其不会阻塞dom的特点，早下载早解析，自然能尽快得到css规则树。<br>2.js放body最后。一方面因为js会阻塞dom，另一方面是js可能会操作dom，放前面的话文档元素还没开始解析js就操作不了dom。<br>3.script使用defer或async属性，因为这样js下载与dom解析并行，节省去了一部分时间 。<br>4.对css,js压缩，缩短下载时间。<br>5.合并css，js文件，减少请求次数。<br>6.使用cdn，将需要下载的资源放在cdn，加快下载速度。</p>
+
+          </section>
+          <section>
+            <ul style="list-style-type:none">
+            
+        
+          <li class="page-next"><a href=/2017/02/19/CSS面试题目（一）/>下一篇：CSS基础面试</a></li>
+        
+            </ul>
+          </section>
+          
+              <section id="comments">
+              
+                      <!-- 多说评论框 start -->
+<div class="ds-thread" data-thread-key="post-浏览器解析html机制" data-title="浏览器解析html文档机制" data-url="http://xhuanhuan.github.io/2017/02/25/浏览器解析html机制/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+    var duoshuoQuery = {short_name:'xhuanhuan'};
+      (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] 
+         || document.getElementsByTagName('body')[0]).appendChild(ds);
+      })();
+  </script>
+<!-- 多说公共JS代码 end -->
+
+                  
+              </section>
+          
+          <!-- </article> -->
+        </div>
+        </div>
+          </div>
+          <div id="li-of-post" class = 'col-xs-12 col-xs-offset-0 col-md-3 col-md-offset-0 col-sm-4 col-sm-offset-0 col-lg-3 col-lg-offset-0'>
+          <div class="well here">
+            <div style = 'text-align:left'>
+              <button type="button" class="btn btn-primary" id='but2'>内容列表</button>
+              <hr>
+            </div>
+            <div class="postblock">
+            <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#摘要"><span class="toc-number">1.</span> <span class="toc-text">摘要</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-浏览器下载HTML文件并开始解析DOM"><span class="toc-number">2.</span> <span class="toc-text">1.浏览器下载HTML文件并开始解析DOM</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-遇到link-rel-stylesheet-的时候，将其加入资源下载队列，继续解析dom（css没有阻塞dom解析）"><span class="toc-number">3.</span> <span class="toc-text">2.遇到link[rel=stylesheet]的时候，将其加入资源下载队列，继续解析dom（css没有阻塞dom解析）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-当遇到script的时候，之后有三种情况："><span class="toc-number">4.</span> <span class="toc-text">3.当遇到script的时候，之后有三种情况：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-整个dom解析完成，触发DOMContentLoaded。（dom解析跟css解析不一定有关系，比如说css放body最后，dom解析完毕才会开始下载解析css）"><span class="toc-number">5.</span> <span class="toc-text">4.整个dom解析完成，触发DOMContentLoaded。（dom解析跟css解析不一定有关系，比如说css放body最后，dom解析完毕才会开始下载解析css）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-css下载完毕（有可能在4之前，如果在4之前则进行等待dom解析，如果没有下载完毕（比如css放后面），即便dom树已经构建完成，chrome是不会展示页面的，因为render-tree（由dom-tree和css规则树共同构建）没有构建，无法paint），渲染，展示页面（这个就是一般访问国外网站很久都是一片空白的原因，css阻塞了渲染）"><span class="toc-number">6.</span> <span class="toc-text">5.css下载完毕（有可能在4之前，如果在4之前则进行等待dom解析，如果没有下载完毕（比如css放后面），即便dom树已经构建完成，chrome是不会展示页面的，因为render tree（由dom tree和css规则树共同构建）没有构建，无法paint），渲染，展示页面（这个就是一般访问国外网站很久都是一片空白的原因，css阻塞了渲染）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-等待图片等别的类似资源加载完毕，触发onload事件"><span class="toc-number">7.</span> <span class="toc-text">6.等待图片等别的类似资源加载完毕，触发onload事件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#script标签中defer和async属性的区别"><span class="toc-number">8.</span> <span class="toc-text">script标签中defer和async属性的区别</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#优化页面的方法"><span class="toc-number">9.</span> <span class="toc-text">优化页面的方法</span></a></li></ol>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <div style="width:100%;position:fixed;bottom:5px">
+    <button id="up" class="btn btn-default"><i class="icon-angle-up"></i></button>
+    </div>
+    <footer>
+    <div class="info" style="text-align:center;"><span>Powered By <a href="https://hexo.io/" target="blank">Hexo</a></span>&nbsp;&nbsp;&nbsp;&nbsp;<span>Theme by <a href="https://github.com/xhuanhuan/xhuanhuan.github.io/" target="blank">Xhuanhuan</a></span></div>
+</footer>
+
+</article>
+
+
+    </div>
+      <script src="/js/jquery-1.12.3.min.js"></script>
+      <script src="/js/index.js"></script>
+      <script src="/js/bootstrap.min.js"></script>
+      
+    <script>
+        hljs.initHighlightingOnLoad();
+    </script>
+</body>
+</html>
