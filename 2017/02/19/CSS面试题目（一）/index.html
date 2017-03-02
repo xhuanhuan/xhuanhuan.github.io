@@ -148,79 +148,172 @@ transform:rotate(9deg) scale(0.85,0.90) translate(0px,-30px) skew(-9deg,0deg);//
 </code></pre><h4 id="请解释一下CSS3的Flexbox（弹性盒布局模型）-以及适用场景？"><a href="#请解释一下CSS3的Flexbox（弹性盒布局模型）-以及适用场景？" class="headerlink" title="请解释一下CSS3的Flexbox（弹性盒布局模型）,以及适用场景？"></a>请解释一下CSS3的Flexbox（弹性盒布局模型）,以及适用场景？</h4><p>参考阮一峰的<a href="http://www.ruanyifeng.com/blog/2015/07/flex-grammar.html" target="_blank" rel="external">网络日志</a><br>常用于网页布局，垂直居中<br>(一)容器属性</p>
 <ul>
 <li><p>flex-direction 属性决定主轴的方向（即项目的排列方向）。<br>row（默认值）：主轴为水平方向，起点在左端。<br>row-reverse：主轴为水平方向，起点在右端。<br>column：主轴为垂直方向，起点在上沿。<br>column-reverse：主轴为垂直方向，起点在下沿。</p>
-  <figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.box</span> &#123;</div><div class="line">  <span class="attribute">flex-direction</span>: row | row-reverse | column | column-reverse;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>  .box {</p>
+<pre><code>flex-direction: row | row-reverse | column | column-reverse;
+</code></pre><p>  }</p>
 </li>
 <li><p>flex-wrap 换行<br>nowrap（默认）：不换行。<br>wrap：换行，第一行在上方。<br>wrap-reverse：换行，第一行在下方。</p>
-  <figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.box</span> &#123;</div><div class="line">  <span class="attribute">flex-wrap</span>: nowrap | wrap | wrap-reverse;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>  .box {</p>
+<pre><code>flex-wrap: nowrap | wrap | wrap-reverse;
+</code></pre><p>  }</p>
 </li>
 <li><p>flex-flow 属性是flex-direction属性和flex-wrap属性的简写形式，默认值为row nowrap。</p>
 </li>
 <li><p>justify-content 定义了项目在主轴上的对齐方式。它可能取5个值，具体对齐方式与轴的方向有关。下面假设主轴为从左到右。<br>flex-start（默认值）：左对齐<br>flex-end：右对齐<br>center： 居中<br>space-between：两端对齐，项目之间的间隔都相等。<br>space-around：每个项目两侧的间隔相等。所以，项目之间的间隔比项目与边框的间隔大一倍。</p>
-  <figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.box</span> &#123;</div><div class="line">  <span class="attribute">justify-content</span>: flex-start | flex-end | center | space-between | space-around;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>  .box {</p>
+<pre><code>justify-content: flex-start | flex-end | center | space-between | space-around;
+</code></pre><p>  }</p>
 </li>
 <li><p>align-items属性 定义项目在交叉轴上如何对齐。它可能取5个值。具体的对齐方式与交叉轴的方向有关，下面假设交叉轴从上到下。<br>flex-start：交叉轴的起点对齐。<br>flex-end：交叉轴的终点对齐。<br>center：交叉轴的中点对齐。<br>baseline: 项目的第一行文字的基线对齐。<br>stretch（默认值）：如果项目未设置高度或设为auto，将占满整个容器的高度。</p>
-  <figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.box</span> &#123;</div><div class="line">  <span class="attribute">align-items</span>: flex-start | flex-end | center | baseline | stretch;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>  .box {</p>
+<pre><code>align-items: flex-start | flex-end | center | baseline | stretch;
+</code></pre><p>  }</p>
 </li>
 <li><p>align-content属性 定义了多根轴线的对齐方式。如果项目只有一根轴线，该属性不起作用。</p>
-  <figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.box</span> &#123;</div><div class="line">  <span class="attribute">align-content</span>: flex-start | flex-end | center | space-between | space-around | stretch;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>  .box {</p>
+<pre><code>align-content: flex-start | flex-end | center | space-between | space-around | stretch;
+</code></pre><p>  }</p>
 </li>
 </ul>
 <p>(二)项目的属性</p>
 <ul>
 <li><p>order属性 定义项目的排列顺序。数值越小，排列越靠前，默认为0。</p>
-  <figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.item</span> &#123;</div><div class="line">  <span class="attribute">order</span>: &lt;integer&gt;;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>  .item {</p>
+<pre><code>order: &lt;integer&gt;;
+</code></pre><p>  }</p>
 </li>
 <li><p>flex-grow属性 定义项目的放大比例，默认为0，即如果存在剩余空间，也不放大。</p>
-  <figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.item</span> &#123;</div><div class="line">  <span class="attribute">flex-grow</span>: &lt;number&gt;; <span class="comment">/* default 0 */</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>  .item {</p>
+<pre><code>flex-grow: &lt;number&gt;; //default 0
+</code></pre><p>  }</p>
 </li>
 <li><p>flex-shrink属性 定义了项目的缩小比例，默认为1，即如果空间不足，该项目将缩小。负值对该属性无效。如果一个项目的flex-shrink属性为0，其他项目都为1，则空间不足时，前者不缩小。</p>
-  <figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.item</span> &#123;</div><div class="line">  <span class="attribute">flex-shrink</span>: &lt;number&gt;; <span class="comment">/* default 1 */</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>  .item {</p>
+<pre><code>flex-shrink: &lt;number&gt;; //default 1
+</code></pre><p>  }</p>
 </li>
 <li><p>flex-basis属性定义了在分配多余空间之前，项目占据的主轴空间（main size）。浏览器根据这个属性，计算主轴是否有多余空间。它的默认值为auto，即项目的本来大小。<br>它可以设为跟width或height属性一样的值（比如350px），则项目将占据固定空间。建议优先使用这个属性，而不是单独写三个分离的属性，因为浏览器会推算相关值。</p>
-  <figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.item</span> &#123;</div><div class="line">  <span class="attribute">flex-basis</span>: &lt;length&gt; | auto; <span class="comment">/* default auto */</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>  .item {</p>
+<pre><code>flex-basis: &lt;length&gt; | auto; // default auto
+</code></pre><p>  }</p>
 </li>
 <li><p>flex属性是flex-grow, flex-shrink 和 flex-basis的简写，默认值为0 1 auto。后两个属性可选。</p>
-  <figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.item</span> &#123;</div><div class="line">  <span class="attribute">flex</span>: none | [ &lt;<span class="string">'flex-grow'</span>&gt; &lt;<span class="string">'flex-shrink'</span>&gt;? || &lt;<span class="string">'flex-basis'</span>&gt; ]</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>  .item {</p>
+<pre><code>flex: none | [ &lt;&apos;flex-grow&apos;&gt; &lt;&apos;flex-shrink&apos;&gt;? || &lt;&apos;flex-basis&apos;&gt; ]
+</code></pre><p>  }</p>
 </li>
 <li><p>align-self属性允许单个项目有与其他项目不一样的对齐方式，可覆盖align-items属性。默认值为auto，表示继承父元素的align-items属性，如果没有父元素，则等同于stretch</p>
-  <figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.item</span> &#123;</div><div class="line">  <span class="attribute">align-self</span>: auto | flex-start | flex-end | center | baseline | stretch;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>  .item {</p>
+<pre><code>align-self: auto | flex-start | flex-end | center | baseline | stretch;
+</code></pre><p>  }</p>
 </li>
 </ul>
-<h4 id="用纯CSS创建一个三角形的原理是什么？"><a href="#用纯CSS创建一个三角形的原理是什么？" class="headerlink" title="用纯CSS创建一个三角形的原理是什么？"></a>用纯CSS创建一个三角形的原理是什么？</h4><p>把上、左、右三条边隐藏掉（颜色设为 transparent）<br>    <figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="selector-id">#demo</span> &#123;</div><div class="line">  <span class="attribute">width</span>: <span class="number">0</span>;</div><div class="line">  <span class="attribute">height</span>: <span class="number">0</span>;</div><div class="line">  <span class="attribute">border-width</span>: <span class="number">20px</span>;</div><div class="line">  <span class="attribute">border-style</span>: solid;</div><div class="line">  <span class="attribute">border-color</span>: transparent transparent red transparent;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<h4 id="一个满屏-品-字布局-如何设计"><a href="#一个满屏-品-字布局-如何设计" class="headerlink" title="一个满屏 品 字布局 如何设计?"></a>一个满屏 品 字布局 如何设计?</h4><p>简单的方式：<br>    上面的div宽100%，<br>    下面的两个div分别宽50%，<br>    然后用float.<br>或者使用flexbox:<br>    容器设置display:flex;flex-wrap:wrap；<br>    上面的div宽100%，<br>    下面的两个div分别宽50%</p>
-<h4 id="常见兼容性问题？"><a href="#常见兼容性问题？" class="headerlink" title="常见兼容性问题？"></a>常见兼容性问题？</h4><ul>
+<h4 id="用纯CSS创建一个三角形的原理是什么？"><a href="#用纯CSS创建一个三角形的原理是什么？" class="headerlink" title="用纯CSS创建一个三角形的原理是什么？"></a>用纯CSS创建一个三角形的原理是什么？</h4><p>把上、左、右三条边隐藏掉（颜色设为 transparent）</p>
+<pre><code>#demo {
+  width: 0;
+  height: 0;
+  border-width: 20px;
+  border-style: solid;
+  border-color: transparent transparent red transparent;
+}
+</code></pre><h4 id="一个满屏-品-字布局-如何设计"><a href="#一个满屏-品-字布局-如何设计" class="headerlink" title="一个满屏 品 字布局 如何设计?"></a>一个满屏 品 字布局 如何设计?</h4><p>简单的方式：</p>
+<pre><code>上面的div宽100%，
+下面的两个div分别宽50%，
+然后用float.
+</code></pre><p>或者使用flexbox:</p>
+<pre><code>容器设置display:flex;flex-wrap:wrap;
+上面的div宽100%;
+下面的两个div分别宽50%;
+</code></pre><h4 id="常见兼容性问题？"><a href="#常见兼容性问题？" class="headerlink" title="常见兼容性问题？"></a>常见兼容性问题？</h4><ul>
 <li><p>png24位的图片在iE6浏览器上出现背景，解决方案是做成PNG8.</p>
 </li>
 <li><p>浏览器默认的margin和padding不同。解决方案是加一个全局的*{margin:0;padding:0;}来统一。</p>
 </li>
+<li><p>IE6双边距bug:块属性标签float后，又有横行的margin情况下，在ie6显示margin比设置的大。</p>
+<p>浮动ie产生的双倍距离 #box{ float:left; width:10px; margin:0 0 0 100px;}</p>
+<p>这种情况之下IE会产生20px的距离，解决方案是在float的标签样式控制中加入_display:inline;将其转化为行内属性。(-这个符号只有ie6会识别)</p>
+<p>渐进识别的方式，从总体中逐渐排除局部。</p>
+<p>首先，巧妙的使用“\9”这一标记，将IE游览器从所有情况中分离出来。<br>接着，再次使用“+”将IE8和IE7、IE6分离开来，这样IE8已经独立识别。</p>
+</li>
 </ul>
-<p>**IE6双边距bug:块属性标签float后，又有横行的margin情况下，在ie6显示margin比设置的大。</p>
-<p>  浮动ie产生的双倍距离 #box{ float:left; width:10px; margin:0 0 0 100px;}</p>
-<p>  这种情况之下IE会产生20px的距离，解决方案是在float的标签样式控制中加入_display:inline;将其转化为行内属性。(-这个符号只有ie6会识别)</p>
-<p>  渐进识别的方式，从总体中逐渐排除局部。</p>
-<p>  首先，巧妙的使用“\9”这一标记，将IE游览器从所有情况中分离出来。<br>  接着，再次使用“+”将IE8和IE7、IE6分离开来，这样IE8已经独立识别。</p>
-<pre><code><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line">    .bb&#123;</div><div class="line">      background-color:#f1ee18;/*所有识别*/</div><div class="line">      .background-color:#00deff\9; /*IE6、7、8识别*/</div><div class="line">      +background-color:#a200ff;/*IE6、7识别*/</div><div class="line">      _background-color:#1e0bd1;/*IE6识别*/</div><div class="line">    &#125;</div><div class="line">    ```**</div><div class="line"></div><div class="line">*  IE下,可以使用获取常规属性的方法来获取自定义属性,也可以使用getAttribute()获取自定义属性;</div><div class="line">   Firefox下,只能使用getAttribute()获取自定义属性。</div><div class="line">   解决方法:统一通过getAttribute()获取自定义属性。</div><div class="line"></div><div class="line">*  IE下,even对象有x,y属性,但是没有pageX,pageY属性;</div><div class="line">   Firefox下,event对象有pageX,pageY属性,但是没有x,y属性。</div><div class="line">   解决方法：（条件注释）缺点是在IE浏览器下可能会增加额外的HTTP请求数。</div><div class="line"></div><div class="line">*  Chrome 中文界面下默认会将小于 12px 的文本强制按照 12px 显示,</div><div class="line">   解决方法：可通过加入 CSS 属性 -webkit-text-size-adjust: none。</div><div class="line"></div><div class="line">*  超链接访问过后hover样式就不出现了 被点击访问过的超链接样式不在具有hover和active了。</div><div class="line">   解决方法是改变CSS属性的排列顺序:L-V-H-A 即 a:link &#123;&#125; a:visited &#123;&#125; a:hover &#123;&#125; a:active &#123;&#125;</div><div class="line"></div><div class="line">  补充部分，参考博客[http://www.cnblogs.com/lgmcolin/archive/2013/02/12/2910179.html](http://www.cnblogs.com/lgmcolin/archive/2013/02/12/2910179.html)</div><div class="line">  3、在ie6，ie7中元素高度超出自己设置高度。原因是IE8以前的浏览器中会给元素设置默认的行高的高度导致的。解决方案是加上overflow:hidden或设置line-height为更小的高度。</div><div class="line">  4、min-height在IE6下不起作用。解决方案是添加 height:auto !important;height:??px;其中??就是min-height设置的值。</div><div class="line">  5、透明度 IE用filter:Alpha(Opacity=60)，而其他主流浏览器用 opacity:0.6;</div><div class="line">  6、a(有href属性)标签嵌套下的img标签，在IE下会带有边框。解决办法是加上a img&#123;border:none;&#125;样式。</div><div class="line">  7、input边框问题。去掉input边框一般用border:none;就可以，但由于IE6在解析input样式时的BUG(优先级问题)，在IE6下无效。　解决</div><div class="line">  方案是用:border:0或border:0 none;或border:none:border-color:transparent;，推荐用第三种方案。</div><div class="line">  * 8、父子标签间用margin的问题，表现在有时除IE(6/7)外的浏览器子标签margin转移到了父标签上，IE6&amp;7下没有转移。解决办法就是父子标签间的间隔建议用padding，兄弟标签间用margin。</div><div class="line">  9、假设两块div，第一块浮动而第二块没有浮动，IE6下第二块就会跑到第一块边上，并且二者之间还留有间距，但标准浏览器中是第二块重合于第一块。</div><div class="line">  * 10、父子关系的标签，子标签浮动导致父标签不再包裹子标签。解决方案是清除浮动。</div><div class="line">      ```html</div><div class="line">      &lt;div class="parent1"&gt;</div><div class="line">        &lt;div class="one1"&gt;One&lt;/div&gt;</div><div class="line">        &lt;div style="clear:both;"&gt;&lt;/div&gt;</div><div class="line">      &lt;/div&gt;</div></pre></td></tr></table></figure>
-
-  或者采用 伪元素 ：after
-  <figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.parent</span><span class="selector-pseudo">:after</span>&#123; <span class="comment">/*--for other broswer--*/</span></div><div class="line">  <span class="attribute">content</span>:<span class="string">"."</span>;</div><div class="line">  <span class="attribute">display</span>:block;</div><div class="line">  <span class="attribute">line-height</span>:<span class="number">0</span>;</div><div class="line">  <span class="attribute">clear</span>:both;</div><div class="line">  <span class="attribute">visibility</span>:hidden;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</code></pre><h4 id="li与li之间有看不见的空白间隔是什么原因引起的？有什么解决办法？"><a href="#li与li之间有看不见的空白间隔是什么原因引起的？有什么解决办法？" class="headerlink" title="li与li之间有看不见的空白间隔是什么原因引起的？有什么解决办法？"></a>li与li之间有看不见的空白间隔是什么原因引起的？有什么解决办法？</h4><p>浏览器的默认行为是把inline元素间的空白字符（空格换行tab）渲染成一个空格，也就是<li>换行后会产生换行字符，而它会变成一个空格，当然空格就占用一个字符的宽度。<br>解决办法：<br>(1)直接不要换行<br>    <figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">ul</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">li</span> <span class="attr">style</span>=<span class="string">"display:inline-block;"</span>&gt;</span>sss<span class="tag">&lt;/<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">li</span> <span class="attr">style</span>=<span class="string">"display:inline-block;"</span>&gt;</span>fff<span class="tag">&lt;/<span class="name">li</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></div></pre></td></tr></table></figure></li></p>
-<p>(2)设置容器ul font-size:0,li font-size:xxx、或ul letter-spacing: -8px;ul li letter-spacing: normal;<br>    <figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">ul</span> <span class="attr">style</span>=<span class="string">"font-size:0"</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">li</span> <span class="attr">style</span>=<span class="string">"display:inline-block;font-size:14px"</span>&gt;</span>sss<span class="tag">&lt;/<span class="name">li</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">li</span> <span class="attr">style</span>=<span class="string">"display:inline-block;font-size:14px"</span>&gt;</span>fff<span class="tag">&lt;/<span class="name">li</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">ul</span> <span class="attr">style</span>=<span class="string">"letter-spacing: -8px"</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">li</span> <span class="attr">style</span>=<span class="string">"display:inline-block;letter-spacing: normal"</span>&gt;</span>sss<span class="tag">&lt;/<span class="name">li</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">li</span> <span class="attr">style</span>=<span class="string">"display:inline-block;letter-spacing: normal"</span>&gt;</span>fff<span class="tag">&lt;/<span class="name">li</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></div></pre></td></tr></table></figure></p>
-<p>(3)采用flexbox<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">ul</span> <span class="attr">style</span>=<span class="string">'display:flex;'</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">li</span> <span class="attr">style</span>=<span class="string">"display:inline-block;background-color:red;"</span>&gt;</span>sss<span class="tag">&lt;/<span class="name">li</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">li</span> <span class="attr">style</span>=<span class="string">"display:inline-block;background-color:red;"</span>&gt;</span>fff<span class="tag">&lt;/<span class="name">li</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></div></pre></td></tr></table></figure></p>
-<h4 id="为什么要初始化CSS样式。"><a href="#为什么要初始化CSS样式。" class="headerlink" title="为什么要初始化CSS样式。"></a>为什么要初始化CSS样式。</h4><ul>
+<pre><code>.bb{
+  background-color:#f1ee18; //所有识别
+  .background-color:#00deff\9; //IE6、7、8识别
+  +background-color:#a200ff; //IE6、7识别
+\_background-color:#1e0bd1; //IE6识别
+}
+</code></pre><ul>
+<li><p>IE下,可以使用获取常规属性的方法来获取自定义属性,也可以使用getAttribute()获取自定义属性;<br>Firefox下,只能使用getAttribute()获取自定义属性。<br>解决方法:统一通过getAttribute()获取自定义属性。</p>
+</li>
+<li><p>IE下,even对象有x,y属性,但是没有pageX,pageY属性;<br>Firefox下,event对象有pageX,pageY属性,但是没有x,y属性。<br>解决方法：（条件注释）缺点是在IE浏览器下可能会增加额外的HTTP请求数。</p>
+</li>
+<li><p>Chrome 中文界面下默认会将小于 12px 的文本强制按照 12px 显示,<br>解决方法：可通过加入 CSS 属性 -webkit-text-size-adjust: none。</p>
+</li>
+<li><p>超链接访问过后hover样式就不出现了 被点击访问过的超链接样式不在具有hover和active了。<br>解决方法是改变CSS属性的排列顺序:L-V-H-A 即 a:link {} a:visited {} a:hover {} a:active {}</p>
+<p>补充部分，参考博客<a href="http://www.cnblogs.com/lgmcolin/archive/2013/02/12/2910179.html" target="_blank" rel="external">http://www.cnblogs.com/lgmcolin/archive/2013/02/12/2910179.html</a></p>
+<p>3、在ie6，ie7中元素高度超出自己设置高度。原因是IE8以前的浏览器中会给元素设置默认的行高的高度导致的。解决方案是加上overflow:hidden或设置line-height为更小的高度。<br>4、min-height在IE6下不起作用。解决方案是添加 height:auto !important;height:??px;其中??就是min-height设置的值。<br>5、透明度 IE用filter:Alpha(Opacity=60)，而其他主流浏览器用 opacity:0.6;<br>6、a(有href属性)标签嵌套下的img标签，在IE下会带有边框。解决办法是加上a img{border:none;}样式。<br>7、input边框问题。去掉input边框一般用border:none;就可以，但由于IE6在解析input样式时的BUG(优先级问题)，在IE6下无效。　解决<br>方案是用:border:0或border:0 none;或border:none:border-color:transparent;，推荐用第三种方案。</p>
+<ul>
+<li>8、父子标签间用margin的问题，表现在有时除IE(6/7)外的浏览器子标签margin转移到了父标签上，IE6&amp;7下没有转移。解决办法就是父子标签间的间隔建议用padding，兄弟标签间用margin。<br>9、假设两块div，第一块浮动而第二块没有浮动，IE6下第二块就会跑到第一块边上，并且二者之间还留有间距，但标准浏览器中是第二块重合于第一块。</li>
+<li><p>10、父子关系的标签，子标签浮动导致父标签不再包裹子标签。解决方案是清除浮动。</p>
+ <figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"parent1"</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"one1"</span>&gt;</span>One<span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">style</span>=<span class="string">"clear:both;"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure>
+<p> 或者采用 伪元素 ：after</p>
+ <figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.parent</span><span class="selector-pseudo">:after</span>&#123; <span class="comment">/*--for other broswer--*/</span></div><div class="line">  <span class="attribute">content</span>:<span class="string">"."</span>;</div><div class="line">  <span class="attribute">display</span>:block;</div><div class="line">  <span class="attribute">line-height</span>:<span class="number">0</span>;</div><div class="line">  <span class="attribute">clear</span>:both;</div><div class="line">  <span class="attribute">visibility</span>:hidden;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="li与li之间有看不见的空白间隔是什么原因引起的？有什么解决办法？"><a href="#li与li之间有看不见的空白间隔是什么原因引起的？有什么解决办法？" class="headerlink" title="li与li之间有看不见的空白间隔是什么原因引起的？有什么解决办法？"></a>li与li之间有看不见的空白间隔是什么原因引起的？有什么解决办法？</h4><p>浏览器的默认行为是把inline元素间的空白字符（空格换行tab）渲染成一个空格，也就是<li>换行后会产生换行字符，而它会变成一个空格，当然空格就占用一个字符的宽度。<br>解决办法：<br>(1)直接不要换行</li></p>
+<pre><code>&lt;ul&gt;
+&lt;li style=&quot;display:inline-block;&quot;&gt;sss&lt;/li&gt;&lt;li style=&quot;display:inline-block;&quot;&gt;fff&lt;/li&gt;
+&lt;/ul&gt;
+</code></pre><p>(2)设置容器ul font-size:0,li font-size:xxx、或ul letter-spacing: -8px;ul li letter-spacing: normal;</p>
+<pre><code>&lt;ul style=&quot;font-size:0&quot;&gt;
+&lt;li style=&quot;display:inline-block;font-size:14px&quot;&gt;sss&lt;/li&gt;
+&lt;li style=&quot;display:inline-block;font-size:14px&quot;&gt;fff&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ul style=&quot;letter-spacing: -8px&quot;&gt;
+&lt;li style=&quot;display:inline-block;letter-spacing: normal&quot;&gt;sss&lt;/li&gt;
+&lt;li style=&quot;display:inline-block;letter-spacing: normal&quot;&gt;fff&lt;/li&gt;
+&lt;/ul&gt;
+</code></pre><p>(3)采用flexbox</p>
+<pre><code>&lt;ul style=&apos;display:flex;&apos;&gt;
+  &lt;li style=&quot;display:inline-block;background-color:red;&quot;&gt;sss&lt;/li&gt;
+  &lt;li style=&quot;display:inline-block;background-color:red;&quot;&gt;fff&lt;/li&gt;
+&lt;/ul&gt;
+</code></pre><h4 id="为什么要初始化CSS样式。"><a href="#为什么要初始化CSS样式。" class="headerlink" title="为什么要初始化CSS样式。"></a>为什么要初始化CSS样式。</h4><ul>
 <li><p>因为浏览器的兼容问题，不同浏览器对有些标签的默认值是不同的，如果没对CSS初始化往往会出现浏览器之间的页面显示差异。</p>
 </li>
 <li><p>当然，初始化样式会对SEO有一定的影响，但鱼和熊掌不可兼得，但力求影响最小的情况下初始化。</p>
 </li>
 </ul>
 <p>最简单的初始化方法： * {padding: 0; margin: 0;} （强烈不建议）</p>
-<p>淘宝的样式初始化代码：<br>    <figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">body</span>, <span class="selector-tag">h1</span>, <span class="selector-tag">h2</span>, <span class="selector-tag">h3</span>, <span class="selector-tag">h4</span>, <span class="selector-tag">h5</span>, <span class="selector-tag">h6</span>, <span class="selector-tag">hr</span>, <span class="selector-tag">p</span>, <span class="selector-tag">blockquote</span>, <span class="selector-tag">dl</span>, <span class="selector-tag">dt</span>, <span class="selector-tag">dd</span>, <span class="selector-tag">ul</span>, <span class="selector-tag">ol</span>, <span class="selector-tag">li</span>, <span class="selector-tag">pre</span>, <span class="selector-tag">form</span>, <span class="selector-tag">fieldset</span>, <span class="selector-tag">legend</span>, <span class="selector-tag">button</span>, <span class="selector-tag">input</span>, <span class="selector-tag">textarea</span>, <span class="selector-tag">th</span>, <span class="selector-tag">td</span> &#123; <span class="attribute">margin</span>:<span class="number">0</span>; <span class="attribute">padding</span>:<span class="number">0</span>; &#125;</div><div class="line"><span class="selector-tag">body</span>, <span class="selector-tag">button</span>, <span class="selector-tag">input</span>, <span class="selector-tag">select</span>, <span class="selector-tag">textarea</span> &#123; <span class="attribute">font</span>:<span class="number">12px</span>/<span class="number">1.5</span>tahoma, arial, \<span class="number">5</span>b8b\<span class="number">4</span>f53; &#125;</div><div class="line"><span class="selector-tag">h1</span>, <span class="selector-tag">h2</span>, <span class="selector-tag">h3</span>, <span class="selector-tag">h4</span>, <span class="selector-tag">h5</span>, <span class="selector-tag">h6</span>&#123; <span class="attribute">font-size</span>:<span class="number">100%</span>; &#125;</div><div class="line"><span class="selector-tag">address</span>, <span class="selector-tag">cite</span>, <span class="selector-tag">dfn</span>, <span class="selector-tag">em</span>, <span class="selector-tag">var</span> &#123; <span class="attribute">font-style</span>:normal; &#125;</div><div class="line"><span class="selector-tag">code</span>, <span class="selector-tag">kbd</span>, <span class="selector-tag">pre</span>, <span class="selector-tag">samp</span> &#123; <span class="attribute">font-family</span>:couriernew, courier, monospace; &#125;</div><div class="line"><span class="selector-tag">small</span>&#123; <span class="attribute">font-size</span>:<span class="number">12px</span>; &#125;</div><div class="line"><span class="selector-tag">ul</span>, <span class="selector-tag">ol</span> &#123; <span class="attribute">list-style</span>:none; &#125;</div><div class="line"><span class="selector-tag">a</span> &#123; <span class="attribute">text-decoration</span>:none; &#125;</div><div class="line"><span class="selector-tag">a</span><span class="selector-pseudo">:hover</span> &#123; <span class="attribute">text-decoration</span>:underline; &#125;</div><div class="line"><span class="selector-tag">sup</span> &#123; <span class="attribute">vertical-align</span>:text-top; &#125;</div><div class="line"><span class="selector-tag">sub</span>&#123; <span class="attribute">vertical-align</span>:text-bottom; &#125;</div><div class="line"><span class="selector-tag">legend</span> &#123; <span class="attribute">color</span>:<span class="number">#000</span>; &#125;</div><div class="line"><span class="selector-tag">fieldset</span>, <span class="selector-tag">img</span> &#123; <span class="attribute">border</span>:<span class="number">0</span>; &#125;</div><div class="line"><span class="selector-tag">button</span>, <span class="selector-tag">input</span>, <span class="selector-tag">select</span>, <span class="selector-tag">textarea</span> &#123; <span class="attribute">font-size</span>:<span class="number">100%</span>; &#125;</div><div class="line"><span class="selector-tag">table</span> &#123; <span class="attribute">border-collapse</span>:collapse; <span class="attribute">border-spacing</span>:<span class="number">0</span>; &#125;</div></pre></td></tr></table></figure></p>
-<h4 id="absolute的containing-block-容器块-计算方式跟正常流有什么不同？"><a href="#absolute的containing-block-容器块-计算方式跟正常流有什么不同？" class="headerlink" title="absolute的containing block(容器块)计算方式跟正常流有什么不同？"></a>absolute的containing block(容器块)计算方式跟正常流有什么不同？</h4><p>先找到其祖先元素中最近的 position 值不为 static 的元素，然后再判断：<br>1、若此元素为 inline 元素，则 containing block 为能够包含这个元素(absolute)生成的第一个和最后一个 inline box 的 padding box (除 margin, border 外的区域) 的最小矩形(包含padding，content)。即当碰到absolute的时候，寻找第一个position不为static的祖先元素，祖先元素是inline,则以这个absolute为中心，寻找距离最远的inline元素（中间不能有块级元素），以这两个inline元素的边界围成的最小矩形作为containing block。<br>2、否则,则由这个祖先元素的 padding box 构成。如果都找不到，则为 initial containing block(根元素)。<br>补充：</p>
+<p>淘宝的样式初始化代码：</p>
+<pre><code>body, h1, h2, h3, h4, h5, h6, hr, p, blockquote, dl, dt, dd, ul, ol, li, pre, form, fieldset, legend, button, input, textarea, th, td { margin:0; padding:0; }
+body, button, input, select, textarea { font:12px/1.5tahoma, arial, \5b8b\4f53; }
+h1, h2, h3, h4, h5, h6{ font-size:100%; }
+address, cite, dfn, em, var { font-style:normal; }
+code, kbd, pre, samp { font-family:couriernew, courier, monospace; }
+small{ font-size:12px; }
+ul, ol { list-style:none; }
+a { text-decoration:none; }
+a:hover { text-decoration:underline; }
+sup { vertical-align:text-top; }
+sub{ vertical-align:text-bottom; }
+legend { color:#000; }
+fieldset, img { border:0; }
+button, input, select, textarea { font-size:100%; }
+table { border-collapse:collapse; border-spacing:0; }
+</code></pre><h4 id="absolute的containing-block-容器块-计算方式跟正常流有什么不同？"><a href="#absolute的containing-block-容器块-计算方式跟正常流有什么不同？" class="headerlink" title="absolute的containing block(容器块)计算方式跟正常流有什么不同？"></a>absolute的containing block(容器块)计算方式跟正常流有什么不同？</h4><p>先找到其祖先元素中最近的 position 值不为 static 的元素，然后再判断：</p>
+<pre><code>1、若此元素为 inline 元素，则 containing block 为能够包含这个元素(absolute)生成的第一个和最后一个 inline box 的 padding box (除 margin, border 外的区域) 的最小矩形(包含padding，content)。即当碰到absolute的时候，寻找第一个position不为static的祖先元素，祖先元素是inline,则以这个absolute为中心，寻找距离最远的inline元素（中间不能有块级元素），以这两个inline元素的边界围成的最小矩形作为containing block。
+2、否则,则由这个祖先元素的 padding box 构成。如果都找不到，则为 initial containing block(根元素)。
+</code></pre><p>补充：</p>
 <ol>
 <li>static(默认的)/relative：简单说就是它的父元素的内容框（即去掉padding的部分）</li>
 <li>absolute: 向上找最近的定位为absolute/relative的元素</li>
-<li>fixed: 它的containing block一律为根元素(html/body)，根元素也是initial containing block<h4 id="CSS里的visibility属性有个collapse属性值是干嘛用的？在不同浏览器下以后什么区别？"><a href="#CSS里的visibility属性有个collapse属性值是干嘛用的？在不同浏览器下以后什么区别？" class="headerlink" title="CSS里的visibility属性有个collapse属性值是干嘛用的？在不同浏览器下以后什么区别？"></a>CSS里的visibility属性有个collapse属性值是干嘛用的？在不同浏览器下以后什么区别？</h4>当在表格元素中使用时，此值可删除一行或一列，但是它不会影响表格的布局。被行或列占据的空间会留给其他内容使用。如果此值被用在其他的元素上，会呈现为 “hidden”。<br>在谷歌浏览器里，使用collapse值和使用hidden值没有什么区别。<br>在火狐浏览器、Opera和IE11里，使用collapse值的效果就如它的字面意思：table的行会消失，它的下面一行会补充它的位置。<h4 id="position跟display、margin-collapse、overflow、float这些特性相互叠加后会怎么样？"><a href="#position跟display、margin-collapse、overflow、float这些特性相互叠加后会怎么样？" class="headerlink" title="position跟display、margin collapse、overflow、float这些特性相互叠加后会怎么样？"></a>position跟display、margin collapse、overflow、float这些特性相互叠加后会怎么样？</h4></li>
+<li>fixed: 它的containing block一律为根元素(html/body)，根元素也是initial containing block</li>
 </ol>
-<ul>
+<h4 id="CSS里的visibility属性有个collapse属性值是干嘛用的？在不同浏览器下以后什么区别？"><a href="#CSS里的visibility属性有个collapse属性值是干嘛用的？在不同浏览器下以后什么区别？" class="headerlink" title="CSS里的visibility属性有个collapse属性值是干嘛用的？在不同浏览器下以后什么区别？"></a>CSS里的visibility属性有个collapse属性值是干嘛用的？在不同浏览器下以后什么区别？</h4><p>当在表格元素中使用时，此值可删除一行或一列，但是它不会影响表格的布局。被行或列占据的空间会留给其他内容使用。如果此值被用在其他的元素上，会呈现为 “hidden”。<br>在谷歌浏览器里，使用collapse值和使用hidden值没有什么区别。<br>在火狐浏览器、Opera和IE11里，使用collapse值的效果就如它的字面意思：table的行会消失，它的下面一行会补充它的位置。</p>
+<h4 id="position跟display、margin-collapse、overflow、float这些特性相互叠加后会怎么样？"><a href="#position跟display、margin-collapse、overflow、float这些特性相互叠加后会怎么样？" class="headerlink" title="position跟display、margin collapse、overflow、float这些特性相互叠加后会怎么样？"></a>position跟display、margin collapse、overflow、float这些特性相互叠加后会怎么样？</h4><ul>
 <li>position控制元素是否在文档流中，static和relative都存在于文档流，fixed直接脱离文档流锁定在以整个文档为offsetParent的位置，而absolute也是直接脱离文档流锁定在最近的一个有position属性的parent的位置上。</li>
 <li>display控制布局方式，而所有的布局方式的前提是元素在文档流当中。block以block方式布局，inline以inline方式布局，inline-block以inline-block方式布局，所以如果position设置为脱离文档流，display就只影响子元素的布局了。display:none直接让元素脱离文档流一样的布局方式</li>
 <li>margin collapse也是在文档流时才会有效</li>
@@ -239,18 +332,48 @@ transform:rotate(9deg) scale(0.85,0.90) translate(0px,-30px) skew(-9deg,0deg);//
 </li>
 </ol>
 <p>四. BFC 与 hasLayout<br>E6-7 并不支持 W3C 的 BFC ，而是使用私有属性 hasLayout。hasLayout 跟 BFC 很相似，设置 IE 特有的 CSS 属性 zoom: 1 触发 hasLayout 。<br>既然 hasLayout 有着跟 BFC 相似的功能，那么在实际开发中，就要为需要触发 BFC 的元素同时触发 hasLayout ，这样 BFC 和 hasLayout 具有的一些特殊性质可以在现代浏览器和 IE 中同时产生，避免一个元素在不同浏览器间的表现因为 BFC 或 hasLayout 出现差异。</p>
-<h4 id="css定义的权重"><a href="#css定义的权重" class="headerlink" title="css定义的权重"></a>css定义的权重</h4><p>以下是权重的规则：标签的权重为1，class的权重为10，id的权重为100，以下例子是演示各种定义的权重值：<br>/<em>权重为1</em>/<br>div{<br>}</p>
-<p>/<em>权重为10</em>/<br>.class1{<br>}</p>
-<p>/<em>权重为100</em>/</p>
-<p>#id1{<br>}</p>
-<p>/<em>权重为100+1=101</em>/</p>
-<p>#id1 div{<br>}</p>
-<p>/<em>权重为10+1=11</em>/<br>.class1 div{<br>}</p>
-<p>/<em>权重为10+10+1=21</em>/<br>.class1 .class2 div{<br>}</p>
-<p>如果权重相同，则最后定义的样式会起作用，但是应该避免这种情况出现</p>
-<h4 id="请解释一下为什么会出现浮动和什么时候需要清除浮动？清除浮动的方式"><a href="#请解释一下为什么会出现浮动和什么时候需要清除浮动？清除浮动的方式" class="headerlink" title="请解释一下为什么会出现浮动和什么时候需要清除浮动？清除浮动的方式"></a>请解释一下为什么会出现浮动和什么时候需要清除浮动？清除浮动的方式</h4><p>浮动可以使我们更好的布局。但是元素浮动之后脱离文档流，当浮动框高度超出包含框的时候，也就会出现包含框不会自动伸高来闭合浮动元素，即 高度塌陷现象。我们说的清除浮动是指清除由于子元素浮动带来父元素高度塌陷的影响。<br>清除浮动的方式：<br>(1) 在父元素的最后设置clear:both<br>    <figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"p"</span>&gt;</span></div><div class="line">     <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"c"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">     <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"c"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">     <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"c"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">     <span class="tag">&lt;<span class="name">div</span> <span class="attr">style</span>=<span class="string">"clear:left;"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure></p>
-<p>(2) 伪元素::after<br>    <figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.parent</span><span class="selector-pseudo">::after</span>&#123;</div><div class="line">  <span class="attribute">content</span>:<span class="string">"."</span>;</div><div class="line">  <span class="attribute">display</span>:block;</div><div class="line">  <span class="attribute">height</span>:<span class="number">0</span>;</div><div class="line">  <span class="attribute">clear</span>:both;</div><div class="line">  <span class="attribute">visibility</span>:hidden;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>(3) 给父元素添加overflow:hidden,触发BFC机制。</p>
+<h4 id="css定义的权重"><a href="#css定义的权重" class="headerlink" title="css定义的权重"></a>css定义的权重</h4><p>以下是权重的规则：标签的权重为1，class的权重为10，id的权重为100，以下例子是演示各种定义的权重值：</p>
+<pre><code>/*权重为1*/
+div{
+}
+
+/*权重为10*/
+.class1{
+}
+
+/*权重为100*/
+#id1{
+}
+
+/*权重为100+1=101*/
+#id1 div{
+}
+
+/*权重为10+1=11*/
+.class1 div{
+}
+
+/*权重为10+10+1=21*/
+.class1 .class2 div{
+}
+</code></pre><p>如果权重相同，则最后定义的样式会起作用，但是应该避免这种情况出现</p>
+<h4 id="请解释一下为什么会出现浮动和什么时候需要清除浮动？清除浮动的方式"><a href="#请解释一下为什么会出现浮动和什么时候需要清除浮动？清除浮动的方式" class="headerlink" title="请解释一下为什么会出现浮动和什么时候需要清除浮动？清除浮动的方式"></a>请解释一下为什么会出现浮动和什么时候需要清除浮动？清除浮动的方式</h4><p>浮动可以使我们更好的布局。但是元素浮动之后脱离文档流，当浮动框高度超出包含框的时候，也就会出现包含框不会自动伸高来闭合浮动元素，即 高度塌陷现象。我们说的清除浮动是指清除由于子元素浮动带来父元素高度塌陷的影响。</p>
+<p>清除浮动的方式：<br>(1) 在父元素的内容后添加元素，并设置clear:both</p>
+<pre><code>&lt;div class=&quot;p&quot;&gt;
+     &lt;div class=&quot;c&quot;&gt;&lt;/div&gt;
+     &lt;div class=&quot;c&quot;&gt;&lt;/div&gt;
+     &lt;div class=&quot;c&quot;&gt;&lt;/div&gt;
+     &lt;div style=&quot;clear:left;&quot;&gt;&lt;/div&gt;
+&lt;/div&gt;
+</code></pre><p>(2) 伪元素::after</p>
+<pre><code>.parent::after{
+  content:&quot;.&quot;;
+  display:block;
+  height:0;
+  clear:both;
+  visibility:hidden;
+}
+</code></pre><p>(3) 给父元素添加overflow:hidden,触发BFC机制。</p>
 <h4 id="移动端的布局用过媒体查询吗？"><a href="#移动端的布局用过媒体查询吗？" class="headerlink" title="移动端的布局用过媒体查询吗？"></a>移动端的布局用过媒体查询吗？</h4><p>通过媒体查询可以为不同大小和尺寸的媒体定义不同的css，适合相应的设备显示；即响应式布局<br>@media screen and (min-width: 400px) and (max-width: 700px) { … }<br>@media handheld and (min-width: 20em), screen and (min-width: 20em) { … }<br>@media not print and (max-width: 1200px){样式代码}//使用关键词“not”是用来排除某种制定的媒体类型</p>
 <p><link rel="stylesheet" media="screen and (max-device-width:480px)" href="iphone.css"></p>
 <p><linkrel="stylesheet" media="only screen and (max-device-width:240px)" href="android240.css">//only用来指定某种特定的媒体类型</linkrel="stylesheet"></p>
