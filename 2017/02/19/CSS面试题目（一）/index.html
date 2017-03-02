@@ -110,26 +110,18 @@ div{
     margin:0 auto;
  }
 </code></pre><p>居中一个浮动元素</p>
-<pre><code>确定容器的宽高 宽500 高 300 的层
-设置层的外边距
+<pre><code>确定容器的宽高 宽500 高 300 的层,设置BFC
+设置浮动元素的外边距
  .div {
-      width:500px ; height:300px;//高度可以不设
-      margin: -150px 0 0 -250px;
+      width:300px ; height:200px;//高度可以不设
+      margin: -100px 0 0 -150px;//上（高度一半） 右 下 左（宽度一半）
       position:relative;         //相对定位
-      background-color:pink;     //方便看效果
       left:50%;
       top:50%;
+      background-color:pink;     //方便看效果
  }
-</code></pre><p>让绝对定位的div居中</p>
-<pre><code>position: absolute;
-width: 1200px;
-background: none;
-margin: 0 auto;
-top: 0;
-left: 0;
-bottom: 0;
-right: 0;
-</code></pre><h4 id="display有哪些值？说明他们的作用。"><a href="#display有哪些值？说明他们的作用。" class="headerlink" title="display有哪些值？说明他们的作用。"></a>display有哪些值？说明他们的作用。</h4><pre><code>none    此元素不会被显示。
+</code></pre><p>让绝对定位的div居中<br>    方法一：设置容器relative，其余同上<br>    方法二：flexbox,容器设置<br>    display: flex;<br>    width: 1200px;<br>    background: none;<br>    justify-content:center;<br>        align-items:center;</p>
+<h4 id="display有哪些值？说明他们的作用。"><a href="#display有哪些值？说明他们的作用。" class="headerlink" title="display有哪些值？说明他们的作用。"></a>display有哪些值？说明他们的作用。</h4><pre><code>none    此元素不会被显示。
 block    此元素将显示为块级元素，此元素前后会带有换行符。
 inline    默认。此元素会被显示为内联元素，元素前后没有换行符。
 inline-block    行内块元素,即元素内联,内容块级。（CSS2.1 新增的值）
