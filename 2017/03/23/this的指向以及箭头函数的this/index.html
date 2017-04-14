@@ -75,7 +75,7 @@
               <span>js中this的指向以及箭头函数的this</span>
           </h1>
           <section class='post-content'>
-              <h4 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h4><p>本文主要总结了js中，this的指向的击中判断规则以及注意事项，然后介绍了箭头函数的this指向判断的方法。希望可以跟大家一起学习。</p>
+              <h4 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h4><p>本文主要总结了js中，this的指向的击中判断规则以及注意事项，然后介绍了箭头函数的this指向判断的方法。希望可以跟大家一起学习。<br><a id="more"></a></p>
 <h3 id="this依赖于函数的调用方式，是在函数执行的时候确定的，大概有以下几种情况"><a href="#this依赖于函数的调用方式，是在函数执行的时候确定的，大概有以下几种情况" class="headerlink" title="this依赖于函数的调用方式，是在函数执行的时候确定的，大概有以下几种情况"></a>this依赖于函数的调用方式，是在函数执行的时候确定的，大概有以下几种情况</h3><ol>
 <li>作为函数调用，this一般指向了全局，浏览器下就是window,Node中是一个global对象，具体内部没有深究</li>
 <li>作为对象的方法调用，this指向了对象本身，此处有一点需要注意：<br>类似setTimeout(obj.func,1000)的回调（事件的回调也是一样）,这种情况下，相当于将obj.func赋值给了一个函数，真正执行的时候是作为函数进行的调用，这种情况下this还是指向了全局，可以采用bind,或者匿名函数包裹的方法来达到this的正确指向。</li>

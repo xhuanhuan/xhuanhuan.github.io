@@ -78,36 +78,11 @@
         <div class="postblock">
         <section class="md post-content">
             
-                <h4 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h4><p>本文主要总结了web性能优化的几个方案，供大家参考学习</p>
-<h2 id="web性能的优化"><a href="#web性能的优化" class="headerlink" title="web性能的优化"></a>web性能的优化</h2><ol>
-<li>dom加载原理，从而引出css放前面，js放后面或者合理利用defer,async</li>
-<li>并行下载是有代价的（下载速度慢）,所以要合并css,js,也要对其压缩，可以通过webpack打包压缩。</li>
-<li>小图标的加载采用雪碧图，通过控制图片的background-position实现不同图标的显示</li>
-<li>大图片可以采用webp的方式，这种方式我没有实践，但是据说webp体积小，清晰度高</li>
-<li>将文件放到cdn上，能够一定程度上提高客户端下载速度</li>
-<li>cdn不稳定的话，就只能通过合理的利用Http缓存了。</li>
-<li>其实，通过h5的manifest和http缓存配合使用，个人认为效果更佳</li>
-<li>减少DNS查询（网络层）</li>
-</ol>
-<h2 id="http缓存的重要性"><a href="#http缓存的重要性" class="headerlink" title="http缓存的重要性"></a>http缓存的重要性</h2><p>合理利用缓存，能够极大的减小服务器压力，极大的提升客户端体验</p>
-<h2 id="如何合理利用"><a href="#如何合理利用" class="headerlink" title="如何合理利用"></a>如何合理利用</h2><ol>
-<li>不会修改的静态资源采用强缓存的方式</li>
-<li>会发生修改的文件js,css等，采用协商缓存的方式</li>
-</ol>
-<h2 id="关键头部"><a href="#关键头部" class="headerlink" title="关键头部"></a>关键头部</h2><ol>
-<li>强缓存<br> Cache-Control,Expires,Cache-Control优先级高，采用的是相对时间，效果好</li>
-<li>协商缓存<br> Last-Modified(server),if-modified-since(client)配合使用,客户端不需要人为配置，浏览器检测到服务端设置Last-Modified之后就会在下次请求发送if-modified-since，服务器端比较两个时间来决定发送新的回应还是发送304，让浏览器使用本地缓存，但是有可能资源已经改变，而服务器并没有检测到，从而导致资源得不到及时更新。<br> Etag(server),if-none-match(client),同样的，客户端不需要人为配置，浏览器检测到服务器端Etag的设置，会自动在下次请求头部添加if-none-match,内容就是上次发送的Etag,服务端进行对比从而决定发送304，还是重新发送新的资源。Etag是根据文件名，最后修改时间，以及文件的大小以及每个机器的不同ip,物理地址等地址生成的独一无二的字符串，所以修改时间，文件大小发生了改变，都会导致Etag的不同，从而及时更新信息。 <strong>但是要注意，Etag跟计算机的信息有关，所以如果是分布式服务器，务必取消Etag，采用last-modified,同时还要保证多个服务器的last-modified相同</strong></li>
-</ol>
-<h2 id="还有什么办法能达到相同的效果"><a href="#还有什么办法能达到相同的效果" class="headerlink" title="还有什么办法能达到相同的效果"></a>还有什么办法能达到相同的效果</h2><p>我认为，h5的minifest文件也可以做到相同的效果，同时，服务器通过版本号来控制静态资源的更新，很好用的一个特性，但是所有资源的更新与否都根据一个manifest版本号来控制，会导致没有修改的静态文件的重新加载，这个时候如果配合http缓存，个人认为效果能好很多</p>
-<h2 id="怎么配合"><a href="#怎么配合" class="headerlink" title="怎么配合"></a>怎么配合</h2><p>manifest的原理是这样的：第一次访问，浏览器根据manifest文件下载相应的文件，放入缓存，第二次访问，先发送一个请求，查询其版本号是否与当前不同，如果不同，重新从服务器下载文件，如果相同，使用之前缓存的文件。<br>这里面其实有一个可以利用的地方，就是如果版本号不同，重新向服务器发送请求进而缓存文件，这个时候，服务器端可以采用强缓存或者协商缓存，来决定是否要返回新的文件还是让浏览器沿用之前的缓存。从而达到版本号更改，需要替换的文件依旧采用强缓存和协商缓存的方式来实现合理的利用之前的缓存</p>
-<h2 id="关于DNS查询"><a href="#关于DNS查询" class="headerlink" title="关于DNS查询"></a>关于DNS查询</h2><ol>
-<li>DNS查找：每次主机名的解析都需要一次网络往返，从而增加了请求的延迟时间，同时还会阻塞后续的请求。<br>(1)在用户请求了一个主机名之后，DNS信息会留在操作系统的DNS缓存中，之后对于该主机名的请求将无需进行过多的DNS查找，至少短时间内不需要。很多浏览器拥有其自己的缓存，和操作系统的缓存相分离。只要浏览器在其缓存中保留了DNS记录，它就不会麻烦操作系统来请求这个记录。只有当浏览器缓存丢弃了记录时，它才会向操作系统询问地址–然后操作系统或者通过其缓存来响应这个请求，或者将请求发给一台远程服务器，这时就会发生潜在的速度降低。<br>(2)当客户端的DNS缓存为空,DNS查找的数量与Web页面中唯一主机名的数量相等。这包括页面URL、图片、脚本文件、样式表、Flash对象等的主机名。减少唯一主机名的数量会潜在地减少页面中并行下载的数量。使用Keep-Alive可以通过重用现有连接，从而通过避免TCP/IP开销来减少响应时间，通过使用Keep-Alive和较少的域名来减少DNS查找。</li>
-<li>重用TCP连接：尽可能的使用持久连接，以消除因TCP握手和慢启动导致的延迟。</li>
-<li>减少HTTP重定向。HTTP冲定向需要额外的DNS查询、TCP握手等非常耗时，最佳的重定向次数为0.</li>
-</ol>
-
+                <h4 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h4><p>本文主要总结了web性能优化的几个方案，供大家参考学习<br>
             
         </section>
+        
+            <a href="/2017/03/23/web性能优化/" class="more">More +</a>
         
       </div>
     </article>
@@ -142,6 +117,15 @@
         
           
             <div class="archive_item">
+              <h5><a class="title" href="/2017/02/19/CSS面试题/">CSS基础面试</a></h5>
+              <br />
+              <span class="date">02/19</span>
+            </div>
+           
+       
+        
+          
+            <div class="archive_item">
               <h5><a class="title" href="/2017/02/11/HTML面试题目/">HTML基础面试篇</a></h5>
               <br />
               <span class="date">02/11</span>
@@ -157,15 +141,6 @@
               <h5><a class="title" href="/2017/01/10/JavaScript基础知识之面试篇(一)/">JavaScript基础之面试篇（一）</a></h5>
               <br />
               <span class="date">01/10</span>
-            </div>
-           
-       
-        
-          
-            <div class="archive_item">
-              <h5><a class="title" href="/2017/02/19/CSS面试题/">CSS基础面试</a></h5>
-              <br />
-              <span class="date">02/19</span>
             </div>
            
        
@@ -195,11 +170,8 @@
        
         
           
-       
-        
-          
             <div class="archive_item">
-              <h5><a class="title" href="/2017/03/23/this的指向以及箭头函数的this/">js中this的指向以及箭头函数的this</a></h5>
+              <h5><a class="title" href="/2017/03/23/web性能优化/">web性能优化总结</a></h5>
               <br />
               <span class="date">03/23</span>
             </div>
@@ -208,7 +180,7 @@
         
           
             <div class="archive_item">
-              <h5><a class="title" href="/2017/03/23/web性能优化/">web性能优化总结</a></h5>
+              <h5><a class="title" href="/2017/03/23/this的指向以及箭头函数的this/">js中this的指向以及箭头函数的this</a></h5>
               <br />
               <span class="date">03/23</span>
             </div>
@@ -223,8 +195,14 @@
             </div>
            
        
+        
+          
+       
     
         <h2 class="year">2016</h2>
+       
+        
+          
        
         
           
@@ -249,20 +227,8 @@
        
         
           
-       
-        
-          
             <div class="archive_item">
               <h5><a class="title" href="/2016/09/28/hexo主题制作笔记（1）关于hexo的一点疑问/">关于hexo的一点疑问</a></h5>
-              <br />
-              <span class="date">09/28</span>
-            </div>
-           
-       
-        
-          
-            <div class="archive_item">
-              <h5><a class="title" href="/2016/09/28/hexo主题制作笔记（2）：进展/">hexo主题制作进展</a></h5>
               <br />
               <span class="date">09/28</span>
             </div>
@@ -285,6 +251,15 @@
        
         
           
+       
+        
+          
+            <div class="archive_item">
+              <h5><a class="title" href="/2016/09/28/hexo主题制作笔记（2）：进展/">hexo主题制作进展</a></h5>
+              <br />
+              <span class="date">09/28</span>
+            </div>
+           
        
     
 </div>

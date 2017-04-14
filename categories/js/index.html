@@ -78,34 +78,11 @@
         <div class="postblock">
         <section class="md post-content">
             
-                <h4 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h4><p>本文主要总结了js中，this的指向的击中判断规则以及注意事项，然后介绍了箭头函数的this指向判断的方法。希望可以跟大家一起学习。</p>
-<h3 id="this依赖于函数的调用方式，是在函数执行的时候确定的，大概有以下几种情况"><a href="#this依赖于函数的调用方式，是在函数执行的时候确定的，大概有以下几种情况" class="headerlink" title="this依赖于函数的调用方式，是在函数执行的时候确定的，大概有以下几种情况"></a>this依赖于函数的调用方式，是在函数执行的时候确定的，大概有以下几种情况</h3><ol>
-<li>作为函数调用，this一般指向了全局，浏览器下就是window,Node中是一个global对象，具体内部没有深究</li>
-<li>作为对象的方法调用，this指向了对象本身，此处有一点需要注意：<br>类似setTimeout(obj.func,1000)的回调（事件的回调也是一样）,这种情况下，相当于将obj.func赋值给了一个函数，真正执行的时候是作为函数进行的调用，这种情况下this还是指向了全局，可以采用bind,或者匿名函数包裹的方法来达到this的正确指向。</li>
-<li>作为构造器调用，this其实是一个返回值，这里的this比较特殊<br>构造器的内部原理可以这么理解：<ol>
-<li>创建一个空对象，var this = {};</li>
-<li>构造函数的原型赋值给空对象的原型 this.prototype = Func.prototype;</li>
-<li>执行构造函数，this.name = name;this.age = age等类似操作</li>
-<li><strong>如果没有显示返回值</strong>，新创建的对象将作为构造器的返回值进行返回，也就是return this</li>
-</ol>
-</li>
-<li>call,apply,bind<br>可以在回调函数中强制指定上下文，也就是this</li>
-<li>在onclick,change,touchstart等事件所触发的回调中，this指向了事件的绑定者,这个时候有一个情况，就是事件委托，要注意的是，即便是在委托的情况下，this也是指向被委托元素，也就是被委托的父类元素自己，而不是event.target这个事件真正的触发者</li>
-</ol>
-<h3 id="箭头函数的this"><a href="#箭头函数的this" class="headerlink" title="箭头函数的this"></a>箭头函数的this</h3><p>箭头函数不遵循以上的任何一种规则，它采用的是词法规则，我可以这样来解释：<br>每个函数执行时都会创建一个执行上下文，包括这样几个方面：外层作用域链、变量对象、还有绑定this。箭头函数就是去掉绑定this这一步，他的this和arguments都是来自于外层作用域链（词法作用域）。所以，我们判断箭头函数的this的指向时，需要看他定义时的外层作用域，并且谨记，js只有全局作用域和函数作用域，不要被对象的情况迷惑。</p>
-<pre><code class="js">var obj={
-  name:&#39;xhuanhuan&#39;,
-  sayName1:function(){
-  (()=&gt;{console.log(this.name)})();//外层个作用域为函数，该函数的this指向obj
-  },
-  sayName:()=&gt;console.log(this.name)//外层作用域为全局
-}
-obj.sayName()//undefined
-obj.sayName1()//xhuanhuan
-</code></pre>
-
+                <h4 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h4><p>本文主要总结了js中，this的指向的击中判断规则以及注意事项，然后介绍了箭头函数的this指向判断的方法。希望可以跟大家一起学习。<br>
             
         </section>
+        
+            <a href="/2017/03/23/this的指向以及箭头函数的this/" class="more">More +</a>
         
       </div>
     </article>
@@ -140,6 +117,15 @@ obj.sayName1()//xhuanhuan
         
           
             <div class="archive_item">
+              <h5><a class="title" href="/2017/02/19/CSS面试题/">CSS基础面试</a></h5>
+              <br />
+              <span class="date">02/19</span>
+            </div>
+           
+       
+        
+          
+            <div class="archive_item">
               <h5><a class="title" href="/2017/02/11/HTML面试题目/">HTML基础面试篇</a></h5>
               <br />
               <span class="date">02/11</span>
@@ -155,15 +141,6 @@ obj.sayName1()//xhuanhuan
               <h5><a class="title" href="/2017/01/10/JavaScript基础知识之面试篇(一)/">JavaScript基础之面试篇（一）</a></h5>
               <br />
               <span class="date">01/10</span>
-            </div>
-           
-       
-        
-          
-            <div class="archive_item">
-              <h5><a class="title" href="/2017/02/19/CSS面试题/">CSS基础面试</a></h5>
-              <br />
-              <span class="date">02/19</span>
             </div>
            
        
@@ -193,11 +170,8 @@ obj.sayName1()//xhuanhuan
        
         
           
-       
-        
-          
             <div class="archive_item">
-              <h5><a class="title" href="/2017/03/23/this的指向以及箭头函数的this/">js中this的指向以及箭头函数的this</a></h5>
+              <h5><a class="title" href="/2017/03/23/web性能优化/">web性能优化总结</a></h5>
               <br />
               <span class="date">03/23</span>
             </div>
@@ -206,7 +180,7 @@ obj.sayName1()//xhuanhuan
         
           
             <div class="archive_item">
-              <h5><a class="title" href="/2017/03/23/web性能优化/">web性能优化总结</a></h5>
+              <h5><a class="title" href="/2017/03/23/this的指向以及箭头函数的this/">js中this的指向以及箭头函数的this</a></h5>
               <br />
               <span class="date">03/23</span>
             </div>
@@ -221,8 +195,14 @@ obj.sayName1()//xhuanhuan
             </div>
            
        
+        
+          
+       
     
         <h2 class="year">2016</h2>
+       
+        
+          
        
         
           
@@ -247,20 +227,8 @@ obj.sayName1()//xhuanhuan
        
         
           
-       
-        
-          
             <div class="archive_item">
               <h5><a class="title" href="/2016/09/28/hexo主题制作笔记（1）关于hexo的一点疑问/">关于hexo的一点疑问</a></h5>
-              <br />
-              <span class="date">09/28</span>
-            </div>
-           
-       
-        
-          
-            <div class="archive_item">
-              <h5><a class="title" href="/2016/09/28/hexo主题制作笔记（2）：进展/">hexo主题制作进展</a></h5>
               <br />
               <span class="date">09/28</span>
             </div>
@@ -283,6 +251,15 @@ obj.sayName1()//xhuanhuan
        
         
           
+       
+        
+          
+            <div class="archive_item">
+              <h5><a class="title" href="/2016/09/28/hexo主题制作笔记（2）：进展/">hexo主题制作进展</a></h5>
+              <br />
+              <span class="date">09/28</span>
+            </div>
+           
        
     
 </div>
