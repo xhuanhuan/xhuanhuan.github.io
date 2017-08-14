@@ -82,8 +82,7 @@
 <li>代理模式是为了控制对象的访问。通常也只需要包装一次。</li>
 </ol>
 <h4 id="单例模式"><a href="#单例模式" class="headerlink" title="单例模式"></a>单例模式</h4><p>只有一个实例，即实例只创建一次(使用闭包保存实例)。</p>
-<pre><code>```
-var getSingle=function(fn){
+<pre><code class="js">var getSingle=function(fn){
   var result
   return function(){
     return result||result=fn.apply(this,arguments)
@@ -99,10 +98,9 @@ document.getElementById(&#39;login-btn&#39;).onclick=function(){
       var loginlayer=createSingleLoginLayer()
       loginlayer.style.display=&#39;block&#39;
 }
-```
-</code></pre><h4 id="策略模式"><a href="#策略模式" class="headerlink" title="策略模式"></a>策略模式</h4><p>在程序设计中，我们也常常遇到类似的情况，要实现某一个功能有多种方案可以选择。比如一个压缩文件的程序，既可以选择 zip 算法，也可以选择 gzip 算法。<br>策略模式的定义是： 定义一系列的算法，把它们一个个封装起来，并且使它们可以相互替换。下面以计算奖金为例。</p>
-<h5 id="不使用策略模式"><a href="#不使用策略模式" class="headerlink" title="不使用策略模式"></a>不使用策略模式</h5><pre><code>```js
-var calculateBonus = function( performanceLevel, salary ){
+</code></pre>
+<h4 id="策略模式"><a href="#策略模式" class="headerlink" title="策略模式"></a>策略模式</h4><p>在程序设计中，我们也常常遇到类似的情况，要实现某一个功能有多种方案可以选择。比如一个压缩文件的程序，既可以选择 zip 算法，也可以选择 gzip 算法。<br>策略模式的定义是： 定义一系列的算法，把它们一个个封装起来，并且使它们可以相互替换。下面以计算奖金为例。</p>
+<h5 id="不使用策略模式"><a href="#不使用策略模式" class="headerlink" title="不使用策略模式"></a>不使用策略模式</h5><pre><code class="js">var calculateBonus = function( performanceLevel, salary ){
 if ( performanceLevel === &#39;S&#39; ){
 return salary * 4;
 }
@@ -115,67 +113,66 @@ return salary * 2;
 };
 calculateBonus( &#39;B&#39;, 20000 ); // 输出： 40000
 calculateBonus( &#39;S&#39;, 6000 ); // 输出： 24000
-```
-</code></pre><h5 id="使用策略模式"><a href="#使用策略模式" class="headerlink" title="使用策略模式"></a>使用策略模式</h5><ol>
-<li><p>使用类的方式</p>
-<pre><code class="js"> //定义策略类
- var performanceS = function(){};
- performanceS.prototype.calculate = function( salary ){
- return salary * 4;
- };
- var performanceA = function(){};
- performanceA.prototype.calculate = function( salary ){
- return salary * 3;
- };
- var performanceB = function(){};
- performanceB.prototype.calculate = function( salary ){
- return salary * 2;
- };
- //定义奖金类
- var Bonus = function(){
- this.salary = null; // 原始工资
- this.strategy = null; // 绩效等级对应的策略对象
- };
- Bonus.prototype.setSalary = function( salary ){
- this.salary = salary; // 设置员工的原始工资
- };
- Bonus.prototype.setStrategy = function( strategy ){
- this.strategy = strategy; // 设置员工绩效等级对应的策略对象
- };
- Bonus.prototype.getBonus = function(){ // 取得奖金数额
- return this.strategy.calculate( this.salary ); // 把计算奖金的操作委托给对应的策略对象
- };
- var bonus = new Bonus();
- bonus.setSalary( 10000 );
- bonus.setStrategy( new performanceS() ); // 设置策略对象
- console.log( bonus.getBonus() ); // 输出： 40000
- bonus.setStrategy( new performanceA() ); // 设置策略对象
- console.log( bonus.getBonus() ); // 输出： 30000
 </code></pre>
-</li>
-<li><p>使用对象字面量</p>
-<pre><code class="js"> var strategies = {
-   &quot;S&quot;: function( salary ){
-   return salary * 4;
-   },
-   &quot;A&quot;: function( salary ){
-   return salary * 3;
-   },
-   &quot;B&quot;: function( salary ){
-   return salary * 2;
-   }
- }
- var calculateBonus = function( level, salary ){
-   return strategies[ level ]( salary );
- };
- console.log( calculateBonus( &#39;S&#39;, 20000 ) ); // 输出： 80000
- console.log( calculateBonus( &#39;A&#39;, 10000 ) ); // 输出： 30000
-</code></pre>
-</li>
+<h5 id="使用策略模式"><a href="#使用策略模式" class="headerlink" title="使用策略模式"></a>使用策略模式</h5><ol>
+<li>使用类的方式</li>
 </ol>
+<pre><code class="js">//定义策略类
+var performanceS = function(){};
+performanceS.prototype.calculate = function( salary ){
+return salary * 4;
+};
+var performanceA = function(){};
+performanceA.prototype.calculate = function( salary ){
+return salary * 3;
+};
+var performanceB = function(){};
+performanceB.prototype.calculate = function( salary ){
+return salary * 2;
+};
+//定义奖金类
+var Bonus = function(){
+this.salary = null; // 原始工资
+this.strategy = null; // 绩效等级对应的策略对象
+};
+Bonus.prototype.setSalary = function( salary ){
+this.salary = salary; // 设置员工的原始工资
+};
+Bonus.prototype.setStrategy = function( strategy ){
+this.strategy = strategy; // 设置员工绩效等级对应的策略对象
+};
+Bonus.prototype.getBonus = function(){ // 取得奖金数额
+return this.strategy.calculate( this.salary ); // 把计算奖金的操作委托给对应的策略对象
+};
+var bonus = new Bonus();
+bonus.setSalary( 10000 );
+bonus.setStrategy( new performanceS() ); // 设置策略对象
+console.log( bonus.getBonus() ); // 输出： 40000
+bonus.setStrategy( new performanceA() ); // 设置策略对象
+console.log( bonus.getBonus() ); // 输出： 30000
+</code></pre>
+<ol>
+<li>使用对象字面量</li>
+</ol>
+<pre><code class="js">var strategies = {
+  &quot;S&quot;: function( salary ){
+  return salary * 4;
+  },
+  &quot;A&quot;: function( salary ){
+  return salary * 3;
+  },
+  &quot;B&quot;: function( salary ){
+  return salary * 2;
+  }
+}
+var calculateBonus = function( level, salary ){
+  return strategies[ level ]( salary );
+};
+console.log( calculateBonus( &#39;S&#39;, 20000 ) ); // 输出： 80000
+console.log( calculateBonus( &#39;A&#39;, 10000 ) ); // 输出： 30000
+</code></pre>
 <h4 id="代理模式"><a href="#代理模式" class="headerlink" title="代理模式"></a>代理模式</h4><p>代理模式的关键是，当客户不方便直接访问一个对象或者不满足需要的时候，提供一个替身对象来控制对这个对象的访问，客户实际上访问的是替身对象。替身对象对请求做出一些处理之后，再把请求转交给本体对象。<br>下面以图片预加载为例：</p>
-<pre><code>```js
-var myImage = (function(){
+<pre><code class="js">var myImage = (function(){
   var imgNode = document.createElement( &#39;img&#39; );
   document.body.appendChild( imgNode );
   return {
@@ -197,8 +194,8 @@ var proxyImage = (function(){
   }
 })();
 proxyImage.setSrc( &#39;http:// imgcache.qq.com/music/photo/k/000GGDys0yA0Nk.jpg&#39; );
-```
-</code></pre><h4 id="迭代器模式"><a href="#迭代器模式" class="headerlink" title="迭代器模式"></a>迭代器模式</h4><p>迭代器模式是指提供一种方法顺序访问一个聚合对象中的各个元素，而又不需要暴露该对象的内部表示。迭代器模式可以把迭代的过程从业务逻辑中分离出来，在使用迭代器模式之后，即使不关心对象的内部构造，也可以按顺序访问其中的每个元素。</p>
+</code></pre>
+<h4 id="迭代器模式"><a href="#迭代器模式" class="headerlink" title="迭代器模式"></a>迭代器模式</h4><p>迭代器模式是指提供一种方法顺序访问一个聚合对象中的各个元素，而又不需要暴露该对象的内部表示。迭代器模式可以把迭代的过程从业务逻辑中分离出来，在使用迭代器模式之后，即使不关心对象的内部构造，也可以按顺序访问其中的每个元素。</p>
 <pre><code>```js
 var each = function( ary, callback ){
   for ( var i = 0, l = ary.length; i &lt; l; i++ ){
