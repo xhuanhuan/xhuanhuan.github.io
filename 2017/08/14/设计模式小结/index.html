@@ -1,0 +1,709 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Xhuanhuan&#39;s Blog</title>
+    <link rel="Shortcut Icon" href="icon.jpg">
+    <link href="http://cdn.bootcss.com/highlight.js/8.0/styles/monokai_sublime.min.css" rel="stylesheet">
+    <script src="http://cdn.bootcss.com/highlight.js/8.0/highlight.min.js"></script>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+      <link rel="stylesheet" href="/css/style.css">
+        <link rel="stylesheet" href="/css/font-awesome.min.css">
+        <link rel="stylesheet" href="/css/fontdiao.css">
+    </head>
+<body>
+    <div class="main">
+        
+    <article>
+      <header>
+  <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#my-navbar">
+            <span class="sr-only">切换导航</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+
+        <ul class="nav nav-pills navbar-left" role="tablist">
+        <li><div class="navbar-left" style="margin-top:2px;width:45px;height:45px;border-radius:100%;">
+          <img id="head1" class="img-responsive img-circle" src="/images/head1.JPG">
+        </div></li>
+        <li class="banner">  <a href="/">Xhuanhuan&#39;s Blog</a></li>
+         </ul>
+       </div>
+       
+       <div class="mytittle">
+         设计模式小结
+       </div>
+       
+   <div class="navbar-collapse" id="my-navbar">
+
+    <ul class="nav nav-pills navbar-right menu_list" role="tablist">
+        
+            <li class="navlist"><a href="/" >Home</a></li>
+        
+            <li class="navlist"><a href="/archives" >Archives</a></li>
+        
+            <li class="navlist"><a href="/myworks" >My-Works</a></li>
+        
+    </ul>
+  </div>
+  </nav>
+</header>
+
+      <div class="myfirstarchive">
+        <img src="/images/设计模式小结.JPG ">
+      <div class="title-on-img">
+        <h1 class='post-title' style="color:white;">
+            <span>设计模式小结</span>
+        </h1>
+      </div>
+      </div>
+
+      <div class="container">
+      <div class="row">
+      <div  class = 'col-xs-12 col-xs-offset-0 col-md-7 col-md-offset-1 col-sm-7 col-sm-offset-1 col-lg-7 col-lg-offset-1'>
+        <div class="well">
+          <div style = 'text-align:right'>
+            <button type="button" class="btn btn-success" id='but2'><a href="/archives">返回</a></button>
+            <hr>
+          </div>
+         <div class="postblock">
+          <h1 class='post-title' style="border-bottom:1px solid #f0f0f0;">
+              <span>设计模式小结</span>
+          </h1>
+          <section class='post-content'>
+              <h4 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h4><p>本文主要是我在看了设计模式一书之后，对设计模式的一个小结，并附上书中的js代码，帮助读者理解；以及对一些即为相似的设计模式如何区分。本人前端小白一枚，欢迎读者指正错误<br><a id="more"></a></p>
+<h4 id="对比适配器模式、装饰者模式、代理模式"><a href="#对比适配器模式、装饰者模式、代理模式" class="headerlink" title="对比适配器模式、装饰者模式、代理模式"></a>对比适配器模式、装饰者模式、代理模式</h4><p>三者均属于包装器，不改变原有接口。区分他们主要根据目的。</p>
+<ol>
+<li>适配器模式是解决接口不兼容的问题。通常只需要包装一次。</li>
+<li>装饰者模式是为了给对象添加新动能。 包装多次形成装饰链。</li>
+<li>代理模式是为了控制对象的访问。通常也只需要包装一次。</li>
+</ol>
+<h4 id="单例模式"><a href="#单例模式" class="headerlink" title="单例模式"></a>单例模式</h4><p>只有一个实例，即实例只创建一次(使用闭包保存实例)</p>
+<pre><code>```js
+var getSingle=function(fn){
+  var result
+  return function(){
+    return result||result=fn.apply(this,arguments)
+  }
+}
+var createLoginLayer=function(){
+  var div=document.createElement(&#39;div&#39;)
+  div.innerHTML=&#39;我是登录窗口&#39;
+  return div
+}
+var createSingleLoginLayer=getSingle(createLoginLayer)
+document.getElementById(&#39;login-btn&#39;).onclick=function(){
+      var loginlayer=createSingleLoginLayer()
+      loginlayer.style.display=&#39;block&#39;
+}
+```
+</code></pre><h4 id="策略模式"><a href="#策略模式" class="headerlink" title="策略模式"></a>策略模式</h4><p>在程序设计中，我们也常常遇到类似的情况，要实现某一个功能有多种方案可以选择。比如一个压缩文件的程序，既可以选择 zip 算法，也可以选择 gzip 算法。<br>策略模式的定义是： 定义一系列的算法，把它们一个个封装起来，并且使它们可以相互替换。下面以计算奖金为例。</p>
+<h5 id="不使用策略模式"><a href="#不使用策略模式" class="headerlink" title="不使用策略模式"></a>不使用策略模式</h5><pre><code>```js
+var calculateBonus = function( performanceLevel, salary ){
+if ( performanceLevel === &#39;S&#39; ){
+return salary * 4;
+}
+if ( performanceLevel === &#39;A&#39; ){
+return salary * 3;
+}
+if ( performanceLevel === &#39;B&#39; ){
+return salary * 2;
+}
+};
+calculateBonus( &#39;B&#39;, 20000 ); // 输出： 40000
+calculateBonus( &#39;S&#39;, 6000 ); // 输出： 24000
+```
+</code></pre><h5 id="使用策略模式"><a href="#使用策略模式" class="headerlink" title="使用策略模式"></a>使用策略模式</h5><ol>
+<li><p>使用类的方式</p>
+<pre><code class="js"> //定义策略类
+ var performanceS = function(){};
+ performanceS.prototype.calculate = function( salary ){
+ return salary * 4;
+ };
+ var performanceA = function(){};
+ performanceA.prototype.calculate = function( salary ){
+ return salary * 3;
+ };
+ var performanceB = function(){};
+ performanceB.prototype.calculate = function( salary ){
+ return salary * 2;
+ };
+ //定义奖金类
+ var Bonus = function(){
+ this.salary = null; // 原始工资
+ this.strategy = null; // 绩效等级对应的策略对象
+ };
+ Bonus.prototype.setSalary = function( salary ){
+ this.salary = salary; // 设置员工的原始工资
+ };
+ Bonus.prototype.setStrategy = function( strategy ){
+ this.strategy = strategy; // 设置员工绩效等级对应的策略对象
+ };
+ Bonus.prototype.getBonus = function(){ // 取得奖金数额
+ return this.strategy.calculate( this.salary ); // 把计算奖金的操作委托给对应的策略对象
+ };
+ var bonus = new Bonus();
+ bonus.setSalary( 10000 );
+ bonus.setStrategy( new performanceS() ); // 设置策略对象
+ console.log( bonus.getBonus() ); // 输出： 40000
+ bonus.setStrategy( new performanceA() ); // 设置策略对象
+ console.log( bonus.getBonus() ); // 输出： 30000
+</code></pre>
+</li>
+<li><p>使用对象字面量</p>
+<pre><code class="js"> var strategies = {
+   &quot;S&quot;: function( salary ){
+   return salary * 4;
+   },
+   &quot;A&quot;: function( salary ){
+   return salary * 3;
+   },
+   &quot;B&quot;: function( salary ){
+   return salary * 2;
+   }
+ }
+ var calculateBonus = function( level, salary ){
+   return strategies[ level ]( salary );
+ };
+ console.log( calculateBonus( &#39;S&#39;, 20000 ) ); // 输出： 80000
+ console.log( calculateBonus( &#39;A&#39;, 10000 ) ); // 输出： 30000
+</code></pre>
+</li>
+</ol>
+<h4 id="代理模式"><a href="#代理模式" class="headerlink" title="代理模式"></a>代理模式</h4><p>代理模式的关键是，当客户不方便直接访问一个对象或者不满足需要的时候，提供一个替身对象来控制对这个对象的访问，客户实际上访问的是替身对象。替身对象对请求做出一些处理之后，再把请求转交给本体对象。<br>下面以图片预加载为例：</p>
+<pre><code>```js
+var myImage = (function(){
+  var imgNode = document.createElement( &#39;img&#39; );
+  document.body.appendChild( imgNode );
+  return {
+    setSrc: function( src ){
+      imgNode.src = src;
+    }
+  }
+})();
+var proxyImage = (function(){
+  var img = new Image;
+  img.onload = function(){
+    myImage.setSrc( this.src );//加载完成，设置实际图像url
+  }
+  return {
+    setSrc: function( src ){
+    myImage.setSrc( &#39;file:// /C:/Users/svenzeng/Desktop/loading.gif&#39; );//设置加载中的图像url
+    img.src = src;
+    }
+  }
+})();
+proxyImage.setSrc( &#39;http:// imgcache.qq.com/music/photo/k/000GGDys0yA0Nk.jpg&#39; );
+```
+</code></pre><h4 id="迭代器模式"><a href="#迭代器模式" class="headerlink" title="迭代器模式"></a>迭代器模式</h4><p>迭代器模式是指提供一种方法顺序访问一个聚合对象中的各个元素，而又不需要暴露该对象的内部表示。迭代器模式可以把迭代的过程从业务逻辑中分离出来，在使用迭代器模式之后，即使不关心对象的内部构造，也可以按顺序访问其中的每个元素。</p>
+<pre><code>```js
+var each = function( ary, callback ){
+  for ( var i = 0, l = ary.length; i &lt; l; i++ ){
+    callback.call( ary[i], i, ary[ i ] ); // 把下标和元素当作参数传给 callback 函数
+  }
+};
+each( [ 1, 2, 3 ], function( i, n ){
+  alert ( [ i, n ] );
+});
+```
+</code></pre><h4 id="发布者-订阅模式（观察者模式）"><a href="#发布者-订阅模式（观察者模式）" class="headerlink" title="发布者-订阅模式（观察者模式）"></a>发布者-订阅模式（观察者模式）</h4><p>发布—订阅模式又叫观察者模式，它定义对象间的一种一对多的依赖关系，当一个对象的状态发生改变时，所有依赖于它的对象都将得到通知。在 JavaScript 开发中，我们一般用事件模型来替代传统的发布—订阅模式。</p>
+<pre><code>```js
+var salesOffices = {}; // 定义售楼处
+salesOffices.clientList = {}; // 缓存列表，存放订阅者的回调函数
+salesOffices.listen = function( key, fn ){
+  if ( !this.clientList[ key ] ){ // 如果还没有订阅过此类消息，给该类消息创建一个缓存列表
+    this.clientList[ key ] = [];
+  }
+  this.clientList[ key ].push( fn ); // 订阅的消息添加进消息缓存列表
+};
+salesOffices.trigger = function(){ // 发布消息
+  var key = Array.prototype.shift.call( arguments ), // 取出消息类型
+  fns = this.clientList[ key ]; // 取出该消息对应的回调函数集合
+  if ( !fns || fns.length === 0 ){ // 如果没有订阅该消息，则返回
+    return false;
+  }
+  for( var i = 0, fn; fn = fns[ i++ ]; ){
+    fn.apply( this, arguments ); // (2) // arguments 是发布消息时附送的参数
+  }
+};
+salesOffices.listen( &#39;squareMeter88&#39;, function( price ){ // 小明订阅 88 平方米房子的消息
+  console.log( &#39;价格= &#39; + price ); // 输出： 2000000
+});
+salesOffices.listen( &#39;squareMeter110&#39;, function( price ){ // 小红订阅 110 平方米房子的消息
+  console.log( &#39;价格= &#39; + price ); // 输出： 3000000
+});
+salesOffices.trigger( &#39;squareMeter88&#39;, 2000000 ); // 发布 88 平方米房子的价格
+salesOffices.trigger( &#39;squareMeter110&#39;, 3000000 ); // 发布 110 平方米房子的价格
+```
+</code></pre><h4 id="命令模式"><a href="#命令模式" class="headerlink" title="命令模式"></a>命令模式</h4><p>命令模式是最简单和优雅的模式之一，命令模式中的命令（command）指的是一个执行某些特定事情的指令。<br>命令模式最常见的应用场景是：有时候需要向某些对象发送请求，但是并不知道请求的接收者是谁，也不知道被请求的操作是什么。此时希望用一种松耦合的方式来设计程序，使得请求发送者和请求接收者能够消除彼此之间的耦合关系。<br>下面以菜单程序为例</p>
+<pre><code>```js
+var setCommand = function( button, func ){
+button.onclick = func;
+};
+var MenuBar = {
+refresh: function(){
+console.log( &#39;刷新菜单界面&#39; );
+}
+};
+var SubMenu = {
+add: function(){
+console.log( &#39;增加子菜单&#39; );
+},
+del: function(){
+console.log( &#39;删除子菜单&#39; );
+}
+};
+setCommand( button1, MenuBar.refresh );
+setCommand( button2, SubMenu.add );
+setCommand( button3, SubMenu.del );
+```
+</code></pre><h4 id="组合模式"><a href="#组合模式" class="headerlink" title="组合模式"></a>组合模式</h4><p>组合模式将对象组合成树形结构，以表示“部分整体”的层次结构。 除了用来表示树形结构之外，组合模式的另一个好处是通过对象的多态性表现，使得用户对单个对象和组合对象的使用具有一致性</p>
+<ol>
+<li>表示树形结构。组合模式的一个优点：提供了一种遍历树形结构的方案，通过调用组合对象的 execute 方法，程序会递归调用组合对象下面的叶对象的 execute 方法，所以我们的万能遥控器只需要一次操作，便能依次完成关门、打开电脑、 登录 QQ 这几件事情。组合模式可以非常方便地描述对象部分-整体层次结构。</li>
+<li><p>利用对象多态性统一对待组合对象和单个对象。利用对象的多态性表现，可以使客户端忽略组合对象和单个对象的不同。在组合模式中，客户将统一地使用组合结构中的所有对象，而不需要关心它究竟是组合对象还是单个对象。</p>
+<pre><code class="js"> var MacroCommand = function(){
+   return {
+   commandsList: [],
+   add: function( command ){
+     this.commandsList.push( command );
+   },
+   execute: function(){
+     for ( var i = 0, command; command = this.commandsList[ i++ ]; ){
+       command.execute();
+     }
+   }
+   }
+ };
+ var openAcCommand = {
+   execute: function(){
+     console.log( &#39;打开空调&#39; );
+   }
+ };
+ var openTvCommand = {
+   execute: function(){
+     console.log( &#39;打开电视&#39; );
+   }
+ };
+ var openSoundCommand = {
+   execute: function(){
+     console.log( &#39;打开音响&#39; );
+   }
+ };
+ var macroCommand1 = MacroCommand();
+ macroCommand1.add( openTvCommand );
+ macroCommand1.add( openSoundCommand );
+
+ var closeDoorCommand = {
+   execute: function(){
+     console.log( &#39;关门&#39; );
+   }
+ };
+ var openPcCommand = {
+   execute: function(){
+     console.log( &#39;开电脑&#39; );
+   }
+ };
+ var openQQCommand = {
+   execute: function(){
+     console.log( &#39;登录 QQ&#39; );
+   }
+ };
+ var macroCommand2 = MacroCommand();
+ macroCommand2.add( closeDoorCommand );
+ macroCommand2.add( openPcCommand );
+ macroCommand2.add( openQQCommand );
+
+ /*********现在把所有的命令组合成一个“超级命令”**********/
+ var macroCommand = MacroCommand();
+ macroCommand.add( openAcCommand );
+ macroCommand.add( macroCommand1 );
+ macroCommand.add( macroCommand2 );
+
+ /*********最后给遥控器绑定“超级命令”**********/
+ var setCommand = (function( command ){
+   document.getElementById( &#39;button&#39; ).onclick = function(){
+     command.execute();
+   }
+ })( macroCommand );
+</code></pre>
+</li>
+</ol>
+<h4 id="模板方法模式"><a href="#模板方法模式" class="headerlink" title="模板方法模式"></a>模板方法模式</h4><p>模板方法模式是一种只需使用继承就可以实现的非常简单的模式。<br>模板方法模式由两部分结构组成，第一部分是抽象父类，第二部分是具体的实现子类。通常在抽象父类中封装了子类的算法框架，包括实现一些公共方法以及封装子类中所有方法的执行顺序。子类通过继承这个抽象类，也继承了整个算法结构，并且可以选择重写父类的方法。</p>
+<pre><code>```js
+//以泡茶&amp;泡咖啡为例
+//基类
+var Beverage = function(){};
+Beverage.prototype.boilWater = function(){
+  console.log( &#39;把水煮沸&#39; );
+};
+Beverage.prototype.brew = function(){}; // 空方法，应该由子类重写
+Beverage.prototype.pourInCup = function(){}; // 空方法，应该由子类重写
+Beverage.prototype.addCondiments = function(){}; // 空方法，应该由子类重写
+Beverage.prototype.init = function(){//模板
+  this.boilWater();
+  this.brew();
+  this.pourInCup();
+  this.addCondiments();
+};
+//coffe子类
+var Coffee = function(){};
+Coffee.prototype = new Beverage();//继承基类
+Coffee.prototype.brew = function(){
+  console.log( &#39;用沸水冲泡咖啡&#39; );
+};
+Coffee.prototype.pourInCup = function(){
+  console.log( &#39;把咖啡倒进杯子&#39; );
+};
+Coffee.prototype.addCondiments = function(){
+  console.log( &#39;加糖和牛奶&#39; );
+};
+var Coffee = new Coffee();
+Coffee.init();
+//tea子类
+var Tea = function(){};
+Tea.prototype = new Beverage();
+Tea.prototype.brew = function(){
+  console.log( &#39;用沸水浸泡茶叶&#39; );
+};
+Tea.prototype.pourInCup = function(){
+  console.log( &#39;把茶倒进杯子&#39; );
+};
+Tea.prototype.addCondiments = function(){
+  console.log( &#39;加柠檬&#39; );
+};
+var tea = new Tea();
+tea.init();
+```
+</code></pre><h4 id="享元模式"><a href="#享元模式" class="headerlink" title="享元模式"></a>享元模式</h4><p>享元（flyweight）模式是一种用于性能优化的模式，“ fly”在这里是苍蝇的意思，意为蝇量级。享元模式的核心是运用共享技术来有效支持大量细粒度的对象。<br>例如：假设有个内衣工厂，目前的产品有 50 种男式内衣和 50 种女士内衣，为了推销产品，工厂决定生产一些塑料模特来穿上他们的内衣拍成广告照片。 正常情况下需要 50 个男模特和 50 个女模特，然后让他们每人分别穿上一件内衣来拍照。不使用享元模式的情况下，在程序里也许会这样写：</p>
+<pre><code>```js
+var Model = function( sex, underwear){
+  this.sex = sex;
+  this.underwear= underwear;
+};
+Model.prototype.takePhoto = function(){
+  console.log( &#39;sex= &#39; + this.sex + &#39; underwear=&#39; + this.underwear);
+};
+for ( var i = 1; i &lt;= 50; i++ ){
+  var maleModel = new Model( &#39;male&#39;, &#39;underwear&#39; + i );
+  maleModel.takePhoto();
+};
+for ( var j = 1; j &lt;= 50; j++ ){
+  var femaleModel= new Model( &#39;female&#39;, &#39;underwear&#39; + j );
+  femaleModel.takePhoto();
+};
+```
+</code></pre><p>下面我们来考虑一下如何优化这个场景。虽然有 100 种内衣，但很显然并不需要 50 个男模特和 50 个女模特。其实男模特和女模特各自有一个就足够了，他们可以分别穿上不同的内衣来拍照。</p>
+<pre><code>```js
+var Model = function( sex ){
+this.sex = sex;
+};
+Model.prototype.takePhoto = function(){
+  console.log( &#39;sex= &#39; + this.sex + &#39; underwear=&#39; + this.underwear);
+};
+//分别创建一个男模特对象和一个女模特对象：
+var maleModel = new Model( &#39;male&#39; ),
+femaleModel = new Model( &#39;female&#39; );
+//给男模特依次穿上所有的男装，并进行拍照：
+for ( var i = 1; i &lt;= 50; i++ ){
+  maleModel.underwear = &#39;underwear&#39; + i;
+  maleModel.takePhoto();
+};
+//同样，给女模特依次穿上所有的女装，并进行拍照：
+for ( var j = 1; j &lt;= 50; j++ ){
+  femaleModel.underwear = &#39;underwear&#39; + j;
+  femaleModel.takePhoto();
+};
+//可以看到，改进之后的代码，只需要两个对象便完成了同样的功能。
+```
+</code></pre><h4 id="职责链模式"><a href="#职责链模式" class="headerlink" title="职责链模式"></a>职责链模式</h4><p>职责链模式的定义是：使多个对象都有机会处理请求，从而避免请求的发送者和接收者之间的耦合关系，将这些对象连成一条链，并沿着这条链传递该请求，直到有一个对象处理它为止。<br>职责链模式的名字非常形象，一系列可能会处理请求的对象被连接成一条链，请求在这些对象之间依次传递，直到遇到一个可以处理它的对象，我们把这些对象称为链中的节点。</p>
+<pre><code>```js
+var order500 = function( orderType, pay, stock ){
+if ( orderType === 1 &amp;&amp; pay === true ){
+console.log( &#39;500 元定金预购，得到 100 优惠券&#39; );
+}else{
+return &#39;nextSuccessor&#39;; // 我不知道下一个节点是谁，反正把请求往后面传递
+}
+};
+var order200 = function( orderType, pay, stock ){
+if ( orderType === 2 &amp;&amp; pay === true ){
+console.log( &#39;200 元定金预购，得到 50 优惠券&#39; );
+}else{
+return &#39;nextSuccessor&#39;; // 我不知道下一个节点是谁，反正把请求往后面传递
+}
+};
+var orderNormal = function( orderType, pay, stock ){
+if ( stock &gt; 0 ){
+console.log( &#39;普通购买，无优惠券&#39; );
+}else{
+console.log( &#39;手机库存不足&#39; );
+}
+};
+//职责连
+var Chain = function( fn ){
+  this.fn = fn;
+  this.successor = null;
+};
+Chain.prototype.setNextSuccessor = function( successor ){
+  return this.successor = successor;
+};
+Chain.prototype.passRequest = function(){
+  var ret = this.fn.apply( this, arguments );
+  if ( ret === &#39;nextSuccessor&#39; ){
+  return this.successor &amp;&amp; this.successor.passRequest.apply( this.successor, arguments );
+  }
+  return ret;
+};
+//现在我们把 3 个订单函数分别包装成职责链的节点：
+var chainOrder500 = new Chain( order500 );
+var chainOrder200 = new Chain( order200 );
+var chainOrderNormal = new Chain( orderNormal );
+//然后指定节点在职责链中的顺序：
+chainOrder500.setNextSuccessor( chainOrder200 );
+chainOrder200.setNextSuccessor( chainOrderNormal );
+//最后把请求传递给第一个节点：
+chainOrder500.passRequest( 1, true, 500 ); // 输出： 500 元定金预购，得到 100 优惠券
+chainOrder500.passRequest( 2, true, 500 ); // 输出： 200 元定金预购，得到 50 优惠券
+chainOrder500.passRequest( 3, true, 500 ); // 输出：普通购买，无优惠券
+chainOrder500.passRequest( 1, false, 0 ); // 输出：手机库存不足
+```
+</code></pre><h4 id="中介者模式"><a href="#中介者模式" class="headerlink" title="中介者模式"></a>中介者模式</h4><p>中介者模式的作用就是解除对象与对象之间的紧耦合关系。增加一个中介者对象后，所有的相关对象都通过中介者对象来通信，而不是互相引用，所以当一个对象发生改变时，只需要通知中介者对象即可。中介者使各对象之间耦合松散，而且可以独立地改变它们之间的交互。</p>
+<pre><code>```js
+function Player( name, teamColor ){
+this.partners = []; // 队友列表
+this.enemies = []; // 敌人列表
+this.state = &#39;live&#39;; // 玩家状态
+this.name = name; // 角色名字
+this.teamColor = teamColor; // 队伍颜色
+};
+Player.prototype.win = function(){ // 玩家团队胜利
+console.log( &#39;winner: &#39; + this.name );
+};
+Player.prototype.lose = function(){ // 玩家团队失败
+console.log( &#39;loser: &#39; + this.name );
+};
+Player.prototype.die = function(){ // 玩家死亡
+var all_dead = true;
+this.state = &#39;dead&#39;; // 设置玩家状态为死亡
+for ( var i = 0, partner; partner = this.partners[ i++ ]; ){ // 遍历队友列表
+if ( partner.state !== &#39;dead&#39; ){ // 如果还有一个队友没有死亡，则游戏还未失败
+all_dead = false;
+break;
+}
+}
+if ( all_dead === true ){ // 如果队友全部死亡
+this.lose(); // 通知自己游戏失败
+for ( var i = 0, partner; partner = this.partners[ i++ ]; ){ // 通知所有队友玩家游戏失败
+partner.lose();
+}
+for ( var i = 0, enemy; enemy = this.enemies[ i++ ]; ){ // 通知所有敌人游戏胜利
+enemy.win();
+}
+}
+};
+//最后定义一个工厂来创建玩家：
+var playerFactory = function( name, teamColor ){
+var newPlayer = new Player( name, teamColor ); // 创建新玩家
+for ( var i = 0, player; player = players[ i++ ]; ){ // 通知所有的玩家，有新角色加入
+if ( player.teamColor === newPlayer.teamColor ){ // 如果是同一队的玩家
+player.partners.push( newPlayer ); // 相互添加到队友列表
+newPlayer.partners.push( player );
+}else{
+player.enemies.push( newPlayer ); // 相互添加到敌人列表
+newPlayer.enemies.push( player );
+}
+}
+players.push( newPlayer );
+return newPlayer;
+};
+//红队：
+var player1 = playerFactory( &#39;皮蛋&#39;, &#39;red&#39; ),
+player2 = playerFactory( &#39;小乖&#39;, &#39;red&#39; ),
+player3 = playerFactory( &#39;宝宝&#39;, &#39;red&#39; ),
+player4 = playerFactory( &#39;小强&#39;, &#39;red&#39; );
+//蓝队：
+var player5 = playerFactory( &#39;黑妞&#39;, &#39;blue&#39; ),
+player6 = playerFactory( &#39;葱头&#39;, &#39;blue&#39; ),
+player7 = playerFactory( &#39;胖墩&#39;, &#39;blue&#39; ),
+player8 = playerFactory( &#39;海盗&#39;, &#39;blue&#39; );
+//让红队玩家全部死亡：
+player1.die();
+player2.die();
+player4.die();
+player3.die();
+```
+</code></pre><h4 id="装饰者模式"><a href="#装饰者模式" class="headerlink" title="装饰者模式"></a>装饰者模式</h4><p>装饰者模式能够在不改变对象自身的基础上，在程序运行期间给对象动态地添加职责。</p>
+<pre><code>```js
+var plane = {
+fire: function(){
+console.log( &#39;发射普通子弹&#39; );
+}
+}
+var missileDecorator = function(){
+console.log( &#39;发射导弹&#39; );
+}
+var atomDecorator = function(){
+console.log( &#39;发射原子弹&#39; );
+}
+var fire1 = plane.fire;
+plane.fire = function(){
+fire1();
+missileDecorator();
+}
+var fire2 = plane.fire;
+plane.fire = function(){
+fire2();
+atomDecorator();
+}
+plane.fire();
+// 分别输出： 发射普通子弹、发射导弹、发射原子弹
+```
+</code></pre><h4 id="状态模式"><a href="#状态模式" class="headerlink" title="状态模式"></a>状态模式</h4><p>状态模式的关键是区分事物内部的状态，事物内部状态的改变往往会带来事物的行为改变。</p>
+<pre><code>```js
+//光的类型
+// OffLightState：
+var OffLightState = function( light ){
+this.light = light;
+};
+OffLightState.prototype.buttonWasPressed = function(){
+console.log( &#39;弱光&#39; ); // offLightState 对应的行为
+this.light.setState( this.light.weakLightState ); // 切换状态到 weakLightState
+};
+// WeakLightState：
+var WeakLightState = function( light ){
+this.light = light;
+};
+WeakLightState.prototype.buttonWasPressed = function(){
+console.log( &#39;强光&#39; ); // weakLightState 对应的行为
+this.light.setState( this.light.strongLightState ); // 切换状态到 strongLightState
+};
+// StrongLightState：
+var StrongLightState = function( light ){
+this.light = light;
+};
+StrongLightState.prototype.buttonWasPressed = function(){
+console.log( &#39;关灯&#39; ); // strongLightState 对应的行为
+this.light.setState( this.light.offLightState ); // 切换状态到 offLightState
+};
+//定义light类
+var Light = function(){
+this.offLightState = new OffLightState( this );
+this.weakLightState = new WeakLightState( this );
+this.strongLightState = new StrongLightState( this );
+this.button = null;
+};
+Light.prototype.init = function(){
+var button = document.createElement( &#39;button&#39; ),
+self = this;
+this.button = document.body.appendChild( button );
+this.button.innerHTML = &#39;开关&#39;;
+this.currState = this.offLightState; // 设置当前状态
+this.button.onclick = function(){
+self.currState.buttonWasPressed();
+}
+};
+Light.prototype.setState = function( newState ){
+this.currState = newState;
+};
+var light = new Light();
+light.init();
+//当有新功能，只需要定义新增类，并将其添加进Lightg构造函数里面
+```
+</code></pre><h4 id="适配器模式"><a href="#适配器模式" class="headerlink" title="适配器模式"></a>适配器模式</h4><p>适配器的别名是包装器（wrapper），适配器模式的作用是解决两个软件实体间的接口不兼容的问题。使用适配器模式之后，原本由于接口不兼容而不能工作的两个软件实体可以一起工作。</p>
+<pre><code>```js
+//show
+var googleMap = {
+show: function(){
+console.log( &#39;开始渲染谷歌地图&#39; );
+}
+};
+//display
+var baiduMap = {
+display: function(){
+console.log( &#39;开始渲染百度地图&#39; );
+}
+};
+var baiduMapAdapter = {
+show: function(){
+return baiduMap.display();
+}
+};
+renderMap( googleMap ); // 输出：开始渲染谷歌地图
+renderMap( baiduMapAdapter ); // 输出：开始渲染百度地图
+```
+</code></pre>
+          </section>
+          <section>
+            <ul style="list-style-type:none">
+            
+              <li class="page-prev"><a href=/2017/08/14/浅谈前端框架react和vue/>上一篇：浅谈前端框架vue和react原理，差异对比</a></li>
+        
+        
+          <li class="page-next"><a href=/2017/03/23/web性能优化/>下一篇：web性能优化总结</a></li>
+        
+            </ul>
+          </section>
+          
+              <section id="comments">
+              
+                      <!-- 多说评论框 start -->
+<div class="ds-thread" data-thread-key="post-设计模式小结" data-title="设计模式小结" data-url="http://xhuanhuan.github.io/2017/08/14/设计模式小结/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+    var duoshuoQuery = {short_name:'xhuanhuan'};
+      (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] 
+         || document.getElementsByTagName('body')[0]).appendChild(ds);
+      })();
+  </script>
+<!-- 多说公共JS代码 end -->
+
+                  
+              </section>
+          
+          <!-- </article> -->
+        </div>
+        </div>
+          </div>
+          <div id="li-of-post" class = 'col-xs-12 col-xs-offset-0 col-md-3 col-md-offset-0 col-sm-4 col-sm-offset-0 col-lg-3 col-lg-offset-0'>
+          <div class="well here">
+            <div style = 'text-align:left'>
+              <button type="button" class="btn btn-primary" id='but2'>内容列表</button>
+              <hr>
+            </div>
+            <div class="postblock">
+            <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#摘要"><span class="toc-number">1.</span> <span class="toc-text">摘要</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#对比适配器模式、装饰者模式、代理模式"><span class="toc-number">2.</span> <span class="toc-text">对比适配器模式、装饰者模式、代理模式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#单例模式"><span class="toc-number">3.</span> <span class="toc-text">单例模式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#策略模式"><span class="toc-number">4.</span> <span class="toc-text">策略模式</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#不使用策略模式"><span class="toc-number">4.1.</span> <span class="toc-text">不使用策略模式</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#使用策略模式"><span class="toc-number">4.2.</span> <span class="toc-text">使用策略模式</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#代理模式"><span class="toc-number">5.</span> <span class="toc-text">代理模式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#迭代器模式"><span class="toc-number">6.</span> <span class="toc-text">迭代器模式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#发布者-订阅模式（观察者模式）"><span class="toc-number">7.</span> <span class="toc-text">发布者-订阅模式（观察者模式）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#命令模式"><span class="toc-number">8.</span> <span class="toc-text">命令模式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#组合模式"><span class="toc-number">9.</span> <span class="toc-text">组合模式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#模板方法模式"><span class="toc-number">10.</span> <span class="toc-text">模板方法模式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#享元模式"><span class="toc-number">11.</span> <span class="toc-text">享元模式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#职责链模式"><span class="toc-number">12.</span> <span class="toc-text">职责链模式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#中介者模式"><span class="toc-number">13.</span> <span class="toc-text">中介者模式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#装饰者模式"><span class="toc-number">14.</span> <span class="toc-text">装饰者模式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#状态模式"><span class="toc-number">15.</span> <span class="toc-text">状态模式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#适配器模式"><span class="toc-number">16.</span> <span class="toc-text">适配器模式</span></a></li></ol>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <div style="width:100%;position:fixed;bottom:5px">
+    <button id="up" class="btn btn-default"><i class="icon-angle-up"></i></button>
+    </div>
+    <footer>
+    <div class="info" style="text-align:center;"><span>Powered By <a href="https://hexo.io/" target="blank">Hexo</a></span>&nbsp;&nbsp;&nbsp;&nbsp;<span>Theme by <a href="https://github.com/xhuanhuan/xhuanhuan.github.io/" target="blank">Xhuanhuan</a></span></div>
+</footer>
+
+</article>
+
+
+    </div>
+      <script src="/js/jquery-1.12.3.min.js"></script>
+      <script src="/js/index.js"></script>
+      <script src="/js/bootstrap.min.js"></script>
+      
+    <script>
+        hljs.initHighlightingOnLoad();
+    </script>
+</body>
+</html>
