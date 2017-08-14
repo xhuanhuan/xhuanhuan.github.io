@@ -79,12 +79,18 @@
 <h3 id="vue-的原理"><a href="#vue-的原理" class="headerlink" title="vue 的原理"></a>vue 的原理</h3><h5 id="数据响应式原理"><a href="#数据响应式原理" class="headerlink" title="数据响应式原理"></a>数据响应式原理</h5><ol>
 <li>observer：递归修改data中的属性为可访问属性，即给每个属性添加getter和setter，并且在get中搜集依赖，set中执行依赖；</li>
 <li>dep：依赖搜集器，每个属性都有一个dep实例，用来搜集依赖；</li>
-<li>watcher:通过表达式取值的方法，触发getter，从而将依赖添加进该属性中。<h5 id="侦测变化"><a href="#侦测变化" class="headerlink" title="侦测变化"></a>侦测变化</h5></li>
+<li>watcher:通过表达式取值的方法，触发getter，从而将依赖添加进该属性中。</li>
+</ol>
+<h5 id="侦测变化"><a href="#侦测变化" class="headerlink" title="侦测变化"></a>侦测变化</h5><ol>
 <li>关于变化侦测有两种方法：pull和push。vue使用的是push。</li>
 <li>vue2.0之后采用的是中等粒度的方式：每个组件是一个watcher,组件内部使用virtual dom。</li>
-<li>由于vue的数据响应式原理，当数据发生变化的时候，vue是知道具体哪些数据变了，从而知道具体哪些组件需要更新。数据改变会触发组件的watcher，将其放进队列，同一个组件触发多次只记录一次。当前事件循环结束之后，在发生了变化组件内部使用virtualdom diff算法对比差异，从而完成视图更新<h5 id="组件通信"><a href="#组件通信" class="headerlink" title="组件通信"></a>组件通信</h5></li>
+<li>由于vue的数据响应式原理，当数据发生变化的时候，vue是知道具体哪些数据变了，从而知道具体哪些组件需要更新。数据改变会触发组件的watcher，将其放进队列，同一个组件触发多次只记录一次。当前事件循环结束之后，在发生了变化组件内部使用virtualdom diff算法对比差异，从而完成视图更新</li>
+</ol>
+<h5 id="组件通信"><a href="#组件通信" class="headerlink" title="组件通信"></a>组件通信</h5><ol>
 <li>父子组件：props down;events up</li>
-<li>非父子组件：以父组件为中介;全局变量（利用vue的写插件方法install，可以定义全局的方法、变量）<h5 id="生命周期"><a href="#生命周期" class="headerlink" title="生命周期"></a>生命周期</h5></li>
+<li>非父子组件：以父组件为中介;全局变量（利用vue的写插件方法install，可以定义全局的方法、变量）</li>
+</ol>
+<h5 id="生命周期"><a href="#生命周期" class="headerlink" title="生命周期"></a>生命周期</h5><ol>
 <li>beforeCreated: 实例初始化以后，还没有进行data响应式处理。不能访问data</li>
 <li>create: 完成数据响应式处理，不能访问dom</li>
 <li>beforeMount: 在挂载开始之前被调用,相关的 render 函数首次被调用。不能访问dom</li>
@@ -101,10 +107,14 @@
 <li>react通过setState修改状态，触发视图更新。</li>
 <li>react修改整个状态，并不知道具体是那个数据变了，所以也不知道具体影响了哪些子组件，于是会导致整个组件树的更新，使用virtual dom diff算法实现。</li>
 <li>react可以通过shouldComponentUpdate来避免不必要的更新。</li>
-<li>react还可以通过继承pureComponent来实现自动检测具体组件的更新（但是只能检测直接改变，如对象增删属性，数组增添元素是检测不到的）<h5 id="virtual-dom-的原理"><a href="#virtual-dom-的原理" class="headerlink" title="virtual dom 的原理"></a>virtual dom 的原理</h5></li>
+<li>react还可以通过继承pureComponent来实现自动检测具体组件的更新（但是只能检测直接改变，如对象增删属性，数组增添元素是检测不到的）</li>
+</ol>
+<h5 id="virtual-dom-的原理"><a href="#virtual-dom-的原理" class="headerlink" title="virtual dom 的原理"></a>virtual dom 的原理</h5><ol>
 <li>根据实际dom树，取关键信息（tagName/props/child nodes）构造虚拟树</li>
 <li>状态更新时构造新的虚拟树</li>
-<li>对比新旧两棵树，记录差异：react认为跨层级的修改是很少见的，所以采用同层级比较，记录差异；采用了list-diff算法实现同层级的节点的移动增删的检测，以最小代价完旧树的替换。<h5 id="生命周期-1"><a href="#生命周期-1" class="headerlink" title="生命周期"></a>生命周期</h5></li>
+<li>对比新旧两棵树，记录差异：react认为跨层级的修改是很少见的，所以采用同层级比较，记录差异；采用了list-diff算法实现同层级的节点的移动增删的检测，以最小代价完旧树的替换。</li>
+</ol>
+<h5 id="生命周期-1"><a href="#生命周期-1" class="headerlink" title="生命周期"></a>生命周期</h5><ol>
 <li>mounting:<br>(1) constructor() 组件创建时调用一次<br>(2) componentWillMount() 组件挂载前调用一次（如果改变了state,render时可以看到效果）<br>(3) render()<br>(4) componentDidMount() 组件挂载后调用调用一次(这里可发送ajax)</li>
 <li>updating:<br>(1) componentWillReceiveProps() 父组件render时调用，不管与之有没有props传递<br>(2) shouldComponentUpdate() 控制返回值true/false来控制组件是否需要更新<br>(3) componentWillUpdate() shouldComponentUpdate返回true时调用<br>(4) render()<br>(5) componentDidUpdate() 每次render之后调用（除了第一次，render后调用componentDidMount）</li>
 <li>unmounting:<br>(1) componentWillUnmount()<br>(2) componentDidUnmount() 可取消未完成的ajax</li>
@@ -113,7 +123,9 @@
 <li>都使用了virtual dom</li>
 <li>组件化，实现代码的复用</li>
 <li>将注意力集中保持在核心库，而将其他功能如路由和全局状态管理交给相关的库</li>
-<li>支持JSX语法（vue还支持模板写法）<h5 id="区别"><a href="#区别" class="headerlink" title="区别"></a>区别</h5></li>
+<li>支持JSX语法（vue还支持模板写法）</li>
+</ol>
+<h5 id="区别"><a href="#区别" class="headerlink" title="区别"></a>区别</h5><ol>
 <li>vue支持模板写法，上手更快</li>
 <li>响应式原理不同。vue是知道具体哪些数据变了的，只在改变了的组件内部diff，速度更快，但也因此有更大的内存开销；react要diff整个组件树，速度相对慢些，但是没有vue那么大的内存开销，而且react可以采用shouldComponentUpdate或继承pureComponent的方式来改进。</li>
 <li>vue支持局部css（原理是 同过添加属性选择器来限制作用域）</li>
@@ -125,7 +137,7 @@
             <ul style="list-style-type:none">
             
         
-          <li class="page-next"><a href=/2017/03/23/this的指向以及箭头函数的this/>下一篇：js中this的指向以及箭头函数的this</a></li>
+          <li class="page-next"><a href=/2017/03/23/web性能优化/>下一篇：web性能优化总结</a></li>
         
             </ul>
           </section>
