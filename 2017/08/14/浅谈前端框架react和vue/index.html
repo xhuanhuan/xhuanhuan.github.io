@@ -91,8 +91,8 @@
 <li>非父子组件：以父组件为中介;全局变量（利用vue的写插件方法install，可以定义全局的方法、变量）</li>
 </ol>
 <h5 id="生命周期"><a href="#生命周期" class="headerlink" title="生命周期"></a>生命周期</h5><ol>
-<li>beforeCreated: 实例初始化以后，还没有进行data响应式处理。不能访问data</li>
-<li>create: 完成数据响应式处理，不能访问dom</li>
+<li>beforeCreate: 实例初始化以后，还没有进行data响应式处理。不能访问data</li>
+<li>created: 完成数据响应式处理，不能访问dom</li>
 <li>beforeMount: 在挂载开始之前被调用,相关的 render 函数首次被调用。不能访问dom</li>
 <li>mounted: 完成新旧结点的替换，可以访问dom</li>
 <li>beforeUpdate: 数据更新时调用，还没有产生virtual dom</li>
@@ -101,7 +101,7 @@
 <li>destroyed: 实例被销毁，所有相关数据解绑，事件移除。</li>
 </ol>
 <h3 id="react-的原理"><a href="#react-的原理" class="headerlink" title="react 的原理"></a>react 的原理</h3><p>react是状态到视图的映射；采用函数式编程；单向数据流</p>
-<h5 id="响应式"><a href="#响应式" class="headerlink" title="响应式"></a>响应式</h5><p>通过setState返回新state而非直接修改state的内容，触发事件导致视图的更新。transaction里面有一个属性，标志着setState是否立刻触发视图更新，若为true就将其放入一个dirtyComponents中,否则立刻更新视图，西安执行dirtyComponents的内容，再执行当前的内容。</p>
+<h5 id="关于setState"><a href="#关于setState" class="headerlink" title="关于setState"></a>关于setState</h5><p>（1）由react事件引发的事件处理，不会同步更新状态。react事件触发，并不会直接调用回调，而是先去调用batchedUpdates方法，进入一个transaction过程。首先将一个表征‘批更新’的属性isbatchingupdates置为true（默认false），然后执行回调，碰到setState,判断isbatchingupdates为true，则将其放入dirtyComponents数组里面，执行完毕之后，调用flushBatchedUpdates方法，合并dirtyComponents里面的state并更新state，然后触发视图更新。如果合并state时有同一个属性被多次修改，最后一次生效。<br>（2）如何实现同步更新状态。绕过react事件，可以使用setTimeout/setInterval，或通过addEventListener的方式，不会去调用batchedUpdates方法，isbatchingupdates默认为false，因此碰到setState会立即执行，不会进入批更新过程。</p>
 <h5 id="变化侦测"><a href="#变化侦测" class="headerlink" title="变化侦测"></a>变化侦测</h5><ol>
 <li>关于变化侦测有两种方法：pull和push。react使用的是pull。</li>
 <li>react通过setState修改状态，触发视图更新。</li>
@@ -139,7 +139,7 @@
               <li class="page-prev"><a href=/2017/08/14/设计模式小结/>上一篇：设计模式小结</a></li>
         
         
-          <li class="page-next"><a href=/2017/03/23/web性能优化/>下一篇：web性能优化总结</a></li>
+          <li class="page-next"><a href=/2017/03/23/this的指向以及箭头函数的this/>下一篇：js中this的指向以及箭头函数的this</a></li>
         
             </ul>
           </section>
@@ -177,7 +177,7 @@
               <hr>
             </div>
             <div class="postblock">
-            <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#摘要"><span class="toc-number">1.</span> <span class="toc-text">摘要</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#vue-的原理"><span class="toc-number"></span> <span class="toc-text">vue 的原理</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#数据响应式原理"><span class="toc-number">0.1.</span> <span class="toc-text">数据响应式原理</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#侦测变化"><span class="toc-number">0.2.</span> <span class="toc-text">侦测变化</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#组件通信"><span class="toc-number">0.3.</span> <span class="toc-text">组件通信</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#生命周期"><span class="toc-number">0.4.</span> <span class="toc-text">生命周期</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#react-的原理"><span class="toc-number"></span> <span class="toc-text">react 的原理</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#响应式"><span class="toc-number">0.1.</span> <span class="toc-text">响应式</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#变化侦测"><span class="toc-number">0.2.</span> <span class="toc-text">变化侦测</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#virtual-dom-的原理"><span class="toc-number">0.3.</span> <span class="toc-text">virtual dom 的原理</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#生命周期-1"><span class="toc-number">0.4.</span> <span class="toc-text">生命周期</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#react与vue的比较"><span class="toc-number"></span> <span class="toc-text">react与vue的比较</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#相同点"><span class="toc-number">0.1.</span> <span class="toc-text">相同点</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#区别"><span class="toc-number">0.2.</span> <span class="toc-text">区别</span></a></li></ol></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#摘要"><span class="toc-number">1.</span> <span class="toc-text">摘要</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#vue-的原理"><span class="toc-number"></span> <span class="toc-text">vue 的原理</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#数据响应式原理"><span class="toc-number">0.1.</span> <span class="toc-text">数据响应式原理</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#侦测变化"><span class="toc-number">0.2.</span> <span class="toc-text">侦测变化</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#组件通信"><span class="toc-number">0.3.</span> <span class="toc-text">组件通信</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#生命周期"><span class="toc-number">0.4.</span> <span class="toc-text">生命周期</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#react-的原理"><span class="toc-number"></span> <span class="toc-text">react 的原理</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#关于setState"><span class="toc-number">0.1.</span> <span class="toc-text">关于setState</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#变化侦测"><span class="toc-number">0.2.</span> <span class="toc-text">变化侦测</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#virtual-dom-的原理"><span class="toc-number">0.3.</span> <span class="toc-text">virtual dom 的原理</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#生命周期-1"><span class="toc-number">0.4.</span> <span class="toc-text">生命周期</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#react与vue的比较"><span class="toc-number"></span> <span class="toc-text">react与vue的比较</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#相同点"><span class="toc-number">0.1.</span> <span class="toc-text">相同点</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#区别"><span class="toc-number">0.2.</span> <span class="toc-text">区别</span></a></li></ol></li></ol>
             </div>
           </div>
         </div>
